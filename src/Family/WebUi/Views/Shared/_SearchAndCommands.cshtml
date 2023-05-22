@@ -1,0 +1,8 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@*@model TModel*@
+
+@inject IViewLocalizer ViewLocalizer
+
+<form class="d-flex" role="search">
+    <input class="form-control me-2" type="search" placeholder="@ViewLocalizer["Search"]" aria-label="Search" />
+</form>
