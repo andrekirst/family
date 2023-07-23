@@ -1,4 +1,4 @@
-﻿using Api.Controllers;
+﻿using Api.Controllers.Core;
 using Api.Database;
 using Api.Database.Core;
 using Api.Infrastructure;

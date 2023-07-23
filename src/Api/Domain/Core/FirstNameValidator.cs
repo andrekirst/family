@@ -1,4 +1,4 @@
-﻿using Api.Controllers;
+﻿using Api.Controllers.Core;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 

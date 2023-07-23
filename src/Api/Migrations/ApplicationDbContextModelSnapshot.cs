@@ -17,10 +17,73 @@ namespace Api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0-preview.4.23259.3")
+                .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Api.Domain.Core.DomainEventEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTimeOffset?>("ChangedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("ChangedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("ConcurrencyToken")
+                        .IsConcurrencyToken()
+                        .HasMaxLength(256)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<int?>("CreatedByFamilyMemberId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CreatedForFamilyMemberId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EventData")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EventType")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<int>("EventVersion")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasMaxLength(256)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedByFamilyMemberId");
+
+                    b.HasIndex("CreatedForFamilyMemberId");
+
+                    b.ToTable("DomainEventEntries", "core");
+                });
 
             modelBuilder.Entity("Api.Domain.Core.FamilyMember", b =>
                 {
@@ -29,6 +92,10 @@ namespace Api.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AspNetUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime?>("Birthdate")
                         .HasColumnType("datetime2");
@@ -71,6 +138,201 @@ namespace Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FamilyMembers", "core");
+                });
+
+            modelBuilder.Entity("Api.Domain.Core.Label", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTimeOffset?>("ChangedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("ChangedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("ConcurrencyToken")
+                        .IsConcurrencyToken()
+                        .HasMaxLength(256)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(265)
+                        .HasColumnType("nvarchar(265)");
+
+                    b.Property<string>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasMaxLength(256)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Labels", "core");
+                });
+
+            modelBuilder.Entity("Api.Domain.WeightTracking.WeightTrackingEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTimeOffset?>("ChangedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("ChangedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("ConcurrencyToken")
+                        .IsConcurrencyToken()
+                        .HasMaxLength(256)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<int>("FamilyMemberId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("MeasuredAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasMaxLength(256)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("float");
+
+                    b.Property<string>("WeightUnit")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FamilyMemberId");
+
+                    b.ToTable("WeightTrackingEntries", "weighttracking");
+                });
+
+            modelBuilder.Entity("FamilyMemberLabel", b =>
+                {
+                    b.Property<int>("FamilyMembersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LabelsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("FamilyMembersId", "LabelsId");
+
+                    b.HasIndex("LabelsId");
+
+                    b.ToTable("FamilyMemberLabel", "core");
+                });
+
+            modelBuilder.Entity("Api.Domain.Core.DomainEventEntry", b =>
+                {
+                    b.HasOne("Api.Domain.Core.FamilyMember", "CreatedByFamilyMember")
+                        .WithMany("CreatedByDomainEventEntries")
+                        .HasForeignKey("CreatedByFamilyMemberId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Api.Domain.Core.FamilyMember", "CreatedForFamilyMember")
+                        .WithMany("CreatedForDomainEventEntries")
+                        .HasForeignKey("CreatedForFamilyMemberId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("CreatedByFamilyMember");
+
+                    b.Navigation("CreatedForFamilyMember");
+                });
+
+            modelBuilder.Entity("Api.Domain.Core.Label", b =>
+                {
+                    b.OwnsOne("Api.Domain.Core.Color", "Color", b1 =>
+                        {
+                            b1.Property<int>("LabelId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .IsUnicode(false)
+                                .HasColumnType("varchar(256)")
+                                .HasColumnName("Color");
+
+                            b1.HasKey("LabelId");
+
+                            b1.ToTable("Labels", "core");
+
+                            b1.WithOwner()
+                                .HasForeignKey("LabelId");
+                        });
+
+                    b.Navigation("Color")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Api.Domain.WeightTracking.WeightTrackingEntry", b =>
+                {
+                    b.HasOne("Api.Domain.Core.FamilyMember", "FamilyMember")
+                        .WithMany("WeightTrackingEntries")
+                        .HasForeignKey("FamilyMemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FamilyMember");
+                });
+
+            modelBuilder.Entity("FamilyMemberLabel", b =>
+                {
+                    b.HasOne("Api.Domain.Core.FamilyMember", null)
+                        .WithMany()
+                        .HasForeignKey("FamilyMembersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Api.Domain.Core.Label", null)
+                        .WithMany()
+                        .HasForeignKey("LabelsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Api.Domain.Core.FamilyMember", b =>
+                {
+                    b.Navigation("CreatedByDomainEventEntries");
+
+                    b.Navigation("CreatedForDomainEventEntries");
+
+                    b.Navigation("WeightTrackingEntries");
                 });
 #pragma warning restore 612, 618
         }

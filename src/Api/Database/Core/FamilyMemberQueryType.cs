@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Database.Core;
 
+[ExtendObjectType("QueryType")]
 public class FamilyMemberQueryType
 {
     [UseProjection]

@@ -1,0 +1,101 @@
+﻿schema {
+  query: FamilyMemberQueryType
+}
+
+type FamilyMemberQueryType {
+  familyMembers(order: [FamilyMemberSortInput!] where: FamilyMemberFilterInput): [FamilyMember!]!
+}
+
+input FamilyMemberSortInput {
+  firstName: SortEnumType
+  lastName: SortEnumType
+  birthdate: SortEnumType
+  id: SortEnumType
+  createdBy: SortEnumType
+  createdAt: SortEnumType
+  changedBy: SortEnumType
+  changedAt: SortEnumType
+  concurrencyToken: SortEnumType
+  rowVersion: SortEnumType
+}
+
+input FamilyMemberFilterInput {
+  and: [FamilyMemberFilterInput!]
+  or: [FamilyMemberFilterInput!]
+  firstName: StringOperationFilterInput
+  lastName: StringOperationFilterInput
+  birthdate: DateTimeOperationFilterInput
+  id: IntOperationFilterInput
+  createdBy: StringOperationFilterInput
+  createdAt: DateTimeOperationFilterInput
+  changedBy: StringOperationFilterInput
+  changedAt: DateTimeOperationFilterInput
+  concurrencyToken: StringOperationFilterInput
+  rowVersion: StringOperationFilterInput
+}
+
+enum SortEnumType {
+  ASC
+  DESC
+}
+
+input StringOperationFilterInput {
+  and: [StringOperationFilterInput!]
+  or: [StringOperationFilterInput!]
+  eq: String
+  neq: String
+  contains: String
+  ncontains: String
+  in: [String]
+  nin: [String]
+  startsWith: String
+  nstartsWith: String
+  endsWith: String
+  nendsWith: String
+}
+
+input DateTimeOperationFilterInput {
+  eq: DateTime
+  neq: DateTime
+  in: [DateTime]
+  nin: [DateTime]
+  gt: DateTime
+  ngt: DateTime
+  gte: DateTime
+  ngte: DateTime
+  lt: DateTime
+  nlt: DateTime
+  lte: DateTime
+  nlte: DateTime
+}
+
+input IntOperationFilterInput {
+  eq: Int
+  neq: Int
+  in: [Int]
+  nin: [Int]
+  gt: Int
+  ngt: Int
+  gte: Int
+  ngte: Int
+  lt: Int
+  nlt: Int
+  lte: Int
+  nlte: Int
+}
+
+"The `DateTime` scalar represents an ISO-8601 compliant date time type."
+scalar DateTime
+
+type FamilyMember {
+  firstName: String
+  lastName: String
+  birthdate: DateTime
+  id: Int!
+  createdBy: String
+  createdAt: DateTime
+  changedBy: String
+  changedAt: DateTime
+  concurrencyToken: String
+  rowVersion: String
+}

@@ -2,22 +2,12 @@
 
 namespace Api.Domain.Core;
 
-public record FamilyMemberUpdatedDomainEvent : IDomainEvent
+public record FamilyMemberUpdatedDomainEvent(
+    int Id,
+    string FirstName,
+    string LastName,
+    DateTime Birthdate) : IDomainEvent
 {
-    public FamilyMemberUpdatedDomainEvent()
-    {
-    }
-
-    public FamilyMemberUpdatedDomainEvent(int id, string firstName, string lastName, DateTime birthdate)
-    {
-        Id = id;
-        FirstName = firstName;
-        LastName = lastName;
-        Birthdate = birthdate;
-    }
-
-    public int Id { get; set; }
-    public string FirstName { get; set; } = default!;
-    public string LastName { get; set; } = default!;
-    public DateTime Birthdate { get; set; }
+    public string DomainEventName => "FamilyMemberUpdatedDomainEvent";
+    public int DomainEventVersion => 1;
 }

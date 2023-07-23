@@ -1,4 +1,5 @@
-﻿using Api.Domain.Core;
+﻿using Api.Domain.Body.WeightTracking;
+using Api.Domain.Core;
 using Api.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Internal;
@@ -10,6 +11,10 @@ public class ApplicationDbContext : DbContext
     private readonly ISystemClock? _systemClock;
     private readonly HttpContext? _httpContext;
 
+    public DbSet<FamilyMember> FamilyMembers => Set<FamilyMember>();
+    public DbSet<WeightTrackingEntry> WeightTrackingEntries => Set<WeightTrackingEntry>();
+    public DbSet<DomainEventEntry> DomainEventEntries => Set<DomainEventEntry>();
+
     public ApplicationDbContext(
         ISystemClock systemClock,
         IHttpContextAccessor httpContextAccessor,
@@ -20,9 +25,8 @@ public class ApplicationDbContext : DbContext
         _httpContext = httpContextAccessor.HttpContext;
     }
 
-    public DbSet<FamilyMember> FamilyMembers => Set<FamilyMember>();
-
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    public ApplicationDbContext(
+        DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
     }

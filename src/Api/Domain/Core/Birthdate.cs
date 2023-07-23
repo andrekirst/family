@@ -37,13 +37,3 @@ public record Birthdate : IValueObjectFrom<Birthdate, DateTime>
 
     public static Birthdate FromNullRaw(DateTime value) => new Birthdate(value, false);
 }
-
-public class BirthdateTooEarlyException : Exception
-{
-    public DateTime? Value { get; }
-
-    public BirthdateTooEarlyException(DateTime? value)
-    {
-        Value = value;
-    }
-}

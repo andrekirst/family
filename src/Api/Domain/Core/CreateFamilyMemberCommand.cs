@@ -1,4 +1,4 @@
-﻿using Api.Controllers;
+﻿using Api.Controllers.Core;
 using Api.Database;
 using Api.Infrastructure;
 using AutoMapper;
@@ -10,7 +10,7 @@ namespace Api.Domain.Core;
 
 public record CreateFamilyMemberCommand(CreateFamilyMemberCommandModel Model) : ICommand;
 
-public record CreateFamilyMemberCommandModel(string FirstName, string LastName, DateTime Birthdate);
+public record CreateFamilyMemberCommandModel(string FirstName, string LastName, DateTime Birthdate, string? AspNetUserId);
 
 public class CreateFamilyMemberCommandValidator : AbstractValidator<CreateFamilyMemberCommand>
 {
