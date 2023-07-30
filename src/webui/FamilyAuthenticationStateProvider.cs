@@ -13,6 +13,7 @@ public class FamilyAuthenticationStateProvider : AuthenticationStateProvider
     private readonly AuthenticationState _anonymousState;
 
     public const string AuthenticationToken = "authenticationToken";
+    private const string AuthenticationType = "jwpAuthType";
 
     public FamilyAuthenticationStateProvider(
         HttpClient httpClient,
@@ -35,7 +36,19 @@ public class FamilyAuthenticationStateProvider : AuthenticationStateProvider
         }
 
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+        return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(token), AuthenticationType)));
+    }
 
-        return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(token), "jwtAuthType")));
+    public void NotifyUserAuthentication(string login)
+    {
+        var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, login) }, AuthenticationType));
+        var authenticationState = Task.FromResult(new AuthenticationState(authenticatedUser));
+        NotifyAuthenticationStateChanged(authenticationState);
+    }
+
+    public void NotifyUserLogout()
+    {
+        var authenticationState = Task.FromResult(_anonymousState);
+        NotifyAuthenticationStateChanged(authenticationState);
     }
 }

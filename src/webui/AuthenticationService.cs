@@ -20,11 +20,11 @@ public class AuthenticationService : IAuthenticationService
     private readonly JsonSerializerOptions _jsonSerializerOptions;
 
     public AuthenticationService(
-        HttpClient httpClient,
+        IHttpClientFactory httpClientFactory,
         AuthenticationStateProvider authenticationStateProvider,
         ILocalStorageService localStorageService)
     {
-        _httpClient = httpClient;
+        _httpClient = httpClientFactory.CreateClient("api");
         _authenticationStateProvider = authenticationStateProvider;
         _localStorageService = localStorageService;
         _jsonSerializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -32,8 +32,8 @@ public class AuthenticationService : IAuthenticationService
 
     public async Task<LoginResponseModel> Login(LoginRequestModel request, CancellationToken cancellationToken = default)
     {
-        var content = JsonSerializer.Serialize(request);
-        var authenticationResult = await _httpClient.PostAsJsonAsync("", content, cancellationToken);
+        //var content = JsonSerializer.Serialize(request);
+        var authenticationResult = await _httpClient.PostAsJsonAsync("api/auth/login", request, cancellationToken);
         var authenticationContent = await authenticationResult.Content.ReadAsStringAsync(cancellationToken);
         var result = JsonSerializer.Deserialize<LoginResponseModel>(authenticationContent, _jsonSerializerOptions);
 
@@ -45,7 +45,7 @@ public class AuthenticationService : IAuthenticationService
         }
 
         await _localStorageService.SetItemAsStringAsync(FamilyAuthenticationStateProvider.AuthenticationToken, result.Token, cancellationToken);
-
+        ((FamilyAuthenticationStateProvider)_authenticationStateProvider).NotifyUserAuthentication(request.Login);
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", result.Token);
 
         return new LoginResponseModel
@@ -57,12 +57,15 @@ public class AuthenticationService : IAuthenticationService
     public async Task Logout()
     {
         await _localStorageService.RemoveItemAsync(FamilyAuthenticationStateProvider.AuthenticationToken);
+        ((FamilyAuthenticationStateProvider)_authenticationStateProvider).NotifyUserLogout();
         _httpClient.DefaultRequestHeaders.Authorization = null;
     }
 }
 
 public class LoginRequestModel
 {
+    public string Login { get; set; } = default!;
+    public string Password { get; set; } = default!;
 }
 
 public class LoginResponseModel

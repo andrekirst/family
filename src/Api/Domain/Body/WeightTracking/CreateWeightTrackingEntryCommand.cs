@@ -7,9 +7,9 @@ using MediatR;
 
 namespace Api.Domain.Body.WeightTracking;
 
-public record CreateWeightTrackingEntryCommand(CreateWeightTrackingEntryCommandModel Model) : ICommand;
+public record CreateWeightTrackingEntryCommand(int FamilyMemberId, CreateWeightTrackingEntryCommandModel Model) : ICommand;
 
-public record CreateWeightTrackingEntryCommandModel(int FamilyMemberId, DateTime MeasuredAt, WeightUnit WeightUnit, double Weight);
+public record CreateWeightTrackingEntryCommandModel(DateTime MeasuredAt, WeightUnit WeightUnit, double Weight);
 
 public class CreateWeightTrackingEntryCommandValidator : AbstractValidator<CreateWeightTrackingEntryCommand>
 {
@@ -19,7 +19,7 @@ public class CreateWeightTrackingEntryCommandValidator : AbstractValidator<Creat
             .SetValidator(new WeightValidator())
             .OverridePropertyName(nameof(CreateWeightTrackingEntryCommand.Model.Weight));
 
-        RuleFor(_ => _.Model.FamilyMemberId)
+        RuleFor(_ => _.FamilyMemberId)
             .MustAsync(dbContext.FamilyMembers.Exists);
     }
 }
@@ -59,7 +59,7 @@ public class CreateWeightTrackingEntryCommandHandler : ICommandHandler<CreateWei
             weightTrackingEntry.WeightUnit,
             weightTrackingEntry.Weight,
             createdByFamilyMemberId,
-            request.Model.FamilyMemberId);
+            request.FamilyMemberId);
         await _mediator.Publish(domainEvent, cancellationToken);
     }
 }

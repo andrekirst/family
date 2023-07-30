@@ -30,5 +30,10 @@
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Pages\Login.razor" />
+      <_ContentIncludedByDefault Remove="RedirectToLogin.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="RedirectToLogin.razor" />
     </ItemGroup>
 </Project>

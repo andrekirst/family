@@ -6,13 +6,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Domain.Body.WeightTracking;
 
-public record DeleteWeightTrackingEntryCommand(int Id) : ICommand;
+public record DeleteWeightTrackingEntryCommand(int Id, int FamilyMemberId) : ICommand;
 
 public class DeleteWeightTrackingEntryCommandValidator : AbstractValidator<DeleteWeightTrackingEntryCommand>
 {
     public DeleteWeightTrackingEntryCommandValidator(
         ApplicationDbContext dbContext)
     {
+        RuleFor(_ => _.FamilyMemberId)
+            .MustAsync(dbContext.FamilyMembers.Exists);
+
         RuleFor(_ => _.Id)
             .MustAsync(dbContext.WeightTrackingEntries.Exists);
 
@@ -43,8 +46,7 @@ public class DeleteWeightTrackingEntryCommandHandler : ICommandHandler<DeleteWei
                 wte.Id,
                 wte.MeasuredAt,
                 wte.Weight,
-                wte.WeightUnit,
-                wte.FamilyMemberId
+                wte.WeightUnit
             })
             .SingleAsync(cancellationToken);
 
@@ -54,7 +56,7 @@ public class DeleteWeightTrackingEntryCommandHandler : ICommandHandler<DeleteWei
 
         if (deletedRows != 1)
         {
-            throw new IncorrectNumberOfWeightTrackingEntriesDeletedException(deletedRows, request.Id, entryForDomainEvent.FamilyMemberId);
+            throw new IncorrectNumberOfWeightTrackingEntriesDeletedException(deletedRows, request.Id, request.FamilyMemberId);
         }
 
         await _mediator.Publish(new WeightTrackingEntryDeletedDomainEvent(entryForDomainEvent.Id, entryForDomainEvent.MeasuredAt, entryForDomainEvent.Weight, entryForDomainEvent.WeightUnit), cancellationToken);

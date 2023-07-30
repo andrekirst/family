@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Domain.Body.WeightTracking;
 
-public record UpdateWeightTrackingEntryCommand(int Id, UpdateWeightTrackingEntryCommandModel Model) : ICommand;
+public record UpdateWeightTrackingEntryCommand(int Id, int FamilyMemberId, UpdateWeightTrackingEntryCommandModel Model) : ICommand;
 
 public record UpdateWeightTrackingEntryCommandModel(DateTime MeasuredAt, WeightUnit WeightUnit, double Weight);
 
@@ -15,6 +15,7 @@ public class UpdateWeightTrackingEntryCommandValidator : AbstractValidator<Updat
 {
     public UpdateWeightTrackingEntryCommandValidator(ApplicationDbContext dbContext)
     {
+        // TODO FamilyMemberId-Check
         RuleFor(_ => Weight.FromRaw(_.Model.Weight))
             .SetValidator(new WeightValidator())
             .OverridePropertyName(nameof(CreateWeightTrackingEntryCommand.Model.Weight));
