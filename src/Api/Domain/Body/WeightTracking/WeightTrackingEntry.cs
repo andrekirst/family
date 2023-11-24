@@ -11,3 +11,15 @@ public class WeightTrackingEntry : BaseEntity
     public int FamilyMemberId { get; set; }
     public FamilyMember FamilyMember { get; set; } = default!;
 }
+
+public class WeightTrackingEntryMappings
+    : IMap<WeightTrackingEntry, CreateWeightTrackingEntryCommandModel>
+{
+    public static WeightTrackingEntry MapTo(CreateWeightTrackingEntryCommandModel model) =>
+        new WeightTrackingEntry
+        {
+            MeasuredAt = model.MeasuredAt,
+            Weight = model.Weight,
+            WeightUnit = model.WeightUnit
+        };
+}

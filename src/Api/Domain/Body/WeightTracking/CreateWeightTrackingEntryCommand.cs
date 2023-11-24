@@ -1,7 +1,6 @@
 ﻿using Api.Database;
 using Api.Domain.Core;
 using Api.Infrastructure;
-using AutoMapper;
 using FluentValidation;
 using MediatR;
 
@@ -24,34 +23,20 @@ public class CreateWeightTrackingEntryCommandValidator : AbstractValidator<Creat
     }
 }
 
-public class CreateWeightTrackingEntryCommandHandler : ICommandHandler<CreateWeightTrackingEntryCommand>
-{
-    private readonly ApplicationDbContext _dbContext;
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMediator _mediator;
-    private readonly IMapper _mapper;
-    private readonly CurrentFamilyMemberIdService _currentFamilyMemberIdService;
-
-    public CreateWeightTrackingEntryCommandHandler(
+public class CreateWeightTrackingEntryCommandHandler(
         ApplicationDbContext dbContext,
         IUnitOfWork unitOfWork,
         IMediator mediator,
-        IMapper mapper,
         CurrentFamilyMemberIdService currentFamilyMemberIdService)
-    {
-        _dbContext = dbContext;
-        _unitOfWork = unitOfWork;
-        _mediator = mediator;
-        _mapper = mapper;
-        _currentFamilyMemberIdService = currentFamilyMemberIdService;
-    }
-
+    : ICommandHandler<CreateWeightTrackingEntryCommand>
+{
     public async Task Handle(CreateWeightTrackingEntryCommand request, CancellationToken cancellationToken)
     {
-        var createdByFamilyMemberId = _currentFamilyMemberIdService.GetFamilyMemberId();
-        var weightTrackingEntry = _mapper.Map<WeightTrackingEntry>(request.Model);
-        _dbContext.WeightTrackingEntries.Add(weightTrackingEntry);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        var createdByFamilyMemberId = currentFamilyMemberIdService.GetFamilyMemberId();
+        var weightTrackingEntry = WeightTrackingEntryMappings.MapTo(request.Model);
+
+        dbContext.WeightTrackingEntries.Add(weightTrackingEntry);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
         
         var domainEvent = new WeightTrackingEntryCreatedDomainEvent(
             weightTrackingEntry.Id,
@@ -60,14 +45,6 @@ public class CreateWeightTrackingEntryCommandHandler : ICommandHandler<CreateWei
             weightTrackingEntry.Weight,
             createdByFamilyMemberId,
             request.FamilyMemberId);
-        await _mediator.Publish(domainEvent, cancellationToken);
-    }
-}
-
-public class CreateWeightTrackingEntryCommandMappings : Profile
-{
-    public CreateWeightTrackingEntryCommandMappings()
-    {
-        CreateMap<CreateWeightTrackingEntryCommandModel, WeightTrackingEntry>();
+        await mediator.Publish(domainEvent, cancellationToken);
     }
 }

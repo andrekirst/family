@@ -153,8 +153,8 @@ public class Program
             .AddType<FamilyMemberQueryType>()
             .AddProjections()
             .AddFiltering()
-            .AddSorting();
-        builder.Services.AddAutoMapper(expression => expression.AddMaps(typeof(Program).Assembly));
+            .AddSorting()
+            .AddAuthorizationCore();
         builder.Services.AddTransient<ExceptionHandlingMiddleware>();
         builder.Services.AddCors(options =>
         {
@@ -194,7 +194,9 @@ public class Program
 
         app.MapControllers();
 
-        app.MapGraphQL();
+        app
+            .MapGraphQL()
+            .RequireAuthorization();
         app.MapBananaCakePop();
 
         await MigrateDbContext(app);

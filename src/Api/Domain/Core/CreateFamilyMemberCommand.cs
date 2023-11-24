@@ -1,7 +1,6 @@
 ﻿using Api.Controllers.Core;
 using Api.Database;
 using Api.Infrastructure;
-using AutoMapper;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -35,18 +34,15 @@ public class CreateFamilyMemberCommandHandler : ICommandHandler<CreateFamilyMemb
     private readonly ApplicationDbContext _dbContext;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMediator _mediator;
-    private readonly IMapper _mapper;
 
     public CreateFamilyMemberCommandHandler(
         ApplicationDbContext dbContext,
         IUnitOfWork unitOfWork,
-        IMediator mediator,
-        IMapper mapper)
+        IMediator mediator)
     {
         _dbContext = dbContext;
         _unitOfWork = unitOfWork;
         _mediator = mediator;
-        _mapper = mapper;
     }
 
     public async Task Handle(CreateFamilyMemberCommand request, CancellationToken cancellationToken)
@@ -60,11 +56,17 @@ public class CreateFamilyMemberCommandHandler : ICommandHandler<CreateFamilyMemb
     }
 }
 
-public class CreateFamilyMemberCommandMappings : Profile
+public class CreateFamilyMemberCommandMappings
+    : IMap<FamilyMember, CreateFamilyMemberCommandModel>,
+        IMap<FamilyMemberCreatedDomainEvent, FamilyMember>
 {
-    public CreateFamilyMemberCommandMappings()
+    public static FamilyMember MapTo(CreateFamilyMemberCommandModel source)
     {
-        CreateMap<CreateFamilyMemberCommandModel, FamilyMember>();
-        CreateMap<FamilyMember, FamilyMemberCreatedDomainEvent>();
+        throw new NotImplementedException();
+    }
+
+    public static FamilyMemberCreatedDomainEvent MapTo(FamilyMember source)
+    {
+        throw new NotImplementedException();
     }
 }
