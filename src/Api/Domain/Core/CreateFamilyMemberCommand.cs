@@ -47,11 +47,11 @@ public class CreateFamilyMemberCommandHandler : ICommandHandler<CreateFamilyMemb
 
     public async Task Handle(CreateFamilyMemberCommand request, CancellationToken cancellationToken)
     {
-        var familyMember = _mapper.Map<FamilyMember>(request.Model);
+        var familyMember = CreateFamilyMemberCommandMappings.MapTo(request.Model);
         _dbContext.FamilyMembers.Add(familyMember);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        var domainEvent = _mapper.Map<FamilyMemberCreatedDomainEvent>(familyMember);
+        
+        var domainEvent = CreateFamilyMemberCommandMappings.MapTo(familyMember);
         await _mediator.Publish(domainEvent, cancellationToken);
     }
 }
