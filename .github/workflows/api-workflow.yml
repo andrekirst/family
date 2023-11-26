@@ -15,3 +15,5 @@ jobs:
                   dotnet-version: ${{ matrix.dotnet-version }}
             - name: Display dotnet version
               run: dotnet --version
+            - name: Build Api
+              run: dotnet build src/Api/Api.csproj
