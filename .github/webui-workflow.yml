@@ -3,17 +3,30 @@ run-name: webui by ${{ github.actor }}
 on: [push]
 jobs:
     build:
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                dotnet-version: [ '8.0.x' ]
-        steps:
-            - uses: actions/checkout@v4
-            - name: Setup dotnet ${{ matrix.dotnet-version }}
-              uses: actions/setup-dotnet@v3
-              with:
-                  dotnet-version: ${{ matrix.dotnet-version }}
-            - name: Display dotnet version
-              run: dotnet --version
-            - name: Build webui
-              run: dotnet build src/webui/WebUI.csproj
+      runs-on: ubuntu-latest
+      strategy:
+          matrix:
+              dotnet-version: [ '8.0.x' ]
+      steps:
+          - uses: actions/checkout@v4
+          - name: Setup dotnet ${{ matrix.dotnet-version }}
+            uses: actions/setup-dotnet@v3
+            with:
+                dotnet-version: ${{ matrix.dotnet-version }}
+          - name: Display dotnet version
+            run: dotnet --version
+          - name: Build webui
+            run: dotnet build src/webui/WebUI.csproj
+    docker:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Login to Docker hub
+          uses: docker/login-action@v3
+          with:
+            username: ${{ secrets.DOCKERUB_USERNAME }}
+            password: ${{ secrets.DOCKERUB_TOKEN }}
+        - name: Build and push
+          users: docker/build-push-action@v5
+          with:
+            push: true
+            tags: andrekirst/family-webui:latest
