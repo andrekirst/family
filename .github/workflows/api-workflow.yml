@@ -28,7 +28,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: .
           file: src/Api/Dockerfile
           push: true
-          tags: andrekirst/family-api:latest
+          tags: ${{ secrets.DOCKERUB_USERNAME }}/family-api:latest
