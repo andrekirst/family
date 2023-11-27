@@ -26,7 +26,7 @@ jobs:
             username: ${{ secrets.DOCKERUB_USERNAME }}
             password: ${{ secrets.DOCKERUB_TOKEN }}
         - name: Build and push
-          users: docker/build-push-action@v5
+          uses: docker/build-push-action@v5
           with:
             push: true
             tags: andrekirst/family-webui:latest
