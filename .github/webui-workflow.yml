@@ -1,5 +1,5 @@
 name: api
-run-name: ${{ github.actor }}
+run-name: webui by ${{ github.actor }}
 on: [push]
 jobs:
     build:
@@ -15,5 +15,5 @@ jobs:
                   dotnet-version: ${{ matrix.dotnet-version }}
             - name: Display dotnet version
               run: dotnet --version
-            - name: Build Api
+            - name: Build webui
               run: dotnet build src/webui/WebUI.csproj
