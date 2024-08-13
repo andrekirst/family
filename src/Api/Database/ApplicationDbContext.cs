@@ -36,8 +36,9 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(Program).Assembly);
     }
 
-    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
+        // TODO Als Interceptor umbauen
         ChangeTracker.DetectChanges();
 
         foreach (var added in ChangeTracker.Entries()

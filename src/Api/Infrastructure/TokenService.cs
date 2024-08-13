@@ -14,25 +14,17 @@ public interface ITokenService
     string CreateToken(IdentityUser user, int familyMemberId);
 }
 
-public class TokenService : ITokenService
+public class TokenService(
+    ISystemClock systemClock,
+    IOptions<JwtOptions> jwtOptions,
+    ILogger<TokenService> logger)
+    : ITokenService
 {
-    private readonly ISystemClock _systemClock;
-    private readonly ILogger<TokenService> _logger;
-    private readonly JwtOptions _jwtOptions;
-
-    public TokenService(
-        ISystemClock systemClock,
-        IOptions<JwtOptions> jwtOptions,
-        ILogger<TokenService> logger)
-    {
-        _systemClock = systemClock;
-        _logger = logger;
-        _jwtOptions = jwtOptions.Value;
-    }
+    private readonly JwtOptions _jwtOptions = jwtOptions.Value;
 
     public string CreateToken(IdentityUser user, int familyMemberId)
     {
-        var expiration = _systemClock.UtcNow.AddMinutes(_jwtOptions.ExpirationMinutes).DateTime;
+        var expiration = systemClock.UtcNow.AddMinutes(_jwtOptions.ExpirationMinutes).DateTime;
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
@@ -57,7 +49,7 @@ public class TokenService : ITokenService
             {
                 new Claim(JwtRegisteredClaimNames.Sub, _jwtOptions.Sub),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, _systemClock.UtcNow.ToString(CultureInfo.InvariantCulture)),
+                new Claim(JwtRegisteredClaimNames.Iat, systemClock.UtcNow.ToString(CultureInfo.InvariantCulture)),
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),
@@ -66,7 +58,7 @@ public class TokenService : ITokenService
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             throw;
         }
     }

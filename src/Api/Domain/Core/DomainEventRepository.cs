@@ -5,19 +5,10 @@ using Api.Infrastructure;
 
 namespace Api.Domain.Core;
 
-public class DomainEventRepository
+public class DomainEventRepository(
+    ApplicationDbContext dbContext,
+    IUnitOfWork unitOfWork)
 {
-    private readonly ApplicationDbContext _dbContext;
-    private readonly IUnitOfWork _unitOfWork;
-
-    public DomainEventRepository(
-        ApplicationDbContext dbContext,
-        IUnitOfWork unitOfWork)
-    {
-        _dbContext = dbContext;
-        _unitOfWork = unitOfWork;
-    }
-
     public async Task AddAsync<TDomainEvent>(TDomainEvent domainEvent, CancellationToken cancellationToken = default)
         where TDomainEvent : IDomainEvent
     {
@@ -33,7 +24,7 @@ public class DomainEventRepository
             EventData = json
         };
 
-        _dbContext.DomainEventEntries.Add(entry);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        dbContext.DomainEventEntries.Add(entry);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

@@ -15,58 +15,54 @@ public class CreateFamilyMemberCommandValidator : AbstractValidator<CreateFamily
 {
     public CreateFamilyMemberCommandValidator(IStringLocalizer<FamilyMemberController> stringLocalizer)
     {
-        RuleFor(_ => FirstName.FromRaw(_.Model.FirstName))
+        RuleFor(command => FirstName.FromRaw(command.Model.FirstName))
             .SetValidator(new FirstNameValidator(stringLocalizer))
             .OverridePropertyName(nameof(CreateFamilyMemberCommandModel.FirstName));
 
-        RuleFor(_ => LastName.FromRaw(_.Model.LastName))
+        RuleFor(command => LastName.FromRaw(command.Model.LastName))
             .SetValidator(new LastNameValidator(stringLocalizer))
             .OverridePropertyName(nameof(CreateFamilyMemberCommandModel.LastName));
 
-        RuleFor(_ => Birthdate.FromRaw(_.Model.Birthdate))
+        RuleFor(command => Birthdate.FromRaw(command.Model.Birthdate))
             .SetValidator(new BirthdateValidator(stringLocalizer))
             .OverridePropertyName(nameof(CreateFamilyMemberCommandModel.Birthdate));
     }
 }
 
-public class CreateFamilyMemberCommandHandler : ICommandHandler<CreateFamilyMemberCommand>
+public class CreateFamilyMemberCommandHandler(
+    ApplicationDbContext dbContext,
+    IUnitOfWork unitOfWork,
+    IMediator mediator)
+    : ICommandHandler<CreateFamilyMemberCommand>
 {
-    private readonly ApplicationDbContext _dbContext;
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMediator _mediator;
-
-    public CreateFamilyMemberCommandHandler(
-        ApplicationDbContext dbContext,
-        IUnitOfWork unitOfWork,
-        IMediator mediator)
-    {
-        _dbContext = dbContext;
-        _unitOfWork = unitOfWork;
-        _mediator = mediator;
-    }
-
     public async Task Handle(CreateFamilyMemberCommand request, CancellationToken cancellationToken)
     {
-        var familyMember = CreateFamilyMemberCommandMappings.MapTo(request.Model);
-        _dbContext.FamilyMembers.Add(familyMember);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        var familyMember = CreateFamilyMemberCommandMappings.MapFromSource(request.Model);
+        dbContext.FamilyMembers.Add(familyMember);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
         
-        var domainEvent = CreateFamilyMemberCommandMappings.MapTo(familyMember);
-        await _mediator.Publish(domainEvent, cancellationToken);
+        var domainEvent = CreateFamilyMemberCommandMappings.MapFromSource(familyMember);
+        await mediator.Publish(domainEvent, cancellationToken);
     }
 }
 
-public class CreateFamilyMemberCommandMappings
-    : IMap<FamilyMember, CreateFamilyMemberCommandModel>,
-        IMap<FamilyMemberCreatedDomainEvent, FamilyMember>
+public class CreateFamilyMemberCommandMappings : IMap<FamilyMember, CreateFamilyMemberCommandModel>, IMap<FamilyMemberCreatedDomainEvent, FamilyMember>
 {
-    public static FamilyMember MapTo(CreateFamilyMemberCommandModel source)
-    {
-        throw new NotImplementedException();
-    }
+    public static FamilyMember MapFromSource(CreateFamilyMemberCommandModel source) =>
+        new()
+        {
+            Birthdate = source.Birthdate,
+            FirstName = source.FirstName,
+            LastName = source.LastName,
+            AspNetUserId = source.AspNetUserId
+        };
 
-    public static FamilyMemberCreatedDomainEvent MapTo(FamilyMember source)
+    public static FamilyMemberCreatedDomainEvent MapFromSource(FamilyMember source)
     {
-        throw new NotImplementedException();
+        ArgumentNullException.ThrowIfNull(source.FirstName);
+        ArgumentNullException.ThrowIfNull(source.LastName);
+        ArgumentNullException.ThrowIfNull(source.Birthdate);
+        
+        return new FamilyMemberCreatedDomainEvent(source.Id, source.FirstName, source.LastName, source.Birthdate.Value, source.AspNetUserId);
     }
 }

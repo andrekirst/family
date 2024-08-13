@@ -14,11 +14,11 @@ public class CreateWeightTrackingEntryCommandValidator : AbstractValidator<Creat
 {
     public CreateWeightTrackingEntryCommandValidator(ApplicationDbContext dbContext)
     {
-        RuleFor(_ => Weight.FromRaw(_.Model.Weight))
+        RuleFor(command => Weight.FromRaw(command.Model.Weight))
             .SetValidator(new WeightValidator())
             .OverridePropertyName(nameof(CreateWeightTrackingEntryCommand.Model.Weight));
 
-        RuleFor(_ => _.FamilyMemberId)
+        RuleFor(command => command.FamilyMemberId)
             .MustAsync(dbContext.FamilyMembers.Exists);
     }
 }
@@ -32,19 +32,24 @@ public class CreateWeightTrackingEntryCommandHandler(
 {
     public async Task Handle(CreateWeightTrackingEntryCommand request, CancellationToken cancellationToken)
     {
-        var createdByFamilyMemberId = currentFamilyMemberIdService.GetFamilyMemberId();
-        var weightTrackingEntry = WeightTrackingEntryMappings.MapTo(request.Model);
+        var familyMemberId = currentFamilyMemberIdService.GetFamilyMemberId();
+        var weightTrackingEntry = WeightTrackingEntryMappings.MapFromSource(request.Model);
 
         dbContext.WeightTrackingEntries.Add(weightTrackingEntry);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         
-        var domainEvent = new WeightTrackingEntryCreatedDomainEvent(
+        var domainEvent = CreateDomainEvent(request, weightTrackingEntry, familyMemberId);
+        await mediator.Publish(domainEvent, cancellationToken);
+    }
+
+    private static WeightTrackingEntryCreatedDomainEvent CreateDomainEvent(CreateWeightTrackingEntryCommand request, WeightTrackingEntry weightTrackingEntry, int familyMemberId)
+    {
+        return new WeightTrackingEntryCreatedDomainEvent(
             weightTrackingEntry.Id,
             weightTrackingEntry.MeasuredAt,
             weightTrackingEntry.WeightUnit,
             weightTrackingEntry.Weight,
-            createdByFamilyMemberId,
+            familyMemberId,
             request.FamilyMemberId);
-        await mediator.Publish(domainEvent, cancellationToken);
     }
 }

@@ -11,7 +11,7 @@ public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<Applicati
         var configuration = new ConfigurationBuilder()
             .AddUserSecrets<Program>()
             .Build();
-        optionsBuilder.UseSqlServer(configuration.GetConnectionString("Default"));
+        optionsBuilder.UseNpgsql(configuration.GetConnectionString("Default"));
         return new ApplicationDbContext(optionsBuilder.Options);
     }
 }

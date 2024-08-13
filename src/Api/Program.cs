@@ -5,6 +5,7 @@ using Api.Database.Body;
 using Api.Database.Core;
 using Api.Domain;
 using Api.Domain.Core;
+using Api.Features.Core;
 using Api.Infrastructure;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -54,6 +55,8 @@ public class Program
                 var validAudience = jwtOptions[nameof(JwtOptions.Audience)];
                 var issuerSigningKey = jwtOptions[nameof(JwtOptions.IssuerSigningKey)];
 
+                ArgumentException.ThrowIfNullOrEmpty(issuerSigningKey);
+                
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ClockSkew = TokenValidationParameters.DefaultClockSkew,
@@ -103,13 +106,16 @@ public class Program
 
         builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
         builder.Services.AddLocalization();
-        builder.Services.AddDbContextFactory<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
+        var defaultConnectionString = builder.Configuration.GetConnectionString("Default");
+        
+        builder.Services.AddDbContextFactory<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
         builder.Services.AddDbContext<ApplicationDbContext>(optionsBuilder =>
         {
             var isNotProduction = !builder.Environment.IsProduction();
-
+            
             optionsBuilder
-                .UseSqlServer(builder.Configuration.GetConnectionString("Default"))
+                .UseNpgsql(builder.Configuration.GetConnectionString("Default"))
                 .EnableDetailedErrors(isNotProduction)
                 .EnableSensitiveDataLogging(isNotProduction)
                 .EnableServiceProviderCaching();
@@ -118,9 +124,9 @@ public class Program
         builder.Services.AddDbContext<UsersContext>(optionsBuilder =>
         {
             var isNotProduction = !builder.Environment.IsProduction();
-
+            
             optionsBuilder
-                .UseSqlServer(builder.Configuration.GetConnectionString("Default"))
+                .UseNpgsql(builder.Configuration.GetConnectionString("Default"))
                 .EnableDetailedErrors(isNotProduction)
                 .EnableSensitiveDataLogging(isNotProduction)
                 .EnableServiceProviderCaching();
@@ -143,18 +149,12 @@ public class Program
         builder.Services.AddScoped<DomainEventRepository>();
         builder.Services.AddScoped<CurrentFamilyMemberIdService>();
         builder.Services.AddHttpContextAccessor();
+        builder.Services.AddAutoMapper(configure =>
+        {
+            configure.AddMaps(typeof(GetFamilyMembersQueryMappings));
+        });
 
         builder.Services.AddUnitOfWork();
-        builder.Services
-            .AddGraphQLServer()
-            .RegisterDbContext<ApplicationDbContext>()
-            .AddQueryType(_ => _.Name("QueryType"))
-            .AddType<WeightTrackingQueryType>()
-            .AddType<FamilyMemberQueryType>()
-            .AddProjections()
-            .AddFiltering()
-            .AddSorting()
-            .AddAuthorizationCore();
         builder.Services.AddTransient<ExceptionHandlingMiddleware>();
         builder.Services.AddCors(options =>
         {
@@ -193,11 +193,6 @@ public class Program
         app.UseMiddleware<ExceptionHandlingMiddleware>();
 
         app.MapControllers();
-
-        app
-            .MapGraphQL()
-            .RequireAuthorization();
-        app.MapBananaCakePop();
 
         await MigrateDbContext(app);
 

@@ -2,5 +2,5 @@
 
 public interface IMap<out TTarget, in TSource>
 {
-    static abstract TTarget MapTo(TSource source);
+    static abstract TTarget MapFromSource(TSource source);
 }
