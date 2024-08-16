@@ -13,28 +13,14 @@ namespace Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthController : ControllerBase
+public class AuthController(
+    UserManager<IdentityUser> userManager,
+    ApplicationDbContext applicationDbContext,
+    UsersContext usersContext,
+    ITokenService tokenService,
+    IMediator mediator)
+    : ControllerBase
 {
-    private readonly UserManager<IdentityUser> _userManager;
-    private readonly ApplicationDbContext _applicationDbContext;
-    private readonly UsersContext _usersContext;
-    private readonly ITokenService _tokenService;
-    private readonly IMediator _mediator;
-
-    public AuthController(
-        UserManager<IdentityUser> userManager,
-        ApplicationDbContext applicationDbContext,
-        UsersContext usersContext,
-        ITokenService tokenService,
-        IMediator mediator)
-    {
-        _userManager = userManager;
-        _applicationDbContext = applicationDbContext;
-        _usersContext = usersContext;
-        _tokenService = tokenService;
-        _mediator = mediator;
-    }
-
     [HttpPost]
     [Route("register")]
     [AllowAnonymous]
@@ -50,16 +36,16 @@ public class AuthController : ControllerBase
             UserName = request.Username,
             Email = request.Email
         };
-        var result = await _userManager.CreateAsync(identityUser, request.Password);
+        var result = await userManager.CreateAsync(identityUser, request.Password);
 
         if (result.Succeeded)
         {
-            var userId = await _usersContext.Users.AsNoTracking()
+            var userId = await usersContext.Users.AsNoTracking()
                 .Where(user => user.UserName == request.Username)
                 .Select(user => user.Id)
                 .SingleAsync(cancellationToken);
 
-            await _mediator.Send(new CreateFamilyMemberCommand(new CreateFamilyMemberCommandModel(
+            await mediator.Send(new CreateFamilyMemberCommand(new CreateFamilyMemberCommandModel(
                 request.FirstName,
                 request.LastName,
                 request.Birthdate,
@@ -87,42 +73,42 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var managedUser = await _userManager.FindByEmailAsync(request.Login) ??
-                          await _userManager.FindByNameAsync(request.Login);
+        var managedUser = await userManager.FindByEmailAsync(request.Login) ??
+                          await userManager.FindByNameAsync(request.Login);
 
         if (managedUser == null)
         {
             return BadRequest("Bad credentials");
         }
 
-        var isPasswordValid = await _userManager.CheckPasswordAsync(managedUser, request.Password);
+        var isPasswordValid = await userManager.CheckPasswordAsync(managedUser, request.Password);
         if (!isPasswordValid)
         {
-            await _userManager.AccessFailedAsync(managedUser);
+            await userManager.AccessFailedAsync(managedUser);
             return BadRequest("Bad credentials");
         }
 
-        var userInDb = await _usersContext.Users.AnyAsync(user => user.NormalizedEmail == managedUser.NormalizedEmail, cancellationToken);
+        var userInDb = await usersContext.Users.AnyAsync(user => user.NormalizedEmail == managedUser.NormalizedEmail, cancellationToken);
         if (!userInDb)
         {
             return Unauthorized();
         }
 
-        var userId = await _usersContext.Users.AsNoTracking()
+        var userId = await usersContext.Users.AsNoTracking()
             .Where(user => user.NormalizedEmail == managedUser.NormalizedEmail)
             .Select(user => user.Id)
             .SingleAsync(cancellationToken);
 
-        var familyMemberId = await _applicationDbContext.FamilyMembers.AsNoTracking()
+        var familyMemberId = await applicationDbContext.FamilyMembers.AsNoTracking()
             .Where(fm => fm.AspNetUserId == userId)
             .Select(fm => fm.Id)
             .SingleOrDefaultAsync(cancellationToken);
 
-        await _userManager.AddClaimAsync(managedUser, new Claim(ApplicationClaimNames.CurrentFamilyMemberId, familyMemberId.ToString(), nameof(Int32)));
+        await userManager.AddClaimAsync(managedUser, new Claim(ApplicationClaimNames.CurrentFamilyMemberId, familyMemberId.ToString(), nameof(Guid)));
 
-        await _userManager.ResetAccessFailedCountAsync(managedUser);
-        var accessToken = _tokenService.CreateToken(managedUser, familyMemberId);
-        await _usersContext.SaveChangesAsync(cancellationToken);
+        await userManager.ResetAccessFailedCountAsync(managedUser);
+        var accessToken = tokenService.CreateToken(managedUser, familyMemberId);
+        await usersContext.SaveChangesAsync(cancellationToken);
 
         return Ok(new AuthenticationResponse
         {

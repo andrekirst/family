@@ -7,11 +7,11 @@ public interface ISearchDataQueryOptionsService
 
 public class SearchDataQueryOptionsService : ISearchDataQueryOptionsService
 {
-    public async Task<SearchQueryOptions> GetOptions(CancellationToken cancellationToken = default)
+    public Task<SearchQueryOptions> GetOptions(CancellationToken cancellationToken = default)
     {
-        return new SearchQueryOptions
+        return Task.FromResult(new SearchQueryOptions
         {
             SearchType = SearchType.Quick
-        };
+        });
     }
 }
