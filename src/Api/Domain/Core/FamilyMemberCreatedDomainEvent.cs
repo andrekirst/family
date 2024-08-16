@@ -3,7 +3,7 @@
 namespace Api.Domain.Core;
 
 public record FamilyMemberCreatedDomainEvent(
-    int Id,
+    Guid Id,
     string FirstName,
     string LastName,
     DateTime Birthdate,

@@ -3,7 +3,7 @@
 namespace Api.Domain.Body.WeightTracking;
 
 public record WeightTrackingEntryUpdatedDomainEvent(
-    int Id,
+    Guid Id,
     DateTime MeasuredAt,
     double Weight,
     WeightUnit WeightUnit) : IDomainEvent

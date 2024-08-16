@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Api.Domain.Body.WeightTracking;
 
-public record CreateWeightTrackingEntryCommand(int FamilyMemberId, CreateWeightTrackingEntryCommandModel Model) : ICommand;
+public record CreateWeightTrackingEntryCommand(Guid FamilyMemberId, CreateWeightTrackingEntryCommandModel Model) : ICommand;
 
 public record CreateWeightTrackingEntryCommandModel(DateTime MeasuredAt, WeightUnit WeightUnit, double Weight);
 
@@ -42,7 +42,7 @@ public class CreateWeightTrackingEntryCommandHandler(
         await mediator.Publish(domainEvent, cancellationToken);
     }
 
-    private static WeightTrackingEntryCreatedDomainEvent CreateDomainEvent(CreateWeightTrackingEntryCommand request, WeightTrackingEntry weightTrackingEntry, int familyMemberId)
+    private static WeightTrackingEntryCreatedDomainEvent CreateDomainEvent(CreateWeightTrackingEntryCommand request, WeightTrackingEntry weightTrackingEntry, Guid familyMemberId)
     {
         return new WeightTrackingEntryCreatedDomainEvent(
             weightTrackingEntry.Id,

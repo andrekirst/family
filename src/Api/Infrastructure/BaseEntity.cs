@@ -2,7 +2,7 @@
 
 public abstract class BaseEntity : IEntityId, IEntityMetadata, IEntityConcurrency, IEntityRowVersion
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string? CreatedBy { get; set; }
     public DateTimeOffset? CreatedAt { get; set; }
     public string? ChangedBy { get; set; }

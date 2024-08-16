@@ -2,22 +2,15 @@
 
 namespace Api.Domain.Core;
 
-public class CurrentFamilyMemberIdService
+public class CurrentFamilyMemberIdService(IHttpContextAccessor httpContextAccessor)
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-
-    public CurrentFamilyMemberIdService(IHttpContextAccessor httpContextAccessor)
+    public Guid GetFamilyMemberId()
     {
-        _httpContextAccessor = httpContextAccessor;
-    }
-
-    public int GetFamilyMemberId()
-    {
-        var claimValue = _httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(a => a.Type == ApplicationClaimNames.CurrentFamilyMemberId)?.Value;
-
+        var claimValue = httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(a => a.Type == ApplicationClaimNames.CurrentFamilyMemberId)?.Value;
+        
         return claimValue == null
             ? throw new CurrentFamilyMemberIdClaimNotFoundException()
-            : int.TryParse(claimValue, out var id)
+            : Guid.TryParse(claimValue, out var id)
                 ? id
                 : throw new CurrentFamilyMemberIdClaimInvalidExcpeption(claimValue);
     }

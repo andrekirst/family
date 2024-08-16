@@ -6,40 +6,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Domain.Body.WeightTracking;
 
-public record DeleteWeightTrackingEntryCommand(int Id, int FamilyMemberId) : ICommand;
+public record DeleteWeightTrackingEntryCommand(Guid Id, Guid FamilyMemberId) : ICommand;
 
 public class DeleteWeightTrackingEntryCommandValidator : AbstractValidator<DeleteWeightTrackingEntryCommand>
 {
     public DeleteWeightTrackingEntryCommandValidator(
         ApplicationDbContext dbContext)
     {
-        RuleFor(_ => _.FamilyMemberId)
+        RuleFor(command => command.FamilyMemberId)
             .MustAsync(dbContext.FamilyMembers.Exists);
 
-        RuleFor(_ => _.Id)
+        RuleFor(command => command.Id)
             .MustAsync(dbContext.WeightTrackingEntries.Exists);
 
-        RuleFor(_ => _)
+        RuleFor(command => command)
             .MustAsync((command, token) => dbContext.WeightTrackingEntries.AnyAsync(wte => wte.Id == command.Id, token));
     }
 }
 
-public class DeleteWeightTrackingEntryCommandHandler : ICommandHandler<DeleteWeightTrackingEntryCommand>
+public class DeleteWeightTrackingEntryCommandHandler(
+    ApplicationDbContext dbContext,
+    IMediator mediator) : ICommandHandler<DeleteWeightTrackingEntryCommand>
 {
-    private readonly ApplicationDbContext _dbContext;
-    private readonly IMediator _mediator;
-
-    public DeleteWeightTrackingEntryCommandHandler(
-        ApplicationDbContext dbContext,
-        IMediator mediator)
-    {
-        _dbContext = dbContext;
-        _mediator = mediator;
-    }
-
     public async Task Handle(DeleteWeightTrackingEntryCommand request, CancellationToken cancellationToken)
     {
-        var entryForDomainEvent = await _dbContext.WeightTrackingEntries.AsNoTracking()
+        var entryForDomainEvent = await dbContext.WeightTrackingEntries.AsNoTracking()
             .Where(wte => wte.Id == request.Id)
             .Select(wte => new
             {
@@ -50,7 +41,7 @@ public class DeleteWeightTrackingEntryCommandHandler : ICommandHandler<DeleteWei
             })
             .SingleAsync(cancellationToken);
 
-        var deletedRows = await _dbContext.WeightTrackingEntries
+        var deletedRows = await dbContext.WeightTrackingEntries
             .Where(wte => wte.Id == request.Id)
             .ExecuteDeleteAsync(cancellationToken);
 
@@ -59,6 +50,6 @@ public class DeleteWeightTrackingEntryCommandHandler : ICommandHandler<DeleteWei
             throw new IncorrectNumberOfWeightTrackingEntriesDeletedException(deletedRows, request.Id, request.FamilyMemberId);
         }
 
-        await _mediator.Publish(new WeightTrackingEntryDeletedDomainEvent(entryForDomainEvent.Id, entryForDomainEvent.MeasuredAt, entryForDomainEvent.Weight, entryForDomainEvent.WeightUnit), cancellationToken);
+        await mediator.Publish(new WeightTrackingEntryDeletedDomainEvent(entryForDomainEvent.Id, entryForDomainEvent.MeasuredAt, entryForDomainEvent.Weight, entryForDomainEvent.WeightUnit), cancellationToken);
     }
 }

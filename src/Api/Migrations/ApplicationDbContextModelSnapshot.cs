@@ -24,11 +24,9 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Domain.Body.WeightTracking.WeightTrackingEntry", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset?>("ChangedAt")
                         .HasColumnType("timestamp with time zone");
@@ -50,11 +48,11 @@ namespace Api.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.Property<int>("FamilyMemberId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("FamilyMemberId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("MeasuredAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("RowVersion")
                         .IsConcurrencyToken()
@@ -81,11 +79,9 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Domain.Core.DomainEventEntry", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset?>("ChangedAt")
                         .HasColumnType("timestamp with time zone");
@@ -107,11 +103,11 @@ namespace Api.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.Property<int?>("CreatedByFamilyMemberId")
-                        .HasColumnType("integer");
+                    b.Property<Guid?>("CreatedByFamilyMemberId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int?>("CreatedForFamilyMemberId")
-                        .HasColumnType("integer");
+                    b.Property<Guid?>("CreatedForFamilyMemberId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("EventData")
                         .IsRequired()
@@ -144,18 +140,16 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Domain.Core.FamilyMember", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("AspNetUserId")
                         .HasMaxLength(450)
                         .HasColumnType("character varying(450)");
 
                     b.Property<DateTime?>("Birthdate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTimeOffset?>("ChangedAt")
                         .HasColumnType("timestamp with time zone");
@@ -199,11 +193,9 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Domain.Core.Label", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset?>("ChangedAt")
                         .HasColumnType("timestamp with time zone");
@@ -244,11 +236,11 @@ namespace Api.Migrations
 
             modelBuilder.Entity("FamilyMemberLabel", b =>
                 {
-                    b.Property<int>("FamilyMembersId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("FamilyMembersId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("LabelsId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("LabelsId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("FamilyMembersId", "LabelsId");
 
@@ -289,8 +281,8 @@ namespace Api.Migrations
                 {
                     b.OwnsOne("Api.Domain.Core.Color", "Color", b1 =>
                         {
-                            b1.Property<int>("LabelId")
-                                .HasColumnType("integer");
+                            b1.Property<Guid>("LabelId")
+                                .HasColumnType("uuid");
 
                             b1.Property<string>("Value")
                                 .IsRequired()

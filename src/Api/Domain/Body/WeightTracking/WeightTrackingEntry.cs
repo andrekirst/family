@@ -8,7 +8,7 @@ public class WeightTrackingEntry : BaseEntity
     public DateTime MeasuredAt { get; set; }
     public WeightUnit WeightUnit { get; set; } = WeightUnit.Kilogram;
     public double Weight { get; set; }
-    public int FamilyMemberId { get; set; }
+    public Guid FamilyMemberId { get; set; }
     public FamilyMember FamilyMember { get; set; } = default!;
 }
 

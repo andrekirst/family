@@ -1,15 +1,8 @@
 ﻿namespace Api.Domain.Body.WeightTracking;
 
-public class IncorrectNumberOfWeightTrackingEntriesDeletedException : Exception
+public class IncorrectNumberOfWeightTrackingEntriesDeletedException(int deletedRows, Guid id, Guid familyMemberId) : Exception
 {
-    public int DeletedRows { get; }
-    public int Id { get; }
-    public int FamilyMemberId { get; }
-
-    public IncorrectNumberOfWeightTrackingEntriesDeletedException(int deletedRows, int id, int familyMemberId)
-    {
-        DeletedRows = deletedRows;
-        Id = id;
-        FamilyMemberId = familyMemberId;
-    }
+    public int DeletedRows { get; } = deletedRows;
+    public Guid Id { get; } = id;
+    public Guid FamilyMemberId { get; } = familyMemberId;
 }

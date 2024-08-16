@@ -32,8 +32,8 @@ public class FamilyMemberController : ApiControllerBase
         return Ok();
     }
 
-    [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(int id, [FromBody] UpdateFamilyMemberCommandModel model, CancellationToken cancellationToken = default)
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateFamilyMemberCommandModel model, CancellationToken cancellationToken = default)
     {
         await ExecuteCommand(new UpdateFamilyMemberCommand(id, model), cancellationToken);
         return Ok();

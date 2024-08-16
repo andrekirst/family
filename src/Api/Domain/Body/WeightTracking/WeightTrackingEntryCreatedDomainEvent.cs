@@ -3,12 +3,12 @@
 namespace Api.Domain.Body.WeightTracking;
 
 public record WeightTrackingEntryCreatedDomainEvent(
-    int Id,
+    Guid Id,
     DateTime MeasuredAt,
     WeightUnit WeightUnit,
     double Weight,
-    int CreatedByFamilyMemberId,
-    int CreatedForFamilyMemberId) : IDomainEvent, IDomainEventHasFamilyMemberInformation
+    Guid CreatedByFamilyMemberId,
+    Guid CreatedForFamilyMemberId) : IDomainEvent, IDomainEventHasFamilyMemberInformation
 {
     public string DomainEventName => "WeightTrackingEntryCreatedDomainEvent";
     public int DomainEventVersion => 1;

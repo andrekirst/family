@@ -4,20 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Domain.Search;
 
-public class SearchFamilyMemberDataService : ISearchDataService
+public class SearchFamilyMemberDataService(ApplicationDbContext dbContext) : ISearchDataService
 {
-    private readonly ApplicationDbContext _dbContext;
-
-    public SearchFamilyMemberDataService(ApplicationDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public async IAsyncEnumerable<SearchDataResult> Search(string value, SearchQueryOptions options, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         var countItemsReturning = options.CountItemsReturning;
         var itemsReturned = 0;
-        var idsAlreadyReturned = new List<int>();
+        var idsAlreadyReturned = new List<Guid>();
         var items = Rank1Query(value, countItemsReturning);
 
         await foreach (var item in items.WithCancellation(cancellationToken))
@@ -42,9 +35,9 @@ public class SearchFamilyMemberDataService : ISearchDataService
         }
     }
 
-    private IAsyncEnumerable<SearchDataResult> Rank2Query(string value, List<int> idsAlreadyReturned, int countItemsReturning, int itemsReturned)
+    private IAsyncEnumerable<SearchDataResult> Rank2Query(string value, List<Guid> idsAlreadyReturned, int countItemsReturning, int itemsReturned)
     {
-        return _dbContext.FamilyMembers
+        return dbContext.FamilyMembers
             .Where(fm => fm.FirstName != null && fm.FirstName.Contains(value) ||
                          fm.LastName != null && fm.LastName.Contains(value))
             .Where(fm => !idsAlreadyReturned.Contains(fm.Id))
@@ -62,7 +55,7 @@ public class SearchFamilyMemberDataService : ISearchDataService
 
     private IAsyncEnumerable<SearchDataResult> Rank1Query(string value, int countItemsReturning)
     {
-        return _dbContext.FamilyMembers
+        return dbContext.FamilyMembers
             .Where(fm => fm.FirstName != null && fm.FirstName.StartsWith(value) ||
                          fm.LastName != null && fm.LastName.StartsWith(value))
             .OrderBy(fm => fm.FirstName)
@@ -77,5 +70,5 @@ public class SearchFamilyMemberDataService : ISearchDataService
             .AsAsyncEnumerable();
     }
 
-    public string[] Shortcuts => new[] { "fm", "fam" };
+    public string[] Shortcuts => ["fm", "fam"];
 }

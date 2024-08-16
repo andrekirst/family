@@ -11,7 +11,7 @@ namespace Api.Infrastructure;
 
 public interface ITokenService
 {
-    string CreateToken(IdentityUser user, int familyMemberId);
+    string CreateToken(IdentityUser user, Guid familyMemberId);
 }
 
 public class TokenService(
@@ -22,7 +22,7 @@ public class TokenService(
 {
     private readonly JwtOptions _jwtOptions = jwtOptions.Value;
 
-    public string CreateToken(IdentityUser user, int familyMemberId)
+    public string CreateToken(IdentityUser user, Guid familyMemberId)
     {
         var expiration = systemClock.UtcNow.AddMinutes(_jwtOptions.ExpirationMinutes).DateTime;
 
@@ -41,7 +41,7 @@ public class TokenService(
         return jwtToken;
     }
 
-    private IEnumerable<Claim> CreateClaims(IdentityUser user, int familyMemberId)
+    private IEnumerable<Claim> CreateClaims(IdentityUser user, Guid familyMemberId)
     {
         try
         {
@@ -53,7 +53,7 @@ public class TokenService(
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ApplicationClaimNames.CurrentFamilyMemberId, familyMemberId.ToString(), nameof(Int32))
+                new Claim(ApplicationClaimNames.CurrentFamilyMemberId, familyMemberId.ToString(), nameof(Guid))
             };
         }
         catch (Exception e)

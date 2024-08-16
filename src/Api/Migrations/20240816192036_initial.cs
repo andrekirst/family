@@ -1,13 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace Api.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,11 +22,10 @@ namespace Api.Migrations
                 schema: "core",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     FirstName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     LastName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    Birthdate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Birthdate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     AspNetUserId = table.Column<string>(type: "character varying(450)", maxLength: 450, nullable: true),
                     CreatedBy = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
@@ -46,8 +44,7 @@ namespace Api.Migrations
                 schema: "core",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Color = table.Column<string>(type: "character varying(256)", unicode: false, maxLength: 256, nullable: false),
                     Name = table.Column<string>(type: "character varying(265)", maxLength: 265, nullable: false),
                     CreatedBy = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -67,13 +64,12 @@ namespace Api.Migrations
                 schema: "core",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     EventType = table.Column<string>(type: "character varying(256)", unicode: false, maxLength: 256, nullable: false),
                     EventVersion = table.Column<int>(type: "integer", nullable: false),
                     EventData = table.Column<string>(type: "text", nullable: false),
-                    CreatedByFamilyMemberId = table.Column<int>(type: "integer", nullable: true),
-                    CreatedForFamilyMemberId = table.Column<int>(type: "integer", nullable: true),
+                    CreatedByFamilyMemberId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreatedForFamilyMemberId = table.Column<Guid>(type: "uuid", nullable: true),
                     CreatedBy = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     ChangedBy = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -103,12 +99,11 @@ namespace Api.Migrations
                 schema: "weighttracking",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    MeasuredAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    MeasuredAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     WeightUnit = table.Column<string>(type: "character varying(256)", unicode: false, maxLength: 256, nullable: false),
                     Weight = table.Column<double>(type: "double precision", nullable: false),
-                    FamilyMemberId = table.Column<int>(type: "integer", nullable: false),
+                    FamilyMemberId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedBy = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     ChangedBy = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -133,8 +128,8 @@ namespace Api.Migrations
                 schema: "core",
                 columns: table => new
                 {
-                    FamilyMembersId = table.Column<int>(type: "integer", nullable: false),
-                    LabelsId = table.Column<int>(type: "integer", nullable: false)
+                    FamilyMembersId = table.Column<Guid>(type: "uuid", nullable: false),
+                    LabelsId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
