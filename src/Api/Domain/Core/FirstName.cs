@@ -13,12 +13,9 @@ public record FirstName : IValueObjectFrom<FirstName, string>
 
     private FirstName(string? value, bool executeValidation)
     {
-        if (executeValidation)
+        if (executeValidation && string.IsNullOrWhiteSpace(value))
         {
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                throw new FirstNameRequiredException(value);
-            }
+            throw new FirstNameRequiredException(value);
         }
 
         Value = value!;

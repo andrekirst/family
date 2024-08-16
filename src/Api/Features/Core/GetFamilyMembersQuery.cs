@@ -17,22 +17,13 @@ public class GetFamilyMembersQueryDto
     public DateTime? BirthDate { get; set; }
 }
 
-public class GetFamilyMembersQueryHandler : IQueryHandler<GetFamilyMembersQuery, List<GetFamilyMembersQueryDto>>
+public class GetFamilyMembersQueryHandler(
+    ApplicationDbContext dbContext,
+    IMapper mapper) : IQueryHandler<GetFamilyMembersQuery, List<GetFamilyMembersQueryDto>>
 {
-    private readonly ApplicationDbContext _dbContext;
-    private readonly IMapper _mapper;
-
-    public GetFamilyMembersQueryHandler(
-        ApplicationDbContext dbContext,
-        IMapper mapper)
-    {
-        _dbContext = dbContext;
-        _mapper = mapper;
-    }
-
     public Task<List<GetFamilyMembersQueryDto>> Handle(GetFamilyMembersQuery request, CancellationToken cancellationToken) =>
-        _dbContext.FamilyMembers
-            .ProjectTo<GetFamilyMembersQueryDto>(_mapper.ConfigurationProvider)
+        dbContext.FamilyMembers
+            .ProjectTo<GetFamilyMembersQueryDto>(mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 }
 

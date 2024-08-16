@@ -6,27 +6,14 @@ public record Birthdate : IValueObjectFrom<Birthdate, DateTime>
 {
     public DateTime Value { get; init; }
 
-    public Birthdate(DateTime? value)
-        : this(value, true)
+    public Birthdate(DateTime? value, bool executeValidation = true)
     {
-    }
-
-    public Birthdate(DateTime? value, bool executeValidation)
-    {
-        if (executeValidation)
+        Value = executeValidation switch
         {
-            if (value == null)
-            {
-                throw new BirthdateRequiredException();
-            }
-
-            if (value == DateTime.MinValue)
-            {
-                throw new BirthdateTooEarlyException(value);
-            }
-        }
-
-        Value = value!.Value;
+            true when value == null => throw new BirthdateRequiredException(),
+            true when value == DateTime.MinValue => throw new BirthdateTooEarlyException(value),
+            _ => value!.Value
+        };
     }
 
     public static Birthdate From(DateTime value) => new Birthdate(value);

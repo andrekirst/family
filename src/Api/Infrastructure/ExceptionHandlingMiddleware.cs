@@ -1,11 +1,10 @@
-﻿using FluentValidation;
+﻿using System.Net.Mime;
+using FluentValidation;
 
 namespace Api.Infrastructure;
 
-internal sealed class ExceptionHandlingMiddleware : IMiddleware
+internal sealed class ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddleware> logger) : IMiddleware
 {
-    private readonly ILogger<ExceptionHandlingMiddleware> _logger;
-    public ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddleware> logger) => _logger = logger;
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         try
@@ -14,7 +13,7 @@ internal sealed class ExceptionHandlingMiddleware : IMiddleware
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             await HandleExceptionAsync(context, e);
         }
     }
@@ -28,7 +27,7 @@ internal sealed class ExceptionHandlingMiddleware : IMiddleware
             detail = exception.Message,
             errors = GetErrors(exception)
         };
-        httpContext.Response.ContentType = "application/json";
+        httpContext.Response.ContentType = MediaTypeNames.Application.Json;
         httpContext.Response.StatusCode = statusCode;
         await httpContext.Response.WriteAsJsonAsync(response);
     }
@@ -48,11 +47,9 @@ internal sealed class ExceptionHandlingMiddleware : IMiddleware
 
     private static IReadOnlyDictionary<string, string[]>? GetErrors(Exception exception)
     {
-        IReadOnlyDictionary<string, string[]>? errors = null;
-        
         if (exception is ValidationException validationException)
         {
-            errors = validationException.Errors
+            return validationException.Errors
                 .GroupBy(
                     x => x.PropertyName,
                     x => x.ErrorMessage,
@@ -64,6 +61,6 @@ internal sealed class ExceptionHandlingMiddleware : IMiddleware
                 .ToDictionary(x => x.Key, x => x.Values);
         }
         
-        return errors;
+        return null;
     }
 }

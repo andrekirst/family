@@ -3,18 +3,11 @@ using MediatR;
 
 namespace Api.Infrastructure;
 
-public class SaveDomainEventNotificationHandler<TDomainEvent> : INotificationHandler<TDomainEvent>
+public class SaveDomainEventNotificationHandler<TDomainEvent>(DomainEventRepository domainEventRepository) : INotificationHandler<TDomainEvent>
     where TDomainEvent : IDomainEvent
 {
-    private readonly DomainEventRepository _domainEventRepository;
-
-    public SaveDomainEventNotificationHandler(DomainEventRepository domainEventRepository)
-    {
-        _domainEventRepository = domainEventRepository;
-    }
-
     public async Task Handle(TDomainEvent notification, CancellationToken cancellationToken)
     {
-        await _domainEventRepository.AddAsync(notification, cancellationToken);
+        await domainEventRepository.AddAsync(notification, cancellationToken);
     }
 }

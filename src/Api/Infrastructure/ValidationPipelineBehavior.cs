@@ -4,21 +4,14 @@ using MediatR;
 
 namespace Api.Infrastructure;
 
-public class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public class ValidationPipelineBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators) : IPipelineBehavior<TRequest, TResponse>
     where TRequest : class
 {
-    private readonly IEnumerable<IValidator<TRequest>> _validators;
-
-    public ValidationPipelineBehavior(IEnumerable<IValidator<TRequest>> validators)
-    {
-        _validators = validators;
-    }
-
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         var validationFailures = new List<ValidationFailure>();
 
-        foreach (var validator in _validators)
+        foreach (var validator in validators)
         {
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
@@ -28,7 +21,7 @@ public class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior
             }
         }
 
-        if (validationFailures.Any())
+        if (validationFailures.Count != 0)
         {
             throw new ValidationException(validationFailures);
         }

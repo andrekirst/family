@@ -1,5 +1,3 @@
 ﻿namespace Api.Domain.Core;
 
-public class BirthdateRequiredException : Exception
-{
-}
+public class BirthdateRequiredException : Exception;

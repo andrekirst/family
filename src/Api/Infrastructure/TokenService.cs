@@ -43,10 +43,13 @@ public class TokenService(
 
     private IEnumerable<Claim> CreateClaims(IdentityUser user, Guid familyMemberId)
     {
+        ArgumentException.ThrowIfNullOrEmpty(user.UserName);
+        ArgumentException.ThrowIfNullOrEmpty(user.Email);
+        
         try
         {
-            return new List<Claim>
-            {
+            return
+            [
                 new Claim(JwtRegisteredClaimNames.Sub, _jwtOptions.Sub),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat, systemClock.UtcNow.ToString(CultureInfo.InvariantCulture)),
@@ -54,7 +57,7 @@ public class TokenService(
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ApplicationClaimNames.CurrentFamilyMemberId, familyMemberId.ToString(), nameof(Guid))
-            };
+            ];
         }
         catch (Exception e)
         {
