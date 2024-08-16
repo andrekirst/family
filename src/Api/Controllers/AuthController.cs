@@ -3,6 +3,7 @@ using System.Security.Claims;
 using Api.Database;
 using Api.Domain.Core;
 using Api.Infrastructure;
+using Google.Apis.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -116,6 +117,24 @@ public class AuthController(
             Email = managedUser.Email!,
             Token = accessToken
         });
+    }
+
+    public async Task<IActionResult> LinkGoogleAccount(string idToken, CancellationToken cancellationToken = default)
+    {+
+        var payload = await GoogleJsonWebSignature.ValidateAsync(idToken);
+        if (payload == null)
+        {
+            return BadRequest("Invalid Google token.");
+        }
+        
+        // TODO
+        
+        var userId = payload.Subject;
+        var email = payload.Email;
+        
+        // TODO
+
+        return Ok("Account linked");
     }
 }
 
