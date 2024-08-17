@@ -120,7 +120,7 @@ public class AuthController(
     }
 
     public async Task<IActionResult> LinkGoogleAccount(string idToken, CancellationToken cancellationToken = default)
-    {+
+    {
         var payload = await GoogleJsonWebSignature.ValidateAsync(idToken);
         if (payload == null)
         {
