@@ -2,6 +2,8 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using Microsoft.Extensions.DependencyInjection;
+using ui.Extensions;
 using ui.ViewModels;
 using ui.Views;
 
@@ -16,17 +18,29 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        BindingPlugins.DataValidators.RemoveAt(0);
+
+        var collection = new ServiceCollection();
+        collection.RegisterServices();
+
+        var services = collection.BuildServiceProvider();
+
+        var mainWindowViewModel = services.GetRequiredService<MainWindowViewModel>();
         
-        
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        switch (ApplicationLifetime)
         {
-            // Line below is needed to remove Avalonia data validation.
-            // Without this line you will get duplicate validations from both Avalonia and CT
-            BindingPlugins.DataValidators.RemoveAt(0);
-            desktop.MainWindow = new MainWindow
-            {
-                DataContext = new MainWindowViewModel(),
-            };
+            case IClassicDesktopStyleApplicationLifetime desktop:
+                desktop.MainWindow = new MainWindow
+                {
+                    DataContext = mainWindowViewModel
+                };
+                break;
+            case ISingleViewApplicationLifetime singleViewApplicationLifetime:
+                singleViewApplicationLifetime.MainView = new MainWindow
+                {
+                    DataContext = mainWindowViewModel
+                };
+                break;
         }
 
         base.OnFrameworkInitializationCompleted();
