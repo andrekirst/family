@@ -1,7 +1,0 @@
-﻿query GetFamilyMembersList {
-    familyMembers(order: { firstName: ASC, lastName: ASC } ) {
-        id,
-        firstName,
-        lastName
-  }
-}
