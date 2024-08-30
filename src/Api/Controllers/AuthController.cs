@@ -4,11 +4,17 @@ using Api.Database;
 using Api.Domain.Core;
 using Api.Infrastructure;
 using Google.Apis.Auth;
+using Google.Apis.Auth.OAuth2.Requests;
+using Google.Apis.Http;
+using Google.Apis.Util;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using AuthorizationCodeTokenRequest = Google.Apis.Auth.OAuth2.Requests.AuthorizationCodeTokenRequest;
+using IHttpClientFactory = System.Net.Http.IHttpClientFactory;
 
 namespace Api.Controllers;
 
@@ -19,7 +25,9 @@ public class AuthController(
     ApplicationDbContext applicationDbContext,
     UsersContext usersContext,
     ITokenService tokenService,
-    IMediator mediator)
+    IMediator mediator,
+    IOptions<GoogleAuthenticationOptions> googleAuthenticationOptions,
+    IHttpClientFactory httpClientFactory)
     : ControllerBase
 {
     [HttpPost]
@@ -119,6 +127,7 @@ public class AuthController(
         });
     }
 
+    [HttpPost("link-google-account")]
     public async Task<IActionResult> LinkGoogleAccount(string idToken, CancellationToken cancellationToken = default)
     {
         var payload = await GoogleJsonWebSignature.ValidateAsync(idToken);
@@ -135,6 +144,34 @@ public class AuthController(
         // TODO
 
         return Ok("Account linked");
+    }
+
+    [HttpGet, Route("/signin-google"), AllowAnonymous]
+    public async Task<IActionResult> GoogleCallback(string code, CancellationToken cancellationToken = default)
+    {
+        var options = googleAuthenticationOptions.Value;
+
+        var request = new AuthorizationCodeTokenRequest
+        {
+            ClientId = options.ClientId,
+            ClientSecret = options.ClientSecret,
+            Code = code,
+            RedirectUri = "/signin-google"
+        };
+
+        var httpClient = httpClientFactory.CreateClient();
+        
+        var response = await request.ExecuteAsync(httpClient, "https://oauth2.googleapis.com/token", cancellationToken, SystemClock.Default);
+
+        var payload = await GoogleJsonWebSignature.ValidateAsync(response.IdToken);
+        var userInfo = new
+        {
+            Email = payload.Email,
+            Name = payload.Name,
+            Picture = payload.Picture
+        };
+        
+        return BadRequest();
     }
 }
 

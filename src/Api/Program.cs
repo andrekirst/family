@@ -10,6 +10,8 @@ using Api.Infrastructure;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -33,13 +35,16 @@ public class Program
         builder.Services
             .AddControllers(options =>
             {
-                //options.Filters.Add(new AuthorizeFilter());
+                options.Filters.Add(new AuthorizeFilter());
+                options.Filters.Add(new RequireHttpsAttribute());
             })
             .AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
 
+        builder.Services.AddHttpClient();
+        builder.Services.UseGoogleAuthenticationOptions();
         builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
         builder.Services
             .AddAuthentication(options =>
@@ -48,6 +53,19 @@ public class Program
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddCookie()
+            // .AddGoogle(options =>
+            // {
+            //     var clientId = builder.Configuration["Authentication:Google:ClientId"];
+            //     var clientSecrect = builder.Configuration["Authentication:Google:ClientSecret"];
+            //     var redirectUri = builder.Configuration["Authentication:Google:RedirectUri"];
+            //     
+            //     ArgumentException.ThrowIfNullOrEmpty(clientId);
+            //     ArgumentException.ThrowIfNullOrEmpty(clientSecrect);
+            //     
+            //     options.ClientId = clientId;
+            //     options.ClientSecret = clientSecrect;
+            //     options.CallbackPath = "/signin-google";
+            // })
             .AddJwtBearer(options =>
             {
                 var jwtOptions = builder.Configuration.GetSection("Jwt");
