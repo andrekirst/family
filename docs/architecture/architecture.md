@@ -2,6 +2,8 @@
 
 ## Die Anwendung Family ist...
 
+### meiner Familie gewidmet
+
 ### eventbasiert
 
 Dadurch ist sie klar strukturiert und nachvollziehbar aufgebaut.
