@@ -16,9 +16,15 @@ Dadurch soll sichergestellt werden, dass die Anwendung jederzeit auf Eingaben re
 
 Sie soll einfach zu bedienen sein und Spaß machen.
 
-## Komponente
+### schnell
+
+Eingaben sollen schnell verarbeitet werden und keinen Frust erzeugen. Alle Ergebnisse sollen in weniger als einer 1 Sekunde angezeigt werden.
+
+## Komponenten
 
 ### Reverse-Proxy
+
+### Authentication Management
 
 ### WebApp
 
