@@ -4,6 +4,9 @@ on: [push]
 jobs:
     build:
       runs-on: ubuntu-latest
+      default:
+        run:
+          working-directory: ./src/webui
       strategy:
           matrix:
               node-version: [18.x]
@@ -13,16 +16,13 @@ jobs:
 
           - name: Setup nodejs $
             uses: actions/setup-node@v3
-            working-directory: ./src/webui
             with:
               node-version: 18
               cache: npm
               cache-dependency-path: package-lock.json
 
           - name: Install dependencies
-            working-directory: ./src/webui
             run: npm ci
           
-          - name: Build webui
-            working-directory: ./src/webui
+          - name: Build
             run: npm run build
