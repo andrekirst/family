@@ -13,13 +13,16 @@ jobs:
 
           - name: Setup nodejs $
             uses: actions/setup-node@v3
+            working-directory: ./src/webui
             with:
               node-version: 18
               cache: npm
               cache-dependency-path: package-lock.json
 
           - name: Install dependencies
+            working-directory: ./src/webui
             run: npm ci
           
           - name: Build webui
+            working-directory: ./src/webui
             run: npm run build
