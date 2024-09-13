@@ -3,21 +3,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Infrastructure;
 
-public abstract class ApiControllerBase : ControllerBase
+public abstract class ApiControllerBase(IMediator mediator) : ControllerBase
 {
-    protected ApiControllerBase(IMediator mediator)
-    {
-        Mediator = mediator;
-    }
-
-    protected IMediator Mediator { get; }
+    protected IMediator Mediator { get; } = mediator;
 
     protected Task<TResponse> ExecuteQueryAsync<TResponse>(IQuery<TResponse> query, CancellationToken cancellationToken = default)
         => Mediator.Send(query, cancellationToken);
 
-    protected Task<TResponse> ExecuteCommand<TResponse>(ICommand<TResponse> command, CancellationToken cancellationToken = default)
+    protected Task<TResponse> ExecuteCommandAsync<TResponse>(ICommand<TResponse> command, CancellationToken cancellationToken = default)
         => Mediator.Send(command, cancellationToken);
 
-    protected Task ExecuteCommand(ICommand command, CancellationToken cancellationToken = default)
+    protected Task ExecuteCommandAsync(ICommand command, CancellationToken cancellationToken = default)
         => Mediator.Send(command, cancellationToken);
 }

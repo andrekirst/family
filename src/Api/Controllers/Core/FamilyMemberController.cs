@@ -28,14 +28,14 @@ public class FamilyMemberController : ApiControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateFamilyMemberCommandModel model, CancellationToken cancellationToken = default)
     {
-        await ExecuteCommand(new CreateFamilyMemberCommand(model), cancellationToken);
+        await ExecuteCommandAsync(new CreateFamilyMemberCommand(model), cancellationToken);
         return Ok();
     }
 
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateFamilyMemberCommandModel model, CancellationToken cancellationToken = default)
     {
-        await ExecuteCommand(new UpdateFamilyMemberCommand(id, model), cancellationToken);
+        await ExecuteCommandAsync(new UpdateFamilyMemberCommand(id, model), cancellationToken);
         return Ok();
     }
 }
