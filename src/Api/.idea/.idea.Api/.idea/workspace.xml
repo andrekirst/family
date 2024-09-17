@@ -10,34 +10,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.install" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Controllers/InstallationController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Domain/Installation/Install/IUserRegistration.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Domain/Installation/Install/InstallCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Domain/Installation/Install/InstallCommandHandler.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Domain/Installation/Install/InstallCommandValidator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Domain/Installation/Install/InstallationOptions.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Domain/Installation/IsInstalled/IsInstalledQuery.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Domain/Installation/IsInstalled/IsInstalledQueryHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Domain/Installation/Install/InstallServiceRegistrations.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Family.WebUI/.idea/.idea.Family.WebUI/.idea/dictionaries/andrekirst.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Family.WebUI/.idea/.idea.Family.WebUI/.idea/git_toolbox_blame.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Family.WebUI/.idea/.idea.Family.WebUI/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/Pages/Installation/Install.razor" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/Pages/Installation/Install.razor.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/Pages/Installation/Install.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/Pages/Installation/Install.razor.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/Services/InstallationService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/postcss.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/tailwind.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/wwwroot/app.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/wwwroot/app.min.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/Body/WeightTrackingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Body/WeightTrackingController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/Core/FamilyMemberController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Core/FamilyMemberController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/ApiControllerBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/ApiControllerBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/ICommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/ICommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/ICommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/ICommandHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webui/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/src/app/app.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webui/src/app/app.routes.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/DomainServiceRegistrations.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/DomainServiceRegistrations.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Family.WebUI/.idea/.idea.Family.WebUI/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Family.WebUI/.idea/.idea.Family.WebUI/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/App.razor" beforeDir="false" afterPath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/App.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/Family.WebUI.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/Family.WebUI.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/Layout/MainLayout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/Layout/MainLayout.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/Layout/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/Layout/NavMenu.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/Pages/Counter.razor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/Pages/Home.razor" beforeDir="false" afterPath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/Pages/Home.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/Pages/Weather.razor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/wwwroot/css/app.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/wwwroot/css/bootstrap/bootstrap.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/wwwroot/css/bootstrap/bootstrap.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/wwwroot/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/wwwroot/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Family.WebUI/Family.WebUI/wwwroot/sample-data/weather.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="DpaMonitoringSettings">
-    <option name="autoShow" value="false" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -58,6 +66,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0c7558f9b5904d208d7a8c2cb37cb8f14a400/f8/5f02f8f4/ActivatorUtilities.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5ce17ead15a44f8192c0598d8785e869b2c800/be/0fd6f38a/ArgumentNullException.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5ce17ead15a44f8192c0598d8785e869b2c800/e1/638dfbca/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/822f3e243e634f41ab5364e42d67bd0230200/25/225588f5/ServiceProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/93b43812258a444ca2dceb63ff6803356800/13/d97fbb52/EntityFrameworkRequestExecutorBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9cf715cc4ef4480b828b686ffca412ed196a0/0b/1d30ef94/IdentityEntityFrameworkBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d726e3b0069440e0a83f0fe681951fb913600/5a/c88b6965/ClaimsIdentity.cs" root0="FORCE_HIGHLIGHTING" />
@@ -67,7 +76,6 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3e7a5d9e8f1e8fc8895e3999e4b986ebd69c6f311e8a7f7ba94f4560a54a89/IdentityDbContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8aca45508683a6169bab9e8bd96b7cda607d638cacfaa31173c8c278c45/ISender.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/bin/Debug/net8.0/Api.deps.json" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../webui/package-lock.json" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -81,30 +89,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.Api: http.executor": "Debug",
-    ".NET Launch Settings Profile.Api: https.executor": "Run",
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/andrekirst/git/github/andrekirst/family/src/ui/ui.csproj",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editor.preferences.smartKeys_rider",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.Api: http.executor&quot;: &quot;Debug&quot;,
+    &quot;.NET Launch Settings Profile.Api: https.executor&quot;: &quot;Run&quot;,
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/andrekirst/git/github/andrekirst/family/src/ui/ui.csproj&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.smartKeys_rider&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Api: https">
     <configuration name="Api: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Api.csproj" />
@@ -176,6 +184,8 @@
       <workItem from="1724697704183" duration="655000" />
       <workItem from="1726173322997" duration="1217000" />
       <workItem from="1726215475394" duration="4551000" />
+      <workItem from="1726248528167" duration="2463000" />
+      <workItem from="1726428387862" duration="3718000" />
     </task>
     <task id="LOCAL-00001" summary="remove chocolate">
       <option name="closed" value="true" />
@@ -250,6 +260,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Domain/Installation/Install/IUserRegistration.cs</url>
+          <line>11</line>
+          <properties documentPath="$PROJECT_DIR$/Domain/Installation/Install/IUserRegistration.cs" containingFunctionPresentation="Method 'Register'">
+            <startOffsets>
+              <option value="350" />
+            </startOffsets>
+            <endOffsets>
+              <option value="386" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
