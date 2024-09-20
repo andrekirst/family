@@ -1,12 +1,12 @@
-name: api
-run-name: webui by ${{ github.actor }}
+name: ui
+run-name: ui by ${{ github.actor }}
 on: [push]
 jobs:
     build:
       runs-on: ubuntu-latest
       defaults:
         run:
-          working-directory: ./src/webui
+          working-directory: ./src/ui
       strategy:
           matrix:
               node-version: [18.x]
