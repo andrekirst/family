@@ -11,6 +11,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/app/app.routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/app/setup/install/install.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/app/setup/install/install.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/app/setup/install/install.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/app/setup/install/install.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +50,10 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8aca45508683a6169bab9e8bd96b7cda607d638cacfaa31173c8c278c45/ISender.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/bin/Debug/net8.0/Api.deps.json" root0="SKIP_HIGHLIGHTING" />
   </component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
@@ -74,7 +81,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "com.intellij.kubernetes.config.KubernetesConfigurable",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -158,6 +165,7 @@
       <workItem from="1726428387862" duration="3718000" />
       <workItem from="1727033200590" duration="632000" />
       <workItem from="1727207949717" duration="103000" />
+      <workItem from="1727425368270" duration="1592000" />
     </task>
     <task id="LOCAL-00001" summary="remove chocolate">
       <option name="closed" value="true" />
@@ -259,5 +267,9 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
