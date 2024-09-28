@@ -774,6 +774,7 @@ export interface IGetFamilyMembersQueryDto {
 export class InstallationOptions implements IInstallationOptions {
     username?: string | undefined;
     password?: string | undefined;
+    email?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
 
@@ -790,6 +791,7 @@ export class InstallationOptions implements IInstallationOptions {
         if (_data) {
             this.username = _data["username"];
             this.password = _data["password"];
+            this.email = _data["email"];
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
         }
@@ -806,6 +808,7 @@ export class InstallationOptions implements IInstallationOptions {
         data = typeof data === 'object' ? data : {};
         data["username"] = this.username;
         data["password"] = this.password;
+        data["email"] = this.email;
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
         return data;
@@ -815,6 +818,7 @@ export class InstallationOptions implements IInstallationOptions {
 export interface IInstallationOptions {
     username?: string | undefined;
     password?: string | undefined;
+    email?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
 }

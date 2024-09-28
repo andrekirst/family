@@ -12,6 +12,7 @@ public class InstallCommandHandler(IUserRegistration userRegistration) : IComman
             {
                 Username = installationOptions.Username,
                 Password = installationOptions.Password,
+                Email = installationOptions.Email,
                 FirstName = installationOptions.FirstName,
                 LastName  = installationOptions.LastName
             },
