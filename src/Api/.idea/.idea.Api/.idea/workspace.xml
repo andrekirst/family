@@ -11,11 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Installation/Install/IUserRegistration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Installation/Install/IUserRegistration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Installation/Install/InstallCommandValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Installation/Install/InstallCommandValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Installation/Install/InstallationOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Installation/Install/InstallationOptions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/app/api-client/api-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/app/api-client/api-client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/app/setup/install/install.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/app/setup/install/install.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,7 +165,7 @@
       <workItem from="1727425368270" duration="2196000" />
       <workItem from="1727466458759" duration="1351000" />
       <workItem from="1727470144120" duration="888000" />
-      <workItem from="1727548066219" duration="1598000" />
+      <workItem from="1727548066219" duration="3079000" />
     </task>
     <task id="LOCAL-00001" summary="remove chocolate">
       <option name="closed" value="true" />
