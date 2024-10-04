@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions.Collections", "Extensions.Collections\Extensions.Collections.csproj", "{5D04DCE5-A915-4B75-A8E2-0F18F6EAA085}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Family.Libraries.Extensions.Collections", "Family.Libraries.Extensions.Collections\Family.Libraries.Extensions.Collections.csproj", "{5D04DCE5-A915-4B75-A8E2-0F18F6EAA085}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
