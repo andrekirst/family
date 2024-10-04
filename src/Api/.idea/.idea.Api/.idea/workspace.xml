@@ -11,6 +11,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/app/api-client/api-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/app/api-client/api-client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/app/app.routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/app/services/authentication.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/app/services/authentication.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,6 +171,8 @@
       <workItem from="1727466458759" duration="1351000" />
       <workItem from="1727470144120" duration="888000" />
       <workItem from="1727548066219" duration="3079000" />
+      <workItem from="1727786798281" duration="1398000" />
+      <workItem from="1728025362760" duration="1242000" />
     </task>
     <task id="LOCAL-00001" summary="remove chocolate">
       <option name="closed" value="true" />
