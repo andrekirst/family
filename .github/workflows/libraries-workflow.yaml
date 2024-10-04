@@ -12,7 +12,7 @@ jobs:
         strategy:
             matrix:
                 project:
-                    - 'src/Family.Libraries/Extensions.Collections/Family.Libraries.Extensions.Collections.csproj'
+                    - 'src/Family.Libraries/Family.Libraries.Extensions.Collections/Family.Libraries.Extensions.Collections.csproj'
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
