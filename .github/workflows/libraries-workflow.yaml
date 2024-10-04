@@ -1,0 +1,34 @@
+name: Publish Family-Libraries to NuGet
+
+on:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
+
+jobs:
+    build-and-publish:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                project:
+                    - 'src/Family.Libraries/Extensions.Collections/Extensions.Collections.csproj'
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  sparse-checkout: |
+                    .github
+                    src/Family.Libraries
+            - name: Setup .NET 8
+              uses: actions/setup-dotnet@v4
+              with:
+                dotnet-version: 8.0.x
+            - name: Restore dependencies
+              run: dotnet build ${{ matrix.project }} --configuration Release --no-restore
+            - name: Pack NuGet package
+              run: dotnet pack ${{ matrix.project }} --configuration Release --no-build --output ./nupkg
+            - name: Publish to Nuget
+              run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+              env:
+                NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
