@@ -25,9 +25,9 @@ jobs:
               with:
                 dotnet-version: 8.0.x
             - name: Restore dependencies
-              run: dotnet build ${{ matrix.project }} --configuration Release --no-restore
+              run: dotnet build ${{ matrix.project }} --configuration Release
             - name: Pack NuGet package
-              run: dotnet pack ${{ matrix.project }} --configuration Release --no-build --output ./nupkg
+              run: dotnet pack ${{ matrix.project }} --configuration Release --output ./nupkg
             - name: Publish to Nuget
               run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
               env:
