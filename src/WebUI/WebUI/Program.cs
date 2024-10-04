@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Mvc.Routing;
+using WebUI.Areas;
 using WebUI.Modules;
 
 namespace WebUI;
 
-public class Program
+public static class Program
 {
     public static void Main(string[] args)
     {
@@ -11,8 +13,7 @@ public class Program
         // Add services to the container.
         builder.Services.AddControllersWithViews();
         
-        builder.c
-        builder.Services.AddAppAuthentication();
+        builder.AddAppAuthentication();
 
         var app = builder.Build();
 
@@ -30,10 +31,31 @@ public class Program
         app.UseRouting();
 
         app.UseAuthorization();
+        app.UseAuthentication();
+        
+        app.Use(async (context, next) =>
+        {
+            if (context.Request.Path == "/")
+            {
+                context.Response.Redirect("/App");
+                return;
+            }
 
+            await next();
+        });
+        
+        app.MapAreaControllerRoute(
+            name: "AppArea",
+            areaName: AreaNames.App,
+            pattern: "App/{controller=Home}/{action=Index}/{id?}");
+        
+        app.MapControllerRoute(
+            name: "areas",
+            pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+        
         app.MapControllerRoute(
             name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
+            pattern: "App/{controller=Home}/{action=Index}/{id?}");
 
         app.Run();
     }

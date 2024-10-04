@@ -2,8 +2,9 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using WebUI.Models;
 
-namespace WebUI.Controllers;
+namespace WebUI.Areas.App.Controllers;
 
+[Area(AreaNames.App)]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

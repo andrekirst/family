@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Family.Libraries.Extensions.Collections", "Family.Libraries.Extensions.Collections\Family.Libraries.Extensions.Collections.csproj", "{5D04DCE5-A915-4B75-A8E2-0F18F6EAA085}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Family.Libraries.AspNet.Mvc.Middlewares", "Family.Libraries.AspNet.Mvc.Middlewares\Family.Libraries.AspNet.Mvc.Middlewares.csproj", "{7BBE7D1D-1280-4C49-9412-B4DD6F3EE072}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{5D04DCE5-A915-4B75-A8E2-0F18F6EAA085}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D04DCE5-A915-4B75-A8E2-0F18F6EAA085}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D04DCE5-A915-4B75-A8E2-0F18F6EAA085}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BBE7D1D-1280-4C49-9412-B4DD6F3EE072}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BBE7D1D-1280-4C49-9412-B4DD6F3EE072}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BBE7D1D-1280-4C49-9412-B4DD6F3EE072}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BBE7D1D-1280-4C49-9412-B4DD6F3EE072}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
