@@ -1,0 +1,19 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es6",
+    "outDir": "wwwroot/js"
+  },
+  "include": [
+    "Scripts/**/*",
+    "Views/**/*",
+    "Areas/**/*"
+  ],
+  "exclude": [
+    "node_modules/*"
+  ]
+}
