@@ -14,6 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Family.Libraries.AspNet.Mvc.Middlewares" Version="1.0.10" />
       <PackageReference Include="Family.Libraries.Extensions.Collections" Version="1.0.0" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.8" />
       <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.1.0" />

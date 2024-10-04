@@ -1,3 +1,4 @@
+using Family.Libraries.AspNet.Mvc.Middlewares;
 using Microsoft.AspNetCore.Mvc.Routing;
 using WebUI.Areas;
 using WebUI.Modules;
@@ -32,17 +33,8 @@ public static class Program
 
         app.UseAuthorization();
         app.UseAuthentication();
-        
-        app.Use(async (context, next) =>
-        {
-            if (context.Request.Path == "/")
-            {
-                context.Response.Redirect("/App");
-                return;
-            }
 
-            await next();
-        });
+        app.UseRedirectToWhen("/", "/App");
         
         app.MapAreaControllerRoute(
             name: "AppArea",
