@@ -13,6 +13,7 @@ jobs:
             matrix:
                 project:
                     - 'src/Family.Libraries/Family.Libraries.Extensions.Collections/Family.Libraries.Extensions.Collections.csproj'
+                    - 'src/Family.Libraries/Family.Libraries.AspNet.Mvc.Middlewares/Family.Libraries.AspNet.Mvc.Middlewares.csproj'
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
