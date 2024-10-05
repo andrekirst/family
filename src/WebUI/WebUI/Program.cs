@@ -1,5 +1,6 @@
+using System.IO.Compression;
 using Family.Libraries.AspNet.Mvc.Middlewares;
-using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.ResponseCompression;
 using WebUI.Areas;
 using WebUI.Modules;
 
@@ -13,15 +14,38 @@ public static class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
+        builder.Services.AddResponseCompression(options =>
+        {
+            options.EnableForHttps = true;
+            options.Providers.Add<BrotliCompressionProvider>();
+            options.Providers.Add<GzipCompressionProvider>();
+        });
+
+        builder.Services
+            .Configure<BrotliCompressionProviderOptions>(options =>
+            {
+                options.Level = CompressionLevel.SmallestSize;
+            })
+            .Configure<GzipCompressionProviderOptions>(options =>
+            {
+                options.Level = CompressionLevel.SmallestSize;
+            });
+
+        builder.Services.AddResponseCaching();
         
         builder.AddAppAuthentication();
 
         var app = builder.Build();
 
+        // app.UseCors();
+
+        app.UseResponseCaching();
+        app.UseResponseCompression();
+
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {
-            app.UseExceptionHandler("/Home/Error");
+            app.UseExceptionHandler("/App/Home/Error");
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }

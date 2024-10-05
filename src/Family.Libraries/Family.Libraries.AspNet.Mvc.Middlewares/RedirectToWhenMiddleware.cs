@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.StaticFiles;
-
-namespace Family.Libraries.AspNet.Mvc.Middlewares;
+﻿namespace Family.Libraries.AspNet.Mvc.Middlewares;
 
 public class RedirectToWhenMiddleware(RequestDelegate next, string sourcePath, string targetPath)
 {

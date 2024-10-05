@@ -9,7 +9,7 @@ function getEntryPoints() {
     files.forEach(file => {
         const relativePath = path.relative(path.resolve(__dirname, 'Areas'), file);
 
-        var outputName = relativePath
+        let outputName = relativePath
             .replace(/\/Views\//, '-')
             .replace(/\//g, '-')
             .replace('.cshtml.ts', '');

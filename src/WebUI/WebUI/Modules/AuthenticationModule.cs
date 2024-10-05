@@ -2,6 +2,7 @@ using Family.Libraries.Extensions.Collections;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WebUI.Modules;
 
@@ -27,6 +28,13 @@ public static class AuthenticationModule
                 options.SignedOutCallbackPath = section["RedirectUri"] ??  throw new ArgumentException("RedirectUri is missing");
                 options.ResponseType = OpenIdConnectResponseType.Code;
                 options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();
+                options.GetClaimsFromUserInfoEndpoint = true;
+
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = "name",
+                    RoleClaimType = "roles"
+                };
 
                 var scopes = section
                     .GetSection("Scopes")
