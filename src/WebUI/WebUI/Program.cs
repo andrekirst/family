@@ -1,5 +1,9 @@
 using System.IO.Compression;
 using Family.Libraries.AspNet.Mvc.Middlewares;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.ResponseCompression;
 using WebUI.Areas;
 using WebUI.Modules;
@@ -13,7 +17,15 @@ public static class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-        builder.Services.AddControllersWithViews();
+        builder.Services
+            .AddControllersWithViews(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder(AuthenticationModule.ZitadelAuthenticationSchema)
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            });
+
         builder.Services.AddResponseCompression(options =>
         {
             options.EnableForHttps = true;

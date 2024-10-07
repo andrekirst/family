@@ -12,13 +12,18 @@ public static class AuthenticationModule
 
     public static void AddAppAuthentication(this WebApplicationBuilder builder)
     {
+        builder.Services.AddAuthorization();
         builder.Services
             .AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
             })
-            .AddCookie()
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/App/Login";
+                options.LogoutPath = "/App/Logout";
+            })
             .AddOpenIdConnect(ZitadelAuthenticationSchema, options =>
             {
                 var section = builder.Configuration.GetSection($"Authentication:{ZitadelAuthenticationSchema}");

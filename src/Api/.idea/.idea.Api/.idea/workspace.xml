@@ -10,34 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../Family.Libraries/.idea/.idea.Family.Libraries/.idea/git_toolbox_blame.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Family.Libraries/.idea/.idea.Family.Libraries/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Family.Libraries/Family.Libraries.AspNet.Mvc.Middlewares/Class1.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Family.Libraries/Family.Libraries.AspNet.Mvc.Middlewares/Family.Libraries.AspNet.Mvc.Middlewares.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WebUI/.idea/.idea.WebUI/.idea/dictionaries/andrekirst.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WebUI/.idea/.idea.WebUI/.idea/git_toolbox_blame.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WebUI/.idea/.idea.WebUI/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WebUI/.idea/.idea.WebUI/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WebUI/WebUI/Areas/App/Controllers/AccountController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WebUI/WebUI/Areas/App/Views/Account/SignedOut.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WebUI/WebUI/Areas/AreaNames.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Family.Libraries/.idea/.idea.Family.Libraries/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Family.Libraries/.idea/.idea.Family.Libraries/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Family.Libraries/Family.Libraries.sln" beforeDir="false" afterPath="$PROJECT_DIR$/../Family.Libraries/Family.Libraries.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/.idea/.idea.WebUI/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/.idea/.idea.WebUI/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/WebUI/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/WebUI/Areas/App/Controllers/HomeController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WebUI/WebUI/Modules/AuthenticationModule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/WebUI/Modules/AuthenticationModule.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WebUI/WebUI/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/WebUI/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/WebUI/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/WebUI/Areas/App/Views/Home/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/WebUI/Views/Home/Privacy.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/WebUI/Areas/App/Views/Home/Privacy.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/WebUI/Views/Shared/Error.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/WebUI/Views/Shared/_Layout.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/WebUI/Views/Shared/_Layout.cshtml.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/WebUI/Views/Shared/_ValidationScriptsPartial.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/WebUI/Views/_ViewImports.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/WebUI/Views/_ViewStart.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/WebUI/Areas/_ViewStart.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/WebUI/WebUI.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/WebUI/WebUI.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/WebUI/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/WebUI/appsettings.Development.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,6 +170,8 @@
       <workItem from="1727548066219" duration="3079000" />
       <workItem from="1727786798281" duration="1398000" />
       <workItem from="1728025362760" duration="2693000" />
+      <workItem from="1728241251127" duration="536000" />
+      <workItem from="1728277838166" duration="1927000" />
     </task>
     <task id="LOCAL-00001" summary="remove chocolate">
       <option name="closed" value="true" />
