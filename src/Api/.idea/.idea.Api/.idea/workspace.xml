@@ -11,8 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/WebUI/Modules/AuthenticationModule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/WebUI/Modules/AuthenticationModule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/WebUI/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/WebUI/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
