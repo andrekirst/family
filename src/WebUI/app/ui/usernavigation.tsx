@@ -4,6 +4,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function UserNavigation() {
     const { data: session } = useSession();
@@ -25,7 +26,7 @@ export default function UserNavigation() {
                 <span className="sr-only">Open user menu</span>
                 <Image
                     alt=""
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    src={session?.user?.image ?? "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"}
                     className="h-8 w-8 rounded-full bg-gray-50"
                     width="32"
                     height="32"
@@ -45,9 +46,9 @@ export default function UserNavigation() {
                 >
                 {userNavigation.map((item) => (
                 <MenuItem key={item.name}>
-                    <a href={item.href} className="block px-3 py-1 lg:text-base sm:text-lg leading-6 text-gray-900 data-[focus]:bg-gray-50">
-                        {item.name}
-                    </a>
+                    <Link href={item.href}>
+                        <button className="block px-3 py-1 lg:text-base sm:text-lg leading-6 text-gray-900 data-[focus]:bg-gray-50">{item.name}</button>
+                    </Link>
                 </MenuItem>
                 ))}
             </MenuItems>

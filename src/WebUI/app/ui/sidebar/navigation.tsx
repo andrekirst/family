@@ -1,5 +1,6 @@
 import { classNames } from "@/app/lib/string";
 import { HomeIcon, UsersIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 export default function Navigation() {
     const navigation = [
@@ -22,24 +23,26 @@ export default function Navigation() {
             <ul role="list" className="-mx-2 space-y-1">
                 {navigation.map((item) => (
                 <li key={item.name}>
-                    <a
-                    href={item.href}
-                    className={classNames(
-                        item.current
-                        ? 'bg-gray-50 text-indigo-600'
-                        : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
-                        'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
-                    )}
-                    >
-                    <item.icon
-                        aria-hidden="true"
+                    <Link href={item.href}>
+                        <button
                         className={classNames(
-                        item.current ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600',
-                        'h-6 w-6 shrink-0',
+                            item.current
+                            ? 'bg-gray-50 text-indigo-600'
+                            : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
+                            'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
                         )}
-                    />
-                    {item.name}
-                    </a>
+                        >
+                        <item.icon
+                            aria-hidden="true"
+                            className={classNames(
+                            item.current ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600',
+                            'h-6 w-6 shrink-0',
+                            )}
+                        />
+                        {item.name}
+                        </button>
+                    </Link>
+                    
                 </li>
                 ))}
             </ul>

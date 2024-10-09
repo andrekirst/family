@@ -15,7 +15,7 @@ export default function RootLayout({
     <html lang="en" className="h-full bg-white">
       <body className="h-full">
         <AuthProvider>
-          <Home />
+          <Home children={children} />
         </AuthProvider>
       </body>
     </html>
