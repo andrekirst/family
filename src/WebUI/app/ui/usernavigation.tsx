@@ -1,8 +1,13 @@
+"use client";
+
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 
 export default function UserNavigation() {
+    const { data: session } = useSession();
+
     const userNavigation = [
         {
             name: "Profil",
@@ -27,7 +32,9 @@ export default function UserNavigation() {
                 />
                 <span className="hidden lg:flex lg:items-center">
                     <span aria-hidden="true" className="ml-4 text-sm font-semibold leading-6 text-gray-900">
-                        Tom Cook
+                        {
+                            session?.user?.name
+                        }
                     </span>
                     <ChevronDownIcon aria-hidden="true" className="ml-2 h-5 w-5 text-gray-400" />
                 </span>
