@@ -1,7 +1,6 @@
 'use client';
 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-//import " ./globals.css";
 import "@/app/globals.css"
 import { useEffect, useState } from "react";
 import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from "@headlessui/react";
@@ -10,6 +9,7 @@ import Searchbar from "./searchbar";
 import NotificationsBar from "./notificationsbar";
 import Sidebar from "./sidebar/sidebar";
 import { getProviders, signIn, signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function Home({
     children,
@@ -104,9 +104,9 @@ export default function Home({
             </div>
           </div>
             ) : (
-              (authProviders && Object.values(authProviders).map((provider: any) => (
-                <button onClick={() => handleGoogleSignIn(provider)} type='button' key={provider.name}>Sign In With {provider.name}</button>
-              )))
+                <Link href="/api/auth/signin">
+                    <button type="button" className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Button text</button>
+                </Link>
             )
           }
           </>

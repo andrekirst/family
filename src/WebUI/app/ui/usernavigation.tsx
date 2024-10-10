@@ -2,7 +2,7 @@
 
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -13,10 +13,6 @@ export default function UserNavigation() {
         {
             name: "Profil",
             href: "/user/profile"
-        },
-        {
-            name: "Abmelden",
-            href: "/user/logout"
         }
     ];
 
@@ -45,12 +41,15 @@ export default function UserNavigation() {
                 className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                 >
                 {userNavigation.map((item) => (
-                <MenuItem key={item.name}>
-                    <Link href={item.href}>
-                        <button className="block px-3 py-1 lg:text-base sm:text-lg leading-6 text-gray-900 data-[focus]:bg-gray-50">{item.name}</button>
-                    </Link>
-                </MenuItem>
+                    <MenuItem key={item.name}>
+                        <Link href={item.href}>
+                            <button className="block px-3 py-1 lg:text-base sm:text-lg leading-6 text-gray-900 data-[focus]:bg-gray-50">{item.name}</button>
+                        </Link>
+                    </MenuItem>
                 ))}
+                <MenuItem>
+                    <button onClick={() => signOut()} className="block px-3 py-1 lg:text-base sm:text-lg leading-6 text-gray-900 data-[focus]:bg-gray-50">Abmelden</button>
+                </MenuItem>
             </MenuItems>
         </Menu>
     );

@@ -9,8 +9,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
-
   return (
     <html lang="en" className="h-full bg-white">
       <body className="h-full">
