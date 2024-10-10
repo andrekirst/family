@@ -137,6 +137,30 @@ public class Program
                 .EnableServiceProviderCaching();
         });
 
+        builder.Services.AddDbContext<UsersContext>(optionsBuilder =>
+        {
+            var isNotProduction = !builder.Environment.IsProduction();
+
+            optionsBuilder
+                .UseNpgsql(builder.Configuration.GetConnectionString("Default"))
+                .EnableDetailedErrors(isNotProduction)
+                .EnableSensitiveDataLogging(isNotProduction)
+                .EnableServiceProviderCaching();
+        });
+        builder.Services
+            .AddIdentityCore<IdentityUser>(options =>
+            {
+                var isProduction = builder.Environment.IsProduction();
+                options.SignIn.RequireConfirmedAccount = false;
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequireDigit = isProduction;
+                options.Password.RequiredLength = isProduction ? 8 : 4;
+                options.Password.RequireNonAlphanumeric = isProduction;
+                options.Password.RequireUppercase = isProduction;
+                options.Password.RequireLowercase = isProduction;
+            })
+            .AddEntityFrameworkStores<UsersContext>();
+
         builder.Services.AddScoped<ITokenService, TokenService>();
         builder.Services.AddScoped<DomainEventRepository>();
         builder.Services.AddScoped<CurrentFamilyMemberIdService>();
