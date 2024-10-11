@@ -1,4 +1,5 @@
 import axiosInstance from "@/utils/axios";
+import { isSuccessHttpStatusCode } from "./base";
 
 export interface LoginRequest {
     login: string,
@@ -11,6 +12,15 @@ export interface LoginResponse {
     username: string,
     email: string,
     token: string
+}
+
+export interface RegistrationRequest {
+    firstName: string,
+    lastName: string,
+    birthdate: string,
+    email: string,
+    username: string,
+    password: string
 }
 
 export interface GoogleLoginRequest {
@@ -32,6 +42,26 @@ export async function Login(request: LoginRequest): Promise<LoginResponse | null
     }
 
     return null;
+}
+
+export async function Register(request: RegistrationRequest): Promise<boolean> {
+    var url = process.env.NEXT_PUBLIC_API_BASE_URL + '/auth/register';
+    console.log(`Register: ${url}`);
+    var response = await fetch(url, {
+        body: JSON.stringify(request),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST'
+    });
+    
+    // var response = await axiosInstance.post("/auth/register", request);
+
+    if(isSuccessHttpStatusCode(response.status)) {
+        return true;
+    }
+
+    return false;
 }
 
 export async function GoogleLogin(request: GoogleLoginRequest): Promise<GoogleLoginResponse | null> {

@@ -1,51 +1,61 @@
 "use client";
 
-import { redirect } from "next/navigation";
+import { RegistrationRequest, Register as HandleRegister } from "@/services/api/authentication";
+import moment from "moment";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+interface IRegistration {
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string,
+  username: string,
+  birthdate: string
+}
+
 export default function Register() {
-  const [formData, setFormData] = useState({
+  const router = useRouter();
+
+  const [formData, setFormData] = useState<IRegistration>({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
     username: '',
-    birthdate: new Date()
+    birthdate: moment(new Date()).format("YYYY-MM-DD")
   });
 
-  const handleChange = (e) => {
-    const { firstName, lastName, email, password, username, birthdate } = e.target;
-    setFormData((pervData) => ({
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
       ...prevData,
-      [firstName]: firstName,
-      [lastName]: lastName,
-      [email]: email,
-      [password]: password,
-      [username]: username,
-      [birthdate]: birthdate
+      [name]: value
     }))
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(process.env.API_BASE_URL + '/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
+      const request: RegistrationRequest = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        birthdate: formData.birthdate,
+        email: formData.email,
+        password: formData.password,
+        username: formData.username
+      };
+      const response = await HandleRegister(request);
 
-      if(response.ok) {
-        redirect("/");
+      if(response) {
+        router.push("/api/auth/signin");
       }
       else{
         alert('asd');
       }
     } catch (error) {
-      
+      console.error(error);
     }
   };
 
@@ -71,6 +81,8 @@ export default function Register() {
                             id="firstName"
                             name="firstName"
                             type="text"
+                            value={formData.firstName}
+                            onChange={handleChange}
                             autoComplete="cc-given-name"
                             className="mt-2 block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6"
                           />
@@ -84,6 +96,8 @@ export default function Register() {
                             id="lastName"
                             name="lastName"
                             type="text"
+                            value={formData.lastName}
+                            onChange={handleChange}
                             autoComplete="cc-family-name"
                             className="mt-2 block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6"
                           />
@@ -97,6 +111,8 @@ export default function Register() {
                             id="email"
                             name="email"
                             type="email"
+                            value={formData.email}
+                            onChange={handleChange}
                             autoComplete="email"
                             className="mt-2 block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6"
                           />
@@ -110,6 +126,8 @@ export default function Register() {
                             id="password"
                             name="password"
                             type="password"
+                            value={formData.password}
+                            onChange={handleChange}
                             autoComplete="new-password"
                             className="mt-2 block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6"
                           />
@@ -123,6 +141,8 @@ export default function Register() {
                             id="username"
                             name="username"
                             type="text"
+                            value={formData.username}
+                            onChange={handleChange}
                             autoComplete="username"
                             className="mt-2 block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6"
                           />
@@ -136,6 +156,8 @@ export default function Register() {
                             id="birthdate"
                             name="birthdate"
                             type="date"
+                            value={moment(formData.birthdate).format("YYYY-MM-DD")}
+                            onChange={handleChange}
                             autoComplete="bday-day"
                             className="mt-2 block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6"
                           />

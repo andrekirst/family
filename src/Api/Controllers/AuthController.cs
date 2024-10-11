@@ -198,12 +198,12 @@ public class LoginResponse
 
 public class RegistrationRequest
 {
-    [Required] public string FirstName { get; set; } = default!;
-    [Required] public string LastName { get; set; } = default!;
-    [Required] public DateTime Birthdate { get; set; }
-    [Required] public string EMail { get; set; } = default!;
-    [Required] public string Username { get; set; } = default!;
-    [Required] public string Password { get; set; } = default!;
+    public string FirstName { get; set; } = default!;
+    public string LastName { get; set; } = default!;
+    public DateTime Birthdate { get; set; }
+    public string EMail { get; set; } = default!;
+    public string Username { get; set; } = default!;
+    public string Password { get; set; } = default!;
 
     public void InvalidatePassword() => Password = string.Empty;
     
