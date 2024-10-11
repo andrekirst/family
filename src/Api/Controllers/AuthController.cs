@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using Api.Database;
 using Api.Domain.Core;
+using Api.Extensions;
 using Api.Infrastructure;
 using Google.Apis.Auth;
 using Google.Apis.Auth.OAuth2.Requests;
@@ -33,7 +34,7 @@ public class AuthController(
     [HttpPost]
     [Route("register")]
     [AllowAnonymous]
-    public async Task<IActionResult> Register(RegistrationRequest request, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> Register([FromBody] RegistrationRequest request, CancellationToken cancellationToken = default)
     {
         if (!ModelState.IsValid)
         {
@@ -43,31 +44,25 @@ public class AuthController(
         var identityUser = new IdentityUser
         {
             UserName = request.Username,
-            Email = request.Email
+            Email = request.EMail
         };
         var result = await userManager.CreateAsync(identityUser, request.Password);
 
         if (result.Succeeded)
         {
-            var userId = await usersContext.Users.AsNoTracking()
+            var userId = await usersContext.Users
+                .AsNoTracking()
                 .Where(user => user.UserName == request.Username)
                 .Select(user => user.Id)
                 .SingleAsync(cancellationToken);
 
-            await mediator.Send(new CreateFamilyMemberCommand(new CreateFamilyMemberCommandModel(
-                request.FirstName,
-                request.LastName,
-                request.Birthdate,
-                userId)), cancellationToken);
+            await mediator.Send(request.ToCreateFamilyMemberCommand(userId), cancellationToken);
 
-            request.Password = string.Empty;
-            return CreatedAtAction(nameof(Register), new { request.Email }, request);
+            request.InvalidatePassword();
+            return Created();
         }
 
-        foreach (var error in result.Errors)
-        {
-            ModelState.AddModelError(error.Code, error.Description);
-        }
+        ModelState.AddIdentityModelErrors(result.Errors);
 
         return BadRequest(ModelState);
     }
@@ -87,38 +82,7 @@ public class AuthController(
 
         if (managedUser == null)
         {
-            var identityUser = new IdentityUser
-            {
-                UserName = request.Login,
-                Email = request.EMail
-            };
-            var result = await userManager.CreateAsync(identityUser, request.Password);
-            
-            if (result.Succeeded)
-            {
-                var newUserId = await usersContext.Users
-                    .AsNoTracking()
-                    .Where(user => user.UserName == request.Login)
-                    .Select(user => user.Id)
-                    .SingleAsync(cancellationToken);
-
-                // TODO We need extra information for the names
-                await mediator.Send(new CreateFamilyMemberCommand(new CreateFamilyMemberCommandModel(
-                    request.Login,
-                    request.Login,
-                    DateTime.Today,
-                    newUserId)), cancellationToken);
-
-                request.Password = string.Empty;
-                return CreatedAtAction(nameof(Register), new { request.EMail }, request);
-            }
-
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(error.Code, error.Description);
-            }
-
-            return BadRequest(ModelState);
+            return BadRequest("Bad credentials");
         }
 
         var isPasswordValid = await userManager.CheckPasswordAsync(managedUser, request.Password);
@@ -234,21 +198,15 @@ public class LoginResponse
 
 public class RegistrationRequest
 {
-    [Required]
-    public string FirstName { get; set; } = default!;
+    [Required] public string FirstName { get; set; } = default!;
+    [Required] public string LastName { get; set; } = default!;
+    [Required] public DateTime Birthdate { get; set; }
+    [Required] public string EMail { get; set; } = default!;
+    [Required] public string Username { get; set; } = default!;
+    [Required] public string Password { get; set; } = default!;
+
+    public void InvalidatePassword() => Password = string.Empty;
     
-    [Required]
-    public string LastName { get; set; } = default!;
-    
-    [Required]
-    public DateTime Birthdate { get; set; }
-
-    [Required]
-    public string Email { get; set; } = default!;
-
-    [Required]
-    public string Username { get; set; } = default!;
-
-    [Required]
-    public string Password { get; set; } = default!;
+    public CreateFamilyMemberCommand ToCreateFamilyMemberCommand(string? aspNetUserId) =>
+        new(new CreateFamilyMemberCommandModel(FirstName, LastName, Birthdate, aspNetUserId));
 }

@@ -2,7 +2,7 @@
 
 import "./globals.css";
 import AuthProvider from "@/utils/SessionProvider";
-import Home from "./ui/home";
+import Home from "@/app/components/home";
 
 export default function RootLayout({
   children,

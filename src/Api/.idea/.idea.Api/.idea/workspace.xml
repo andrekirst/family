@@ -10,12 +10,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Extensions/ModelStateExtensions.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AuthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/app/api/auth/[...nextauth]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/app/api/auth/[...nextauth]/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebUI/app/auth/register/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/app/auth/register/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebUI/app/auth/unauthorized/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/app/auth/unauthorized/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebUI/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebUI/app/ui/home.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebUI/app/ui/notificationsbar.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebUI/app/ui/searchbar.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebUI/app/ui/sidebar/familymembers.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebUI/app/ui/sidebar/navigation.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebUI/app/ui/sidebar/settings.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebUI/app/ui/sidebar/sidebar.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebUI/app/ui/usernavigation.tsx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +82,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    ".NET Launch Settings Profile.Api: http.executor": "Debug",
+    ".NET Launch Settings Profile.Api: http.executor": "Run",
     ".NET Launch Settings Profile.Api: https.executor": "Debug",
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -181,7 +189,8 @@
       <workItem from="1728277838166" duration="1927000" />
       <workItem from="1728553887778" duration="8363000" />
       <workItem from="1728589919444" duration="1240000" />
-      <workItem from="1728626826875" duration="5541000" />
+      <workItem from="1728626826875" duration="6140000" />
+      <workItem from="1728648578707" duration="2489000" />
     </task>
     <task id="LOCAL-00001" summary="remove chocolate">
       <option name="closed" value="true" />
@@ -243,29 +252,55 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Controllers/AuthController.cs</url>
-          <line>36</line>
+          <line>37</line>
           <properties documentPath="$PROJECT_DIR$/Controllers/AuthController.cs" containingFunctionPresentation="Method 'Register'">
             <startOffsets>
-              <option value="1221" />
+              <option value="1254" />
             </startOffsets>
             <endOffsets>
-              <option value="1222" />
+              <option value="1255" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Controllers/AuthController.cs</url>
-          <line>78</line>
+          <line>73</line>
           <properties documentPath="$PROJECT_DIR$/Controllers/AuthController.cs" containingFunctionPresentation="Method 'Authentication'">
             <startOffsets>
-              <option value="2577" />
+              <option value="2341" />
             </startOffsets>
             <endOffsets>
-              <option value="2578" />
+              <option value="2342" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Extensions/ModelStateExtensions.cs</url>
+          <line>13</line>
+          <properties documentPath="$PROJECT_DIR$/Extensions/ModelStateExtensions.cs" containingFunctionPresentation="Method 'AddModelErrors'">
+            <startOffsets>
+              <option value="527" />
+            </startOffsets>
+            <endOffsets>
+              <option value="528" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Extensions/ModelStateExtensions.cs</url>
+          <line>8</line>
+          <properties documentPath="$PROJECT_DIR$/Extensions/ModelStateExtensions.cs" containingFunctionPresentation="Method 'AddIdentityModelErrors'">
+            <startOffsets>
+              <option value="276" />
+            </startOffsets>
+            <endOffsets>
+              <option value="277" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
