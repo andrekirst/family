@@ -34,7 +34,10 @@ public class Program
             .AddControllers(options =>
             {
                 options.Filters.Add(new AuthorizeFilter());
-                options.Filters.Add(new RequireHttpsAttribute());
+                if (!builder.Environment.IsDevelopment())
+                {
+                    options.Filters.Add(new RequireHttpsAttribute());   
+                }
             })
             .AddJsonOptions(options =>
             {
@@ -51,19 +54,6 @@ public class Program
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddCookie()
-            // .AddGoogle(options =>
-            // {
-            //     var clientId = builder.Configuration["Authentication:Google:ClientId"];
-            //     var clientSecrect = builder.Configuration["Authentication:Google:ClientSecret"];
-            //     var redirectUri = builder.Configuration["Authentication:Google:RedirectUri"];
-            //     
-            //     ArgumentException.ThrowIfNullOrEmpty(clientId);
-            //     ArgumentException.ThrowIfNullOrEmpty(clientSecrect);
-            //     
-            //     options.ClientId = clientId;
-            //     options.ClientSecret = clientSecrect;
-            //     options.CallbackPath = "/signin-google";
-            // })
             .AddJwtBearer(options =>
             {
                 var jwtOptions = builder.Configuration.GetSection("Jwt");
@@ -199,8 +189,11 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-            
-        app.UseHttpsRedirection();
+
+        if (!builder.Environment.IsDevelopment())
+        {
+            app.UseHttpsRedirection();   
+        }
 
         app.UseAuthentication();
         app.UseAuthorization();

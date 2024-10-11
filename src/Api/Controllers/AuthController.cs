@@ -75,7 +75,7 @@ public class AuthController(
     [HttpPost]
     [Route("login")]
     [AllowAnonymous]
-    public async Task<ActionResult<AuthenticationResponse>> Authentication([FromBody] AuthenticationRequest request, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest request, CancellationToken cancellationToken = default)
     {
         if (!ModelState.IsValid)
         {
@@ -87,7 +87,38 @@ public class AuthController(
 
         if (managedUser == null)
         {
-            return BadRequest("Bad credentials");
+            var identityUser = new IdentityUser
+            {
+                UserName = request.Login,
+                Email = request.EMail
+            };
+            var result = await userManager.CreateAsync(identityUser, request.Password);
+            
+            if (result.Succeeded)
+            {
+                var newUserId = await usersContext.Users
+                    .AsNoTracking()
+                    .Where(user => user.UserName == request.Login)
+                    .Select(user => user.Id)
+                    .SingleAsync(cancellationToken);
+
+                // TODO We need extra information for the names
+                await mediator.Send(new CreateFamilyMemberCommand(new CreateFamilyMemberCommandModel(
+                    request.Login,
+                    request.Login,
+                    DateTime.Today,
+                    newUserId)), cancellationToken);
+
+                request.Password = string.Empty;
+                return CreatedAtAction(nameof(Register), new { request.EMail }, request);
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(error.Code, error.Description);
+            }
+
+            return BadRequest(ModelState);
         }
 
         var isPasswordValid = await userManager.CheckPasswordAsync(managedUser, request.Password);
@@ -103,12 +134,14 @@ public class AuthController(
             return Unauthorized();
         }
 
-        var userId = await usersContext.Users.AsNoTracking()
+        var userId = await usersContext.Users
+            .AsNoTracking()
             .Where(user => user.NormalizedEmail == managedUser.NormalizedEmail)
             .Select(user => user.Id)
             .SingleAsync(cancellationToken);
 
-        var familyMemberId = await applicationDbContext.FamilyMembers.AsNoTracking()
+        var familyMemberId = await applicationDbContext.FamilyMembers
+            .AsNoTracking()
             .Where(fm => fm.AspNetUserId == userId)
             .Select(fm => fm.Id)
             .SingleOrDefaultAsync(cancellationToken);
@@ -119,8 +152,9 @@ public class AuthController(
         var accessToken = tokenService.CreateToken(managedUser, familyMemberId);
         await usersContext.SaveChangesAsync(cancellationToken);
 
-        return Ok(new AuthenticationResponse
+        return Ok(new LoginResponse
         {
+            Id = managedUser.Id,
             Username = managedUser.UserName!,
             Email = managedUser.Email!,
             Token = accessToken
@@ -146,43 +180,53 @@ public class AuthController(
         return Ok("Account linked");
     }
 
-    [HttpGet, Route("/signin-google"), AllowAnonymous]
-    public async Task<IActionResult> GoogleCallback(string code, CancellationToken cancellationToken = default)
+    [HttpGet, Route("/google-login"), AllowAnonymous]
+    public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginRequest request, CancellationToken cancellationToken = default)
     {
-        var options = googleAuthenticationOptions.Value;
-
-        var request = new AuthorizationCodeTokenRequest
-        {
-            ClientId = options.ClientId,
-            ClientSecret = options.ClientSecret,
-            Code = code,
-            RedirectUri = "/signin-google"
-        };
-
-        var httpClient = httpClientFactory.CreateClient();
-        
-        var response = await request.ExecuteAsync(httpClient, "https://oauth2.googleapis.com/token", cancellationToken, SystemClock.Default);
-
-        var payload = await GoogleJsonWebSignature.ValidateAsync(response.IdToken);
-        var userInfo = new
-        {
-            Email = payload.Email,
-            Name = payload.Name,
-            Picture = payload.Picture
-        };
-        
-        return BadRequest();
+        throw new NotImplementedException();
+        // var options = googleAuthenticationOptions.Value;
+        //
+        // var request = new AuthorizationCodeTokenRequest
+        // {
+        //     ClientId = options.ClientId,
+        //     ClientSecret = options.ClientSecret,
+        //     Code = code,
+        //     RedirectUri = "/signin-google"
+        // };
+        //
+        // var httpClient = httpClientFactory.CreateClient();
+        //
+        // var response = await request.ExecuteAsync(httpClient, "https://oauth2.googleapis.com/token", cancellationToken, SystemClock.Default);
+        //
+        // var payload = await GoogleJsonWebSignature.ValidateAsync(response.IdToken);
+        // var userInfo = new
+        // {
+        //     Email = payload.Email,
+        //     Name = payload.Name,
+        //     Picture = payload.Picture
+        // };
+        //
+        // return BadRequest();
     }
 }
 
-public class AuthenticationRequest
+public class GoogleLoginRequest
+{
+    public string EMail { get; set; } = default!;
+    public string Name { get; set; } = default!;
+    public string GoogleId { get; set; } = default!;
+}
+
+public class LoginRequest
 {
     public string Login { get; set; } = default!;
+    public string EMail { get; set; } = default!;
     public string Password { get; set; } = default!;
 }
 
-public class AuthenticationResponse
+public class LoginResponse
 {
+    public string Id { get; set; } = default!;
     public string Username { get; set; } = default!;
     public string Email { get; set; } = default!;
     public string Token { get; set; } = default!;

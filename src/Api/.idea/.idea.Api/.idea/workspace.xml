@@ -10,13 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Migrations/Users/20240813202036_Initial.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Migrations/Users/20240813202036_Initial.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Migrations/Users/UsersContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/projectSettingsUpdater.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Api.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AuthController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebUI/app/api/auth/[...nextauth]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/app/api/auth/[...nextauth]/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebUI/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebUI/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,31 +72,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.Api: http.executor&quot;: &quot;Debug&quot;,
-    &quot;.NET Launch Settings Profile.Api: https.executor&quot;: &quot;Debug&quot;,
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/andrekirst/git/github/andrekirst/family/src/ui/ui.csproj&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.intellij.kubernetes.config.KubernetesConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.Api: http.executor": "Debug",
+    ".NET Launch Settings Profile.Api: https.executor": "Debug",
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/andrekirst/git/github/andrekirst/family/src/ui/ui.csproj",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.tabs",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.Api: https">
+}]]></component>
+  <component name="RunManager" selected=".NET Launch Settings Profile.Api: http">
     <configuration name="Api: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Api.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net8.0" />
@@ -180,7 +179,9 @@
       <workItem from="1728025362760" duration="2693000" />
       <workItem from="1728241251127" duration="536000" />
       <workItem from="1728277838166" duration="1927000" />
-      <workItem from="1728553887778" duration="4746000" />
+      <workItem from="1728553887778" duration="8363000" />
+      <workItem from="1728589919444" duration="1240000" />
+      <workItem from="1728626826875" duration="5541000" />
     </task>
     <task id="LOCAL-00001" summary="remove chocolate">
       <option name="closed" value="true" />
@@ -228,32 +229,6 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/AuthController.cs</url>
-          <line>150</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/AuthController.cs" containingFunctionPresentation="Method 'GoogleCallback'">
-            <startOffsets>
-              <option value="5145" />
-            </startOffsets>
-            <endOffsets>
-              <option value="5146" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/AuthController.cs</url>
-          <line>161</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/AuthController.cs" containingFunctionPresentation="Method 'GoogleCallback'">
-            <startOffsets>
-              <option value="5449" />
-            </startOffsets>
-            <endOffsets>
-              <option value="5499" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Controllers/InstallationController.cs</url>
           <line>25</line>
           <properties documentPath="$PROJECT_DIR$/Controllers/InstallationController.cs" containingFunctionPresentation="Method 'Install'">
@@ -284,10 +259,10 @@
           <line>78</line>
           <properties documentPath="$PROJECT_DIR$/Controllers/AuthController.cs" containingFunctionPresentation="Method 'Authentication'">
             <startOffsets>
-              <option value="2604" />
+              <option value="2577" />
             </startOffsets>
             <endOffsets>
-              <option value="2605" />
+              <option value="2578" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="17" />

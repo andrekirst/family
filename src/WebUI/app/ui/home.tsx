@@ -10,6 +10,8 @@ import NotificationsBar from "./notificationsbar";
 import Sidebar from "./sidebar/sidebar";
 import { getProviders, signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import Unauthorized from "../auth/unauthorized/page";
+import { redirect, usePathname } from "next/navigation";
 
 export default function Home({
     children,
@@ -17,12 +19,13 @@ export default function Home({
     children: React.ReactNode;
   }>) {
 
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const provider: any = null;
   const [authProviders, setAuthProviders] = useState(provider);
   const { data: session } = useSession();
-  
+  const pathname = usePathname();
+
   useEffect(() => {
     const setProviders = async() => {
       const response = await getProviders();
@@ -104,9 +107,9 @@ export default function Home({
             </div>
           </div>
             ) : (
-                <Link href="/api/auth/signin">
-                    <button type="button" className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Button text</button>
-                </Link>
+              <div>
+                {children}
+              </div>
             )
           }
           </>
