@@ -26,7 +26,10 @@ export interface RegistrationRequest {
 export interface GoogleLoginRequest {
     email: string,
     name: string,
-    googleId: string
+    googleId: string,
+    accessToken: string | null | undefined,
+    lastName: string | null,
+    firstName: string | null
 }
 
 export interface GoogleLoginResponse {
@@ -46,7 +49,6 @@ export async function Login(request: LoginRequest): Promise<LoginResponse | null
 
 export async function Register(request: RegistrationRequest): Promise<boolean> {
     var url = process.env.NEXT_PUBLIC_API_BASE_URL + '/auth/register';
-    console.log(`Register: ${url}`);
     var response = await fetch(url, {
         body: JSON.stringify(request),
         headers: {
@@ -54,8 +56,6 @@ export async function Register(request: RegistrationRequest): Promise<boolean> {
         },
         method: 'POST'
     });
-    
-    // var response = await axiosInstance.post("/auth/register", request);
 
     if(isSuccessHttpStatusCode(response.status)) {
         return true;
@@ -64,13 +64,17 @@ export async function Register(request: RegistrationRequest): Promise<boolean> {
     return false;
 }
 
-export async function GoogleLogin(request: GoogleLoginRequest): Promise<GoogleLoginResponse | null> {
-    var response = await axiosInstance.post("/auth/google-login", request);
-
-    if(response.data) {
-        var data = response.data as GoogleLoginResponse;
-        return data;
-    }
-
-    return null;
+export async function GoogleLogin(request: GoogleLoginRequest): Promise<boolean> {
+    var url = process.env.NEXT_PUBLIC_API_BASE_URL + '/auth/google-login';
+    console.log(request);
+    var response = await fetch(url, {
+        body: JSON.stringify(request),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST'
+    });
+    
+    console.log(response);
+    return isSuccessHttpStatusCode(response.status);
 }

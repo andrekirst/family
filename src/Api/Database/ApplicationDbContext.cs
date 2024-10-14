@@ -1,5 +1,6 @@
 ﻿using Api.Domain.Body.WeightTracking;
 using Api.Domain.Core;
+using Api.Domain.Core.Authentication.Google;
 using Api.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Internal;
@@ -14,6 +15,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<FamilyMember> FamilyMembers => Set<FamilyMember>();
     public DbSet<WeightTrackingEntry> WeightTrackingEntries => Set<WeightTrackingEntry>();
     public DbSet<DomainEventEntry> DomainEventEntries => Set<DomainEventEntry>();
+    public DbSet<GoogleAccount> GoogleAccounts => Set<GoogleAccount>();
 
     public ApplicationDbContext(
         ISystemClock systemClock,

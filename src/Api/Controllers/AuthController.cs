@@ -2,6 +2,8 @@
 using System.Security.Claims;
 using Api.Database;
 using Api.Domain.Core;
+using Api.Domain.Core.Authentication;
+using Api.Domain.Core.Authentication.Google;
 using Api.Extensions;
 using Api.Infrastructure;
 using Google.Apis.Auth;
@@ -144,41 +146,16 @@ public class AuthController(
         return Ok("Account linked");
     }
 
-    [HttpGet, Route("/google-login"), AllowAnonymous]
+    [HttpPost, Route("google-login"), AllowAnonymous]
     public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginRequest request, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
-        // var options = googleAuthenticationOptions.Value;
-        //
-        // var request = new AuthorizationCodeTokenRequest
-        // {
-        //     ClientId = options.ClientId,
-        //     ClientSecret = options.ClientSecret,
-        //     Code = code,
-        //     RedirectUri = "/signin-google"
-        // };
-        //
-        // var httpClient = httpClientFactory.CreateClient();
-        //
-        // var response = await request.ExecuteAsync(httpClient, "https://oauth2.googleapis.com/token", cancellationToken, SystemClock.Default);
-        //
-        // var payload = await GoogleJsonWebSignature.ValidateAsync(response.IdToken);
-        // var userInfo = new
-        // {
-        //     Email = payload.Email,
-        //     Name = payload.Name,
-        //     Picture = payload.Picture
-        // };
-        //
-        // return BadRequest();
-    }
-}
+        var command = new GoogleLoginCommand(request);
+        var result = await mediator.Send(command, cancellationToken);
 
-public class GoogleLoginRequest
-{
-    public string EMail { get; set; } = default!;
-    public string Name { get; set; } = default!;
-    public string GoogleId { get; set; } = default!;
+        return result
+            ? Ok()
+            : BadRequest();
+    }
 }
 
 public class LoginRequest

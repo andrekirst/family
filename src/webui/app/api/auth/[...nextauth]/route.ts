@@ -1,7 +1,7 @@
 import NextAuth, { AuthOptions } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
+import GoogleProvider, { GoogleProfile } from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials"
-import { Login, LoginRequest } from "@/services/api/authentication"
+import { GoogleLogin, Login, LoginRequest } from "@/services/api/authentication"
 
 export const authOptions: AuthOptions = {
     providers: [
@@ -44,16 +44,27 @@ export const authOptions: AuthOptions = {
         })
     ],
     callbacks: {
-        // async signIn({ account, profile }) {
-        //     GoogleProvider.name
-        //     if(account?.provider === 'google') {
-        //         try {
-        //             const response = await Login({ login })
-        //         } catch (error) {
-                    
-        //         }
-        //     }
-        // },
+        async signIn({ account, profile }) {
+            if(account?.provider === 'google') {
+                try {
+                    var googleProfile = profile as GoogleProfile;
+                    const response = await GoogleLogin({
+                        email: profile?.email!,
+                        name: profile?.name!,
+                        googleId: profile?.sub!,
+                        accessToken: account?.access_token,
+                        lastName: googleProfile.family_name,
+                        firstName: googleProfile.given_name });
+                    return response;
+                } catch (error) {
+                    console.log(error);
+                }
+
+                return false;
+            }
+
+            return true;
+        },
         async jwt({ token, user }) {
             if (user) {
                 token.id = user.id;

@@ -9,7 +9,11 @@ namespace Api.Domain.Core;
 
 public record CreateFamilyMemberCommand(CreateFamilyMemberCommandModel Model) : ICommand;
 
-public record CreateFamilyMemberCommandModel(string FirstName, string LastName, DateTime Birthdate, string? AspNetUserId);
+public record CreateFamilyMemberCommandModel(
+    string FirstName,
+    string LastName,
+    DateTime Birthdate,
+    string? AspNetUserId);
 
 public class CreateFamilyMemberCommandValidator : AbstractValidator<CreateFamilyMemberCommand>
 {

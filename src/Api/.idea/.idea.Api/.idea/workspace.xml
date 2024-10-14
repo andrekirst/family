@@ -10,13 +10,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Domain/Core/Authentication/Google/GoogleAccount.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Domain/Core/Authentication/Google/GoogleAccountEntityTypeConfiguration.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Domain/Core/Authentication/Google/GoogleLoginCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Domain/Core/Authentication/Google/GoogleLoginRequest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberLoginService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberRegistrationService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Domain/Core/Authentication/RegisterOidcProviderRequest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Domain/Core/Authentication/ServiceRegistrations.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Migrations/20241014104657_add_google_account.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Migrations/20241014104657_add_google_account.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Migrations/20241014111547_change_google_account_metadata.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Migrations/20241014111547_change_google_account_metadata.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AuthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/app/auth/register/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/app/auth/register/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/services/api/authentication.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/services/api/authentication.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebUI/services/api/base.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../WebUI/services/api/base.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Database/ApplicationDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Database/ApplicationDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Core/CreateFamilyMemberCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/CreateFamilyMemberCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/DomainServiceRegistrations.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/DomainServiceRegistrations.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Migrations/ApplicationDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webui/app/api/auth/[...nextauth]/google.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/app/api/auth/[...nextauth]/google.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webui/app/api/auth/[...nextauth]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/app/api/auth/[...nextauth]/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webui/services/api/authentication.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/services/api/authentication.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,10 +65,12 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d25cebc0e04b4f9894c0ed5eb9e0131a1d600/e7/a66b71d5/ServiceProviderServiceExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d726e3b0069440e0a83f0fe681951fb913600/5a/c88b6965/ClaimsIdentity.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/dc37343e91a74fa08a5cd84f35e6e7f2b2d000/31/cd316406/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/eb367f896c6844e48ca6beeea10bc10130400/77/40a4d663/CallSiteFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/eed1cc81c5394859923f394ceb0571884a400/ae/166361fb/PathString.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/12f8d680aa1c5ae78dc1fb7cf8212be01e323372dbe3b9b87360e27c58936a/IRequest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3e7a5d9e8f1e8fc8895e3999e4b986ebd69c6f311e8a7f7ba94f4560a54a89/IdentityDbContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8aca45508683a6169bab9e8bd96b7cda607d638cacfaa31173c8c278c45/ISender.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f4bc324a395d24ed12db75b0a81536b642509aa14825bf114d9b7c934e2b/Mediator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/bin/Debug/net8.0/Api.deps.json" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -73,30 +89,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.Api: http.executor": "Debug",
-    ".NET Launch Settings Profile.Api: https.executor": "Debug",
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/andrekirst/git/github/andrekirst/family/src/ui/ui.csproj",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editor.preferences.tabs",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.Api: http.executor&quot;: &quot;Debug&quot;,
+    &quot;.NET Launch Settings Profile.Api: https.executor&quot;: &quot;Debug&quot;,
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/andrekirst/git/github/andrekirst/family/src/ui/ui.csproj&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.tabs&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Api: http">
     <configuration name="Api: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Api.csproj" />
@@ -185,6 +201,7 @@
       <workItem from="1728626826875" duration="6140000" />
       <workItem from="1728648578707" duration="2489000" />
       <workItem from="1728671348749" duration="5611000" />
+      <workItem from="1728887261117" duration="14444000" />
     </task>
     <task id="LOCAL-00001" summary="remove chocolate">
       <option name="closed" value="true" />
@@ -246,26 +263,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Controllers/AuthController.cs</url>
-          <line>37</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/AuthController.cs" containingFunctionPresentation="Method 'Register'">
-            <startOffsets>
-              <option value="1254" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1255" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/AuthController.cs</url>
-          <line>73</line>
+          <line>75</line>
           <properties documentPath="$PROJECT_DIR$/Controllers/AuthController.cs" containingFunctionPresentation="Method 'Authentication'">
             <startOffsets>
-              <option value="2341" />
+              <option value="2424" />
             </startOffsets>
             <endOffsets>
-              <option value="2342" />
+              <option value="2425" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="17" />
@@ -298,32 +302,102 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Controllers/AuthController.cs</url>
-          <line>76</line>
+          <line>78</line>
           <properties documentPath="$PROJECT_DIR$/Controllers/AuthController.cs" containingFunctionPresentation="Method 'Login'">
             <startOffsets>
-              <option value="2398" />
+              <option value="2481" />
             </startOffsets>
             <endOffsets>
-              <option value="2428" />
+              <option value="2511" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/AuthController.cs</url>
-          <line>38</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/AuthController.cs" containingFunctionPresentation="Method 'Register'">
+          <url>file://$PROJECT_DIR$/Domain/Core/Authentication/Google/GoogleLoginCommand.cs</url>
+          <line>14</line>
+          <properties documentPath="$PROJECT_DIR$/Domain/Core/Authentication/Google/GoogleLoginCommand.cs" containingFunctionPresentation="Method 'Handle'">
             <startOffsets>
-              <option value="1264" />
+              <option value="558" />
             </startOffsets>
             <endOffsets>
-              <option value="1288" />
+              <option value="559" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="28" />
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/AuthController.cs</url>
+          <line>154</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/AuthController.cs" containingFunctionPresentation="Method 'GoogleLogin'">
+            <startOffsets>
+              <option value="5173" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5233" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/AuthController.cs</url>
+          <line>152</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/AuthController.cs" containingFunctionPresentation="Method 'GoogleLogin'">
+            <startOffsets>
+              <option value="5102" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5163" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberRegistrationService.cs</url>
+          <line>20</line>
+          <properties documentPath="$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberRegistrationService.cs" containingFunctionPresentation="Method 'RegisterProviderAccount'">
+            <startOffsets>
+              <option value="730" />
+            </startOffsets>
+            <endOffsets>
+              <option value="731" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Domain/Core/Authentication/Google/GoogleLoginCommand.cs</url>
+          <line>36</line>
+          <properties documentPath="$PROJECT_DIR$/Domain/Core/Authentication/Google/GoogleLoginCommand.cs" containingFunctionPresentation="Method 'Handle'">
+            <startOffsets>
+              <option value="1668" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1943" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberLoginService.cs</url>
+          <line>13</line>
+          <properties documentPath="$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberLoginService.cs" containingFunctionPresentation="Method 'LoginProviderAccount'">
+            <startOffsets>
+              <option value="501" />
+            </startOffsets>
+            <endOffsets>
+              <option value="502" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="39" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="Type#Api.Controllers.GoogleLoginRequest" memberName="GoogleId" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -1,4 +1,5 @@
-﻿using Api.Domain.Installation.Install;
+﻿using Api.Domain.Core.Authentication;
+using Api.Domain.Installation.Install;
 using Api.Domain.Search;
 
 namespace Api.Domain;
@@ -9,5 +10,6 @@ public static class DomainServiceRegistrations
     {
         services.AddSearchServices();
         services.AddInstallServices();
+        services.AddAuthenticationServices();
     }
 }
