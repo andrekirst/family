@@ -5,6 +5,7 @@ using Api.Domain;
 using Api.Domain.Core;
 using Api.Features.Core;
 using Api.Infrastructure;
+using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -53,56 +54,50 @@ public class Program
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddCookie()
             .AddJwtBearer(options =>
             {
-                var jwtOptions = builder.Configuration.GetSection("Jwt");
-                var validIssuer = jwtOptions[nameof(JwtOptions.Issuer)];
-                var validAudience = jwtOptions[nameof(JwtOptions.Audience)];
-                var issuerSigningKey = jwtOptions[nameof(JwtOptions.IssuerSigningKey)];
-
-                ArgumentException.ThrowIfNullOrEmpty(issuerSigningKey);
+                var googleClientId = builder.Configuration.GetSection("Authentication:Google:ClientId").Value;
                 
+                options.Authority = "https://accounts.google.com"; // Google als Token-Issuer
+                options.Audience = googleClientId; // Dein Google Client ID hier
+                options.Events = new JwtBearerEvents
+                {
+                    OnAuthenticationFailed = context =>
+                    {
+                        return Task.CompletedTask;
+                    },
+                    OnMessageReceived = context =>
+                    {
+                        return Task.CompletedTask;
+                    },
+                    OnChallenge = context =>
+                    {
+                        return Task.CompletedTask;
+                    },
+                    OnForbidden = context =>
+                    {
+                        return Task.CompletedTask;
+                    },
+                    OnTokenValidated = context =>
+                    {
+                        return Task.CompletedTask;
+                    } 
+                };
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ClockSkew = TokenValidationParameters.DefaultClockSkew,
                     ValidateIssuer = true,
+                    ValidIssuer = "https://accounts.google.com", // Google Issuer
                     ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = validIssuer,
-                    ValidAudience = validAudience,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(issuerSigningKey))
-                };
+                    ValidAudience = googleClientId, // Dein Google Client ID hier
+                    ValidateLifetime = true, // Token Ablaufzeit validieren
+                    ValidateIssuerSigningKey = true, // Signatur des Tokens validieren
+                }; 
             });
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(options =>
         {
             options.SwaggerDoc("v1", new OpenApiInfo { Title = "Family.Api", Version = "v1"});
-            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-            {
-                In = ParameterLocation.Header,
-                Description = "Please enter a valid token",
-                Name = HeaderNames.Authorization,
-                Type = SecuritySchemeType.Http,
-                BearerFormat = "JWT",
-                Scheme = "Bearer"
-            });
-            options.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
-                {
-                    new OpenApiSecurityScheme
-                    {
-                        Reference = new OpenApiReference
-                        {
-                            Type=ReferenceType.SecurityScheme,
-                            Id="Bearer"
-                        }
-                    },
-                    new string[]{}
-                }
-            });
         });
         builder.Services.AddMediatR(configuration =>
         {

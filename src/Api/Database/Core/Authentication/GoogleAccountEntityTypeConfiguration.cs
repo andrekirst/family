@@ -17,10 +17,6 @@ public class GoogleAccountEntityTypeConfiguration : EntityTypeConfigurationBase<
             .ToTable(EntityTableName, SchemaNames.Core);
 
         builder
-            .Property(p => p.AccessToken)
-            .HasMaxLength(512);
-
-        builder
             .Property(p => p.GoogleId)
             .HasMaxLength(512);
 

@@ -66,7 +66,6 @@ export async function Register(request: RegistrationRequest): Promise<boolean> {
 
 export async function GoogleLogin(request: GoogleLoginRequest): Promise<boolean> {
     var url = process.env.NEXT_PUBLIC_API_BASE_URL + '/auth/google-login';
-    console.log(request);
     var response = await fetch(url, {
         body: JSON.stringify(request),
         headers: {
@@ -75,6 +74,5 @@ export async function GoogleLogin(request: GoogleLoginRequest): Promise<boolean>
         method: 'POST'
     });
     
-    console.log(response);
     return isSuccessHttpStatusCode(response.status);
 }
