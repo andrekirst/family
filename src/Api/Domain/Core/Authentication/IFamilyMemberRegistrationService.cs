@@ -44,6 +44,7 @@ public class FamilyMemberRegistrationService(
                 .Select(user => user.Id)
                 .SingleAsync(cancellationToken);
 
+            // TODO Refactor when using multiple identity providers
             dbContext.GoogleAccounts.Add(new GoogleAccount
             {
                 AccessToken = request.AccessToken,

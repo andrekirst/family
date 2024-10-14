@@ -1,23 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using Api.Database;
-using Api.Domain.Core;
 using Api.Domain.Core.Authentication;
 using Api.Domain.Core.Authentication.Google;
 using Api.Extensions;
 using Api.Infrastructure;
-using Google.Apis.Auth;
-using Google.Apis.Auth.OAuth2.Requests;
-using Google.Apis.Http;
-using Google.Apis.Util;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using AuthorizationCodeTokenRequest = Google.Apis.Auth.OAuth2.Requests.AuthorizationCodeTokenRequest;
-using IHttpClientFactory = System.Net.Http.IHttpClientFactory;
 
 namespace Api.Controllers;
 
@@ -28,9 +19,7 @@ public class AuthController(
     ApplicationDbContext applicationDbContext,
     UsersContext usersContext,
     ITokenService tokenService,
-    IMediator mediator,
-    IOptions<GoogleAuthenticationOptions> googleAuthenticationOptions,
-    IHttpClientFactory httpClientFactory)
+    IMediator mediator)
     : ControllerBase
 {
     [HttpPost]
@@ -127,25 +116,6 @@ public class AuthController(
         });
     }
 
-    [HttpPost("link-google-account")]
-    public async Task<IActionResult> LinkGoogleAccount(string idToken, CancellationToken cancellationToken = default)
-    {
-        var payload = await GoogleJsonWebSignature.ValidateAsync(idToken);
-        if (payload == null)
-        {
-            return BadRequest("Invalid Google token.");
-        }
-        
-        // TODO (wip)
-        
-        var userId = payload.Subject;
-        var email = payload.Email;
-        
-        // TODO
-
-        return Ok("Account linked");
-    }
-
     [HttpPost, Route("google-login"), AllowAnonymous]
     public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginRequest request, CancellationToken cancellationToken = default)
     {
@@ -156,34 +126,4 @@ public class AuthController(
             ? Ok()
             : BadRequest();
     }
-}
-
-public class LoginRequest
-{
-    public string Login { get; set; } = default!;
-    public string EMail { get; set; } = default!;
-    public string Password { get; set; } = default!;
-}
-
-public class LoginResponse
-{
-    public string Id { get; set; } = default!;
-    public string Username { get; set; } = default!;
-    public string Email { get; set; } = default!;
-    public string Token { get; set; } = default!;
-}
-
-public class RegistrationRequest
-{
-    public string FirstName { get; set; } = default!;
-    public string LastName { get; set; } = default!;
-    public DateTime Birthdate { get; set; }
-    public string EMail { get; set; } = default!;
-    public string Username { get; set; } = default!;
-    public string Password { get; set; } = default!;
-
-    public void InvalidatePassword() => Password = string.Empty;
-    
-    public CreateFamilyMemberCommand ToCreateFamilyMemberCommand(string? aspNetUserId) =>
-        new(new CreateFamilyMemberCommandModel(FirstName, LastName, Birthdate, aspNetUserId));
 }

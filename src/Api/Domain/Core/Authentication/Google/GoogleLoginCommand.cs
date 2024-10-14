@@ -27,7 +27,6 @@ public class GoogleLoginCommandHandler(
                 EMail = request.Request.EMail,
                 AccessToken = request.Request.AccessToken,
                 GoogleId = request.Request.GoogleId,
-                // TODO Refactor when using more identity provicers
                 ProviderName = "google"
             };
             
