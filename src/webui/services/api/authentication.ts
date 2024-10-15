@@ -3,15 +3,15 @@ import { isSuccessHttpStatusCode, postAnonymous } from "./base";
 
 export interface LoginRequest {
     login: string,
-    email: string,
-    password: string | null
+    password: string
 }
 
 export interface LoginResponse {
     Id: string,
     username: string,
     email: string,
-    token: string
+    token: string,
+    name: string
 }
 
 export interface RegistrationRequest {
@@ -27,6 +27,7 @@ export interface GoogleLoginRequest {
     email: string,
     name: string,
     googleId: string,
+    googleAccessToken: string | null | undefined,
     accessToken: string | null | undefined,
     lastName: string | null,
     firstName: string | null

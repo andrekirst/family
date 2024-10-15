@@ -8,8 +8,9 @@ public sealed class RegisterOidcProviderRequest
     public DateTime Birthdate { get; set; }
     public string? Username { get; set; } = default!;
     public string ProviderName { get; set; } = default!;
-    public string? AccessToken { get; set; }
+    
     // TODO Refactor when we have more identity providers
+    public string? GoogleAccessToken { get; set; }
     public string? GoogleId { get; set; }
     
     public CreateFamilyMemberCommand ToCreateFamilyMemberCommand(string? aspNetUserId) =>

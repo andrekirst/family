@@ -25,7 +25,7 @@ public class GoogleLoginCommandHandler(
                 LastName = request.Request.LastName ?? nameParts.LastOrDefault() ?? "<Unknwon LastName>",
                 Username = request.Request.EMail,
                 EMail = request.Request.EMail,
-                AccessToken = request.Request.AccessToken,
+                GoogleAccessToken = request.Request.AccessToken,
                 GoogleId = request.Request.GoogleId,
                 ProviderName = "google"
             };
@@ -36,7 +36,7 @@ public class GoogleLoginCommandHandler(
         return await familyMemberLoginService.LoginProviderAccount(new LoginOidcProviderRequest
         {
             EMail = request.Request.EMail,
-            AccessToken = request.Request.AccessToken!,
+            AccessToken = request.Request.GoogleAccessToken,
             GoogleId = request.Request.GoogleId
         }, cancellationToken);
     }

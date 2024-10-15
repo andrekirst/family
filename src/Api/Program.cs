@@ -3,9 +3,9 @@ using System.Text.Json.Serialization;
 using Api.Database;
 using Api.Domain;
 using Api.Domain.Core;
+using Api.Extensions;
 using Api.Features.Core;
 using Api.Infrastructure;
-using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using ISystemClock = Microsoft.Extensions.Internal.ISystemClock;
 using SystemClock = Microsoft.Extensions.Internal.SystemClock;
@@ -45,6 +44,21 @@ public class Program
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("webui", policy =>
+            {
+                var webuiPolicy = builder.Configuration.GetSection("Cors:webui");
+                var origins = webuiPolicy.GetSection("Origins").Get<string[]>();
+                origins.ThrowIfNullOrEmpty();
+
+                policy
+                    .WithOrigins(origins)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+        });
+
         builder.Services.AddHttpClient();
         builder.Services.UseGoogleAuthenticationOptions();
         builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
@@ -56,42 +70,24 @@ public class Program
             })
             .AddJwtBearer(options =>
             {
-                var googleClientId = builder.Configuration.GetSection("Authentication:Google:ClientId").Value;
+                var jwtSettings = builder.Configuration.GetSection(JwtOptions.OptionsName);
+                var issuerSigningKey = jwtSettings[nameof(JwtOptions.IssuerSigningKey)];
                 
-                options.Authority = "https://accounts.google.com"; // Google als Token-Issuer
-                options.Audience = googleClientId; // Dein Google Client ID hier
-                options.Events = new JwtBearerEvents
-                {
-                    OnAuthenticationFailed = context =>
-                    {
-                        return Task.CompletedTask;
-                    },
-                    OnMessageReceived = context =>
-                    {
-                        return Task.CompletedTask;
-                    },
-                    OnChallenge = context =>
-                    {
-                        return Task.CompletedTask;
-                    },
-                    OnForbidden = context =>
-                    {
-                        return Task.CompletedTask;
-                    },
-                    OnTokenValidated = context =>
-                    {
-                        return Task.CompletedTask;
-                    } 
-                };
+                ArgumentException.ThrowIfNullOrEmpty(issuerSigningKey);
+                
+                var isDevelopment = builder.Environment.IsProduction();
+
+                options.RequireHttpsMetadata = !isDevelopment;
+                options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
-                    ValidIssuer = "https://accounts.google.com", // Google Issuer
                     ValidateAudience = true,
-                    ValidAudience = googleClientId, // Dein Google Client ID hier
-                    ValidateLifetime = true, // Token Ablaufzeit validieren
-                    ValidateIssuerSigningKey = true, // Signatur des Tokens validieren
-                }; 
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings["Issuer"],
+                    ValidAudience = jwtSettings["Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(issuerSigningKey))
+                };
             });
 
         builder.Services.AddEndpointsApiExplorer();
@@ -192,7 +188,7 @@ public class Program
 
         app.UseAuthentication();
         app.UseAuthorization();
-        app.UseCors();
+        app.UseCors("webui");
 
         app.UseMiddleware<ExceptionHandlingMiddleware>();
 

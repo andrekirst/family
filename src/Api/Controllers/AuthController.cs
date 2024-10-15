@@ -83,22 +83,20 @@ public class AuthController(
             return BadRequest("Bad credentials");
         }
 
-        var userInDb = await usersContext.Users.AnyAsync(user => user.NormalizedEmail == managedUser.NormalizedEmail, cancellationToken);
-        if (!userInDb)
-        {
-            return Unauthorized();
-        }
-
-        var familyMemberId = await applicationDbContext.FamilyMembers
+        var familyMember = await applicationDbContext.FamilyMembers
             .AsNoTracking()
             .Where(fm => fm.AspNetUserId == managedUser.Id)
-            .Select(fm => fm.Id)
-            .SingleOrDefaultAsync(cancellationToken);
+            .Select(fm => new
+            {
+                fm.Id,
+                Name = $"{fm.FirstName} {fm.LastName}"
+            })
+            .SingleAsync(cancellationToken);
 
-        await userManager.AddClaimAsync(managedUser, new Claim(ApplicationClaimNames.CurrentFamilyMemberId, familyMemberId.ToString(), nameof(Guid)));
+        await userManager.AddClaimAsync(managedUser, new Claim(ApplicationClaimNames.CurrentFamilyMemberId, familyMember.Id.ToString(), nameof(Guid)));
 
         await userManager.ResetAccessFailedCountAsync(managedUser);
-        var accessToken = tokenService.CreateToken(managedUser, familyMemberId);
+        var accessToken = tokenService.CreateToken(managedUser, familyMember.Id);
         await usersContext.SaveChangesAsync(cancellationToken);
 
         return Ok(new LoginResponse
@@ -106,7 +104,8 @@ public class AuthController(
             Id = managedUser.Id,
             Username = managedUser.UserName!,
             Email = managedUser.Email!,
-            Token = accessToken
+            Token = accessToken,
+            Name = familyMember.Name
         });
     }
 

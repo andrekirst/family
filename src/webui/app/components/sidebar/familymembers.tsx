@@ -13,8 +13,9 @@ export default function FamilyMembers() {
 
     useEffect(() => {
         const fetchData = async () => {
+            console.log('familymembers:fetchdata:session: ' + session);
             // @ts-ignore   
-            const token = session?.idToken;
+            const token = session?.user.accessToken;
             const result = await getFamilyMembers(token!);
             setFamilyMembers(result);
         }

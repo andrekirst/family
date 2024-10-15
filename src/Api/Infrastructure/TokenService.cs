@@ -16,29 +16,38 @@ public interface ITokenService
 
 public class TokenService(
     ISystemClock systemClock,
-    IOptions<JwtOptions> jwtOptions,
-    ILogger<TokenService> logger)
+    IOptions<JwtOptions> jwtOptions)
     : ITokenService
 {
     private readonly JwtOptions _jwtOptions = jwtOptions.Value;
 
     public string CreateToken(IdentityUser user, Guid familyMemberId)
     {
+        ArgumentNullException.ThrowIfNull(user.UserName);
         var expiration = systemClock.UtcNow.AddMinutes(_jwtOptions.ExpirationMinutes).DateTime;
 
+        var claims = new Dictionary<string, object>
+        {
+            { JwtRegisteredClaimNames.Sub, user.UserName },
+            { JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString() }
+        };
+
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.IssuerSigningKey));
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Subject = new ClaimsIdentity(CreateClaims(user, familyMemberId)),
-            Expires = expiration,
             Issuer = _jwtOptions.Issuer,
             Audience = _jwtOptions.Audience,
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.IssuerSigningKey)), SecurityAlgorithms.HmacSha256)
+            Claims = claims,
+            Expires = expiration,
+            Subject = new ClaimsIdentity(CreateClaims(user, familyMemberId)),
+            SigningCredentials = credentials
         };
 
         var tokenHandler = new JwtSecurityTokenHandler();
         var token = tokenHandler.CreateToken(tokenDescriptor);
-        var jwtToken = tokenHandler.WriteToken(token);
-        return jwtToken;
+        return tokenHandler.WriteToken(token);
     }
 
     private IEnumerable<Claim> CreateClaims(IdentityUser user, Guid familyMemberId)
@@ -46,23 +55,15 @@ public class TokenService(
         ArgumentException.ThrowIfNullOrEmpty(user.UserName);
         ArgumentException.ThrowIfNullOrEmpty(user.Email);
         
-        try
-        {
-            return
-            [
-                new Claim(JwtRegisteredClaimNames.Sub, _jwtOptions.Sub),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, systemClock.UtcNow.ToString(CultureInfo.InvariantCulture)),
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ApplicationClaimNames.CurrentFamilyMemberId, familyMemberId.ToString(), nameof(Guid))
-            ];
-        }
-        catch (Exception e)
-        {
-            logger.LogError(e, e.Message);
-            throw;
-        }
+        return
+        [
+            new Claim(JwtRegisteredClaimNames.Sub, _jwtOptions.Sub),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim(JwtRegisteredClaimNames.Iat, systemClock.UtcNow.ToString(CultureInfo.InvariantCulture)),
+            new Claim(ClaimTypes.NameIdentifier, user.Id),
+            new Claim(ClaimTypes.Name, user.UserName),
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ApplicationClaimNames.CurrentFamilyMemberId, familyMemberId.ToString(), nameof(Guid))
+        ];
     }
 }
