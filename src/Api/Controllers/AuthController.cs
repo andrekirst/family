@@ -89,15 +89,9 @@ public class AuthController(
             return Unauthorized();
         }
 
-        var userId = await usersContext.Users
-            .AsNoTracking()
-            .Where(user => user.NormalizedEmail == managedUser.NormalizedEmail)
-            .Select(user => user.Id)
-            .SingleAsync(cancellationToken);
-
         var familyMemberId = await applicationDbContext.FamilyMembers
             .AsNoTracking()
-            .Where(fm => fm.AspNetUserId == userId)
+            .Where(fm => fm.AspNetUserId == managedUser.Id)
             .Select(fm => fm.Id)
             .SingleOrDefaultAsync(cancellationToken);
 

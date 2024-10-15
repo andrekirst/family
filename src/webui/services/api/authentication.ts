@@ -1,5 +1,5 @@
 import axiosInstance from "@/utils/axios";
-import { isSuccessHttpStatusCode } from "./base";
+import { isSuccessHttpStatusCode, postAnonymous } from "./base";
 
 export interface LoginRequest {
     login: string,
@@ -37,25 +37,23 @@ export interface GoogleLoginResponse {
 }
 
 export async function Login(request: LoginRequest): Promise<LoginResponse | null> {
-    var response = await axiosInstance.post("/auth/login", request);
+    const response = await postAnonymous(
+        '/auth/login',
+        JSON.stringify(request));
 
-    if(response.data) {
-        var data = response.data as LoginResponse;
-        return data;
+    const json = await response.json();
+
+    if(json) {
+        return json as LoginResponse;
     }
 
     return null;
 }
 
 export async function Register(request: RegistrationRequest): Promise<boolean> {
-    var url = process.env.NEXT_PUBLIC_API_BASE_URL + '/auth/register';
-    var response = await fetch(url, {
-        body: JSON.stringify(request),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        method: 'POST'
-    });
+    const response = await postAnonymous(
+        '/auth/register',
+        JSON.stringify(request));
 
     if(isSuccessHttpStatusCode(response.status)) {
         return true;
@@ -65,14 +63,10 @@ export async function Register(request: RegistrationRequest): Promise<boolean> {
 }
 
 export async function GoogleLogin(request: GoogleLoginRequest): Promise<boolean> {
-    var url = process.env.NEXT_PUBLIC_API_BASE_URL + '/auth/google-login';
-    var response = await fetch(url, {
-        body: JSON.stringify(request),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        method: 'POST'
-    });
+    const response = await postAnonymous(
+        '/auth/google-login',
+        JSON.stringify(request)
+    )
     
     return isSuccessHttpStatusCode(response.status);
 }

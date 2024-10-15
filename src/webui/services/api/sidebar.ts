@@ -1,3 +1,5 @@
+import { get } from "./base";
+
 export interface getFamilyMembersData
 {
     id: string,
@@ -7,28 +9,12 @@ export interface getFamilyMembersData
 }
 
 export async function getFamilyMembers(token: string): Promise<getFamilyMembersData[]> {
-    const url = process.env.NEXT_PUBLIC_API_BASE_URL + '/frontend/webui/sidebar/familymembers';
-
-    const response = await fetch(url, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        },
-        method: 'GET'
-    })
-    .then((response) => {
-        return response.json();
-    })
-    .then((data: getFamilyMembersData[]) => {
-        return data;
-    })
-    .then((items) => {
-        items.forEach((item) => {
-            item.href = `/familymember/${item.id}/start`
+    return await get<getFamilyMembersData[]>('/frontend/webui/sidebar/familymembers', token)
+        .then((items) => {
+            items.forEach((item) => {
+                item.href = `/familymember/${item.id}/start`
+            });
+            
+            return items;
         });
-        
-        return items;
-    });
-    console.log(response);
-    return response;
 }
