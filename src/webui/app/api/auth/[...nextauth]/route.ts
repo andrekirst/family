@@ -48,7 +48,7 @@ const authOptions: AuthOptions = {
         })
     ],
     callbacks: {
-        async signIn({ account, profile, credentials }) {
+        async signIn({ account, profile, credentials, user }) {
             if (account?.provider === 'google') {
                 try {
                     var googleProfile = profile as GoogleProfile;
@@ -61,7 +61,13 @@ const authOptions: AuthOptions = {
                         lastName: googleProfile.family_name,
                         firstName: googleProfile.given_name
                     });
-                    return response;
+
+                    if(response)
+                    {
+                        account.access_token = response.token;
+                        return true;
+                    }
+                    
                 } catch (error) {
                     console.log(error);
                 }
@@ -80,16 +86,21 @@ const authOptions: AuthOptions = {
 
             return false;
         },
-        async jwt({ token, account, user }) {
-            // Überprüfe, ob es ein neuer Benutzer ist und füge das Access Token hinzu
+        async jwt({ token, account, user, session }) {
             if (account && user) {
                 token.id = user.id;
-                token.accessToken = user.token;  // Füge den Token hinzu
+
+                if(account.provider === 'google') {
+                    token.accessToken = account.access_token;
+                }
+                else {
+                    token.accessToken = user.token;
+                }
             }
 
             return token;
         },
-        async session({ session, token }) {
+        async session({ session, token, newSession }) {
             // @ts-ignore
             session.id = token.id;
             // @ts-ignore

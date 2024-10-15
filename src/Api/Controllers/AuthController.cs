@@ -79,8 +79,8 @@ public class AuthController(
         var isPasswordValid = await userManager.CheckPasswordAsync(managedUser, request.Password);
         if (!isPasswordValid)
         {
-            await userManager.AccessFailedAsync(managedUser);
-            return BadRequest("Bad credentials");
+            var identityResult = await userManager.AccessFailedAsync(managedUser);
+            return BadRequest(identityResult.Errors);
         }
 
         var familyMember = await applicationDbContext.FamilyMembers
@@ -109,14 +109,11 @@ public class AuthController(
         });
     }
 
-    [HttpPost, Route("google-login"), AllowAnonymous]
+    [HttpPost, Route("google-login"), AllowAnonymous, Produces<LoginResponse>]
     public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginRequest request, CancellationToken cancellationToken = default)
     {
         var command = new GoogleLoginCommand(request);
         var result = await mediator.Send(command, cancellationToken);
-
-        return result
-            ? Ok()
-            : BadRequest();
+        return Ok(result);
     }
 }

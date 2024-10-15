@@ -1,3 +1,5 @@
+using Api.Infrastructure;
+
 namespace Api.Domain.Core.Authentication;
 
 public class LoginResponse

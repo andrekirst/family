@@ -63,11 +63,17 @@ export async function Register(request: RegistrationRequest): Promise<boolean> {
     return false;
 }
 
-export async function GoogleLogin(request: GoogleLoginRequest): Promise<boolean> {
+export async function GoogleLogin(request: GoogleLoginRequest): Promise<LoginResponse | null> {
     const response = await postAnonymous(
         '/auth/google-login',
         JSON.stringify(request)
     )
     
-    return isSuccessHttpStatusCode(response.status);
+    const success = isSuccessHttpStatusCode(response.status);
+
+    if(!success) { return null; }
+
+    var value = await response.json().then((data: LoginResponse) => data);
+    console.log('GoogleLogin:value', value);
+    return value;
 }

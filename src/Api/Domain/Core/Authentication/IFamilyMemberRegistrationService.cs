@@ -10,7 +10,39 @@ namespace Api.Domain.Core.Authentication;
 
 public interface IFamilyMemberRegistrationService
 {
-    Task<bool> RegisterProviderAccount(RegisterOidcProviderRequest request, CancellationToken cancellationToken = default);
+    /// <summary>
+    /// Registering a new User, FamilyMember and GoogleAccount
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>The AspNetUserId</returns>
+    Task<RegisterProviderAccountResponse> RegisterProviderAccount(RegisterOidcProviderRequest request, CancellationToken cancellationToken = default);
+}
+
+public class RegisterProviderAccountResponse : IHasSuccessAndHasError
+{
+    private RegisterProviderAccountResponse()
+    {
+    }
+    
+    public string? AspNetUserId { get; set; }
+    public Guid? FamilyMemberId { get; set; }
+    public IdentityUser? IdentityUser { get; set; }
+    public bool IsSuccess { get; private set; }
+    public bool IsError { get; private set; }
+
+    public static RegisterProviderAccountResponse Error() => new()
+    {
+        IsError = true
+    };
+
+    public static RegisterProviderAccountResponse Success(string aspNetUserId, Guid familyMemberId, IdentityUser identityUser) => new()
+    {
+        IsSuccess = true,
+        AspNetUserId = aspNetUserId,
+        FamilyMemberId = familyMemberId,
+        IdentityUser = identityUser
+    };
 }
 
 public class FamilyMemberRegistrationService(
@@ -19,7 +51,7 @@ public class FamilyMemberRegistrationService(
     UsersContext usersContext,
     ApplicationDbContext dbContext) : IFamilyMemberRegistrationService
 {
-    public async Task<bool> RegisterProviderAccount(RegisterOidcProviderRequest request, CancellationToken cancellationToken = default)
+    public async Task<RegisterProviderAccountResponse> RegisterProviderAccount(RegisterOidcProviderRequest request, CancellationToken cancellationToken = default)
     {
         if (!request.ProviderName.Equals("google", StringComparison.InvariantCultureIgnoreCase))
         {
@@ -39,7 +71,10 @@ public class FamilyMemberRegistrationService(
 
         var result = await userManager.CreateAsync(identityUser);
 
-        if (!result.Succeeded) return false;
+        if (!result.Succeeded)
+        {
+            return RegisterProviderAccountResponse.Error();
+        }
         
         var userId = await usersContext.Users
             .Where(user => user.Email == request.EMail)
@@ -66,7 +101,6 @@ public class FamilyMemberRegistrationService(
 
         await sender.Send(request.ToCreateFamilyMemberCommand(userId), cancellationToken);
 
-        return true;
-
+        return RegisterProviderAccountResponse.Success(userId, familyMemberId, identityUser);
     }
 }

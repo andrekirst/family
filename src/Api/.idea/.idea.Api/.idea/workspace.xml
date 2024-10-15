@@ -10,21 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Extensions/EnumerableExtensions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Extensions/QueryableExtensions/FamilyMemberQueryableExtensions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/IHasSuccessAndHasError.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AuthController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Domain/Core/Authentication/Google/GoogleLoginCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/Authentication/Google/GoogleLoginCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Core/Authentication/Google/GoogleLoginRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/Authentication/Google/GoogleLoginRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberLoginService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberLoginService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberRegistrationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberRegistrationService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Core/Authentication/LoginRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/Authentication/LoginRequest.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Domain/Core/Authentication/LoginResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/Authentication/LoginResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Core/Authentication/RegisterOidcProviderRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/Authentication/RegisterOidcProviderRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/JwtOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/JwtOptions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/TokenService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/TokenService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../webui/app/api/auth/[...nextauth]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/app/api/auth/[...nextauth]/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webui/app/components/sidebar/familymembers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/app/components/sidebar/familymembers.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../webui/services/api/authentication.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/services/api/authentication.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,13 +45,16 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0c7558f9b5904d208d7a8c2cb37cb8f14a400/f8/5f02f8f4/ActivatorUtilities.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3e6cfa91023d4528a577156f118914ae141b0/b2/88787306/JwtSecurityTokenHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5ce17ead15a44f8192c0598d8785e869b2c800/be/0fd6f38a/ArgumentNullException.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5ce17ead15a44f8192c0598d8785e869b2c800/e1/638dfbca/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/822f3e243e634f41ab5364e42d67bd0230200/25/225588f5/ServiceProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/93b43812258a444ca2dceb63ff6803356800/13/d97fbb52/EntityFrameworkRequestExecutorBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9cf715cc4ef4480b828b686ffca412ed196a0/0b/1d30ef94/IdentityEntityFrameworkBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c61cc76f205b4535a5b4f40700c07900b2d200/08/7e53c04e/ArgumentNullException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c61cc76f205b4535a5b4f40700c07900b2d200/e7/da2a6711/Nullable`1.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d25cebc0e04b4f9894c0ed5eb9e0131a1d600/e7/a66b71d5/ServiceProviderServiceExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d726e3b0069440e0a83f0fe681951fb913600/5a/c88b6965/ClaimsIdentity.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/dc37343e91a74fa08a5cd84f35e6e7f2b2d000/31/cd316406/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
@@ -198,7 +195,7 @@
       <workItem from="1728648578707" duration="2489000" />
       <workItem from="1728671348749" duration="5611000" />
       <workItem from="1728887261117" duration="25881000" />
-      <workItem from="1728973833452" duration="14772000" />
+      <workItem from="1728973833452" duration="21661000" />
     </task>
     <task id="LOCAL-00001" summary="remove chocolate">
       <option name="closed" value="true" />
@@ -285,43 +282,17 @@
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberRegistrationService.cs</url>
-          <line>22</line>
-          <properties documentPath="$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberRegistrationService.cs" containingFunctionPresentation="Method 'RegisterProviderAccount'">
+          <url>file://$PROJECT_DIR$/Controllers/AuthController.cs</url>
+          <line>116</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/AuthController.cs" containingFunctionPresentation="Method 'GoogleLogin'">
             <startOffsets>
-              <option value="786" />
+              <option value="3890" />
             </startOffsets>
             <endOffsets>
-              <option value="787" />
+              <option value="3908" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="35" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberRegistrationService.cs</url>
-          <line>39</line>
-          <properties documentPath="$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberRegistrationService.cs" containingFunctionPresentation="Method 'RegisterProviderAccount'">
-            <startOffsets>
-              <option value="1368" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1425" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="56" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Program.cs</url>
-          <line>81</line>
-          <properties documentPath="$PROJECT_DIR$/Program.cs" containingFunctionPresentation="Lambda expression inside Method 'Main'">
-            <startOffsets>
-              <option value="2949" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3417" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="59" />
+          <option name="timeStamp" value="63" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -330,6 +301,11 @@
         <PinnedItemInfo parentTag="Type#Api.Controllers.GoogleLoginRequest" memberName="GoogleId" />
       </pinned-members>
     </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="LaunchSettings">
+        <watch expression="result" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
