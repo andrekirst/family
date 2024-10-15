@@ -11,7 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webui/app/api/auth/[...nextauth]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/app/api/auth/[...nextauth]/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberRegistrationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberRegistrationService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,7 +183,7 @@
       <workItem from="1728648578707" duration="2489000" />
       <workItem from="1728671348749" duration="5611000" />
       <workItem from="1728887261117" duration="25881000" />
-      <workItem from="1728973833452" duration="1887000" />
+      <workItem from="1728973833452" duration="4475000" />
     </task>
     <task id="LOCAL-00001" summary="remove chocolate">
       <option name="closed" value="true" />
@@ -271,29 +271,42 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberRegistrationService.cs</url>
-          <line>20</line>
+          <line>22</line>
           <properties documentPath="$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberRegistrationService.cs" containingFunctionPresentation="Method 'RegisterProviderAccount'">
             <startOffsets>
-              <option value="730" />
+              <option value="786" />
             </startOffsets>
             <endOffsets>
-              <option value="731" />
+              <option value="787" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Domain/Core/Authentication/Google/GoogleLoginCommand.cs</url>
-          <line>14</line>
-          <properties documentPath="$PROJECT_DIR$/Domain/Core/Authentication/Google/GoogleLoginCommand.cs" containingFunctionPresentation="Method 'Handle'">
+          <url>file://$PROJECT_DIR$/Controllers/AuthController.cs</url>
+          <line>28</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/AuthController.cs" containingFunctionPresentation="Method 'Register'">
             <startOffsets>
-              <option value="558" />
+              <option value="843" />
             </startOffsets>
             <endOffsets>
-              <option value="559" />
+              <option value="844" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="52" />
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/AuthController.cs</url>
+          <line>64</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/AuthController.cs" containingFunctionPresentation="Method 'Login'">
+            <startOffsets>
+              <option value="1930" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1931" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="54" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

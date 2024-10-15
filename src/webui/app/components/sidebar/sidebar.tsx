@@ -2,6 +2,11 @@ import Image from "next/image";
 import Navigation from "./navigation";
 import FamilyMembers from "./familymembers";
 import Settings from "./settings";
+import { ReactNode, Suspense } from "react";
+
+function Loading(): ReactNode {
+  return <h2>Loading...</h2>
+}
 
 export default function Sidebar() {
     return (
@@ -18,7 +23,9 @@ export default function Sidebar() {
               <nav className="flex flex-1 flex-col">
                 <ul role="list" className="flex flex-1 flex-col gap-y-7">
                   <Navigation />
-                  <FamilyMembers />
+                  <Suspense fallback={<Loading />}>
+                    <FamilyMembers />
+                  </Suspense>
                   <Settings />
                 </ul>
               </nav>
