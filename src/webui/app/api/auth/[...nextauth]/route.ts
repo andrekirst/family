@@ -83,8 +83,11 @@ const authOptions: AuthOptions = {
             return token;
         },
         async session({ session, token }) {
+            // @ts-ignore
             session.id = token.id;
+            // @ts-ignore
             session.accessToken = token.accessToken;
+            // @ts-ignore
             session.idToken = token.idToken;
             return session;
         }
