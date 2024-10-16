@@ -74,6 +74,5 @@ export async function GoogleLogin(request: GoogleLoginRequest): Promise<LoginRes
     if(!success) { return null; }
 
     var value = await response.json().then((data: LoginResponse) => data);
-    console.log('GoogleLogin:value', value);
     return value;
 }

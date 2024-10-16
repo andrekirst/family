@@ -6,37 +6,18 @@ namespace Api.Domain.Core.Authentication;
 
 public interface IFamilyMemberLoginService
 {
-    Task<LoginProviderAccountResponse> LoginProviderAccount(LoginOidcProviderRequest request, CancellationToken cancellationToken = default);
+    Task<Result<LoginProviderAccountResponse>> LoginProviderAccount(LoginOidcProviderRequest request, CancellationToken cancellationToken = default);
 }
 
-public class LoginProviderAccountResponse : IHasSuccessAndHasError
+public class LoginProviderAccountResponse
 {
-    private LoginProviderAccountResponse()
-    {
-    }
-    
-    public Guid? FamilyMemberId { get; set; }
-    public string? Name { get; set; }
-    public bool IsSuccess { get; private set; }
-    public bool IsError { get; private set; }
-
-    public static LoginProviderAccountResponse Success(Guid familyMemberId, string name) => new()
-    {
-        FamilyMemberId = familyMemberId,
-        Name = name,
-        IsSuccess = true
-    };
-    
-    public static LoginProviderAccountResponse Error() => new()
-    {
-        IsError = true
-    };
+    public Guid? FamilyMemberId { get; init; }
+    public string? Name { get; init; }
 }
 
-public class FamilyMemberLoginService(
-    ApplicationDbContext dbContext) : IFamilyMemberLoginService
+public class FamilyMemberLoginService(ApplicationDbContext dbContext) : IFamilyMemberLoginService
 {
-    public async Task<LoginProviderAccountResponse> LoginProviderAccount(LoginOidcProviderRequest request, CancellationToken cancellationToken = default)
+    public async Task<Result<LoginProviderAccountResponse>> LoginProviderAccount(LoginOidcProviderRequest request, CancellationToken cancellationToken = default)
     {
         var googleAccount = await dbContext.GoogleAccounts
             .Where(g => g.GoogleId == request.GoogleId)
@@ -55,6 +36,10 @@ public class FamilyMemberLoginService(
             })
             .SingleAsync(cancellationToken);
 
-        return LoginProviderAccountResponse.Success(familyMember.Id, familyMember.Name);
+        return new LoginProviderAccountResponse
+        {
+            FamilyMemberId = familyMember.Id,
+            Name = familyMember.Name
+        };
     }
 }

@@ -1,61 +1,28 @@
-﻿using System.Security.Claims;
-using Api.Database;
-using Api.Domain.Core.Authentication;
+﻿using Api.Domain.Core.Authentication;
+using Api.Domain.Core.Authentication.Credentials;
 using Api.Domain.Core.Authentication.Google;
-using Api.Extensions;
 using Api.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthController(
-    UserManager<IdentityUser> userManager,
-    ApplicationDbContext applicationDbContext,
-    UsersContext usersContext,
-    ITokenService tokenService,
-    IMediator mediator)
-    : ControllerBase
+public class AuthController(IMediator mediator) : ApiControllerBase(mediator)
 {
     [HttpPost]
     [Route("register")]
     [AllowAnonymous]
     public async Task<IActionResult> Register([FromBody] RegistrationRequest request, CancellationToken cancellationToken = default)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
+        var command = new RegisterCommand(request);
+        var result = await Mediator.Send(command, cancellationToken);
 
-        var identityUser = new IdentityUser
-        {
-            UserName = request.Username,
-            Email = request.EMail
-        };
-        var result = await userManager.CreateAsync(identityUser, request.Password);
-
-        if (result.Succeeded)
-        {
-            var userId = await usersContext.Users
-                .AsNoTracking()
-                .Where(user => user.UserName == request.Username)
-                .Select(user => user.Id)
-                .SingleAsync(cancellationToken);
-
-            await mediator.Send(request.ToCreateFamilyMemberCommand(userId), cancellationToken);
-
-            request.InvalidatePassword();
-            return Created();
-        }
-
-        ModelState.AddIdentityModelErrors(result.Errors);
-
-        return BadRequest(ModelState);
+        return result.IsSuccess
+            ? Created()
+            : BadRequest(result.Error);
     }
 
     [HttpPost]
@@ -63,57 +30,22 @@ public class AuthController(
     [AllowAnonymous]
     public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest request, CancellationToken cancellationToken = default)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
-        var managedUser = await userManager.FindByEmailAsync(request.Login) ??
-                          await userManager.FindByNameAsync(request.Login);
-
-        if (managedUser == null)
-        {
-            return BadRequest("Bad credentials");
-        }
-
-        var isPasswordValid = await userManager.CheckPasswordAsync(managedUser, request.Password);
-        if (!isPasswordValid)
-        {
-            var identityResult = await userManager.AccessFailedAsync(managedUser);
-            return BadRequest(identityResult.Errors);
-        }
-
-        var familyMember = await applicationDbContext.FamilyMembers
-            .AsNoTracking()
-            .Where(fm => fm.AspNetUserId == managedUser.Id)
-            .Select(fm => new
-            {
-                fm.Id,
-                Name = $"{fm.FirstName} {fm.LastName}"
-            })
-            .SingleAsync(cancellationToken);
-
-        await userManager.AddClaimAsync(managedUser, new Claim(ApplicationClaimNames.CurrentFamilyMemberId, familyMember.Id.ToString(), nameof(Guid)));
-
-        await userManager.ResetAccessFailedCountAsync(managedUser);
-        var accessToken = tokenService.CreateToken(managedUser, familyMember.Id);
-        await usersContext.SaveChangesAsync(cancellationToken);
-
-        return Ok(new LoginResponse
-        {
-            Id = managedUser.Id,
-            Username = managedUser.UserName!,
-            Email = managedUser.Email!,
-            Token = accessToken,
-            Name = familyMember.Name
-        });
+        var command = new LoginCommand(request);
+        var result = await Mediator.Send(command, cancellationToken);
+        
+        return result.IsSuccess
+            ? Ok(result.Value)
+            : Unauthorized();
     }
 
     [HttpPost, Route("google-login"), AllowAnonymous, Produces<LoginResponse>]
     public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginRequest request, CancellationToken cancellationToken = default)
     {
         var command = new GoogleLoginCommand(request);
-        var result = await mediator.Send(command, cancellationToken);
-        return Ok(result);
+        var result = await Mediator.Send(command, cancellationToken);
+
+        return result.IsSuccess
+            ? Ok(result.Value)
+            : Unauthorized(result.Error);
     }
 }

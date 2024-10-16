@@ -16,33 +16,14 @@ public interface IFamilyMemberRegistrationService
     /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
     /// <returns>The AspNetUserId</returns>
-    Task<RegisterProviderAccountResponse> RegisterProviderAccount(RegisterOidcProviderRequest request, CancellationToken cancellationToken = default);
+    Task<Result<RegisterProviderAccountResponse>> RegisterProviderAccount(RegisterOidcProviderRequest request, CancellationToken cancellationToken = default);
 }
 
-public class RegisterProviderAccountResponse : IHasSuccessAndHasError
+public class RegisterProviderAccountResponse
 {
-    private RegisterProviderAccountResponse()
-    {
-    }
-    
-    public string? AspNetUserId { get; set; }
-    public Guid? FamilyMemberId { get; set; }
-    public IdentityUser? IdentityUser { get; set; }
-    public bool IsSuccess { get; private set; }
-    public bool IsError { get; private set; }
-
-    public static RegisterProviderAccountResponse Error() => new()
-    {
-        IsError = true
-    };
-
-    public static RegisterProviderAccountResponse Success(string aspNetUserId, Guid familyMemberId, IdentityUser identityUser) => new()
-    {
-        IsSuccess = true,
-        AspNetUserId = aspNetUserId,
-        FamilyMemberId = familyMemberId,
-        IdentityUser = identityUser
-    };
+    public string? AspNetUserId { get; init; }
+    public Guid? FamilyMemberId { get; init; }
+    public IdentityUser? IdentityUser { get; init; }
 }
 
 public class FamilyMemberRegistrationService(
@@ -51,8 +32,9 @@ public class FamilyMemberRegistrationService(
     UsersContext usersContext,
     ApplicationDbContext dbContext) : IFamilyMemberRegistrationService
 {
-    public async Task<RegisterProviderAccountResponse> RegisterProviderAccount(RegisterOidcProviderRequest request, CancellationToken cancellationToken = default)
+    public async Task<Result<RegisterProviderAccountResponse>> RegisterProviderAccount(RegisterOidcProviderRequest request, CancellationToken cancellationToken = default)
     {
+        // TODO Refactor when using multiple identity providers
         if (!request.ProviderName.Equals("google", StringComparison.InvariantCultureIgnoreCase))
         {
             throw new NotSupportedException();
@@ -73,7 +55,7 @@ public class FamilyMemberRegistrationService(
 
         if (!result.Succeeded)
         {
-            return RegisterProviderAccountResponse.Error();
+            return Errors.Authentication.IdentityResult(result.Errors);
         }
         
         var userId = await usersContext.Users
@@ -87,7 +69,11 @@ public class FamilyMemberRegistrationService(
             .Select(fm => fm.Id)
             .SingleAsync(cancellationToken);
 
-        await userManager.AddClaimAsync(identityUser, new Claim(ApplicationClaimNames.CurrentFamilyMemberId, familyMemberId.ToString(), nameof(Guid)));
+        await userManager.AddClaimAsync(
+            identityUser,
+            new Claim(ApplicationClaimNames.CurrentFamilyMemberId,
+                familyMemberId.ToString(),
+                nameof(Guid)));
 
         // TODO Refactor when using multiple identity providers
         dbContext.GoogleAccounts.Add(new GoogleAccount
@@ -101,6 +87,11 @@ public class FamilyMemberRegistrationService(
 
         await sender.Send(request.ToCreateFamilyMemberCommand(userId), cancellationToken);
 
-        return RegisterProviderAccountResponse.Success(userId, familyMemberId, identityUser);
+        return new RegisterProviderAccountResponse
+        {
+            FamilyMemberId = familyMemberId,
+            IdentityUser = identityUser,
+            AspNetUserId = userId
+        };
     }
 }

@@ -5,9 +5,12 @@ namespace Api.Extensions;
 
 public static class ModelStateExtensions
 {
-    public static void AddIdentityModelErrors(this ModelStateDictionary modelState, IEnumerable<IdentityError> errors)
+    public static void AddIdentityModelErrors(this ModelStateDictionary modelState, IEnumerable<IdentityError>? errors)
     {
-        modelState.AddModelErrors(errors, key => key.Code, message => message.Description);
+        if (errors != null)
+        {
+            modelState.AddModelErrors(errors, key => key.Code, message => message.Description);   
+        }
     }
 
     public static void AddModelErrors<T>(this ModelStateDictionary modelState, IEnumerable<T> list, Func<T, string> key, Func<T, string> message)
