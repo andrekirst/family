@@ -23,14 +23,14 @@ public class LoginCommandHandler(
 
         if (managedUser == null)
         {
-            return Errors.Authentication.BadCredentials();
+            return Errors.Authentication.BadCredentials;
         }
 
         var isPasswordValid = await userManager.CheckPasswordAsync(managedUser, request.Password);
         if (!isPasswordValid)
         {
             await userManager.AccessFailedAsync(managedUser);
-            return Errors.Authentication.BadCredentials();
+            return Errors.Authentication.BadCredentials;
         }
 
         var familyMember = await dbContext.FamilyMembers

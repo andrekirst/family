@@ -1,7 +1,6 @@
 ﻿using Api.Database;
 using Api.Database.Body;
 using Api.Domain.Body;
-using Api.Domain.Core;
 using Api.Infrastructure;
 using Api.Infrastructure.Database;
 using FluentValidation;
@@ -30,18 +29,19 @@ public class CreateWeightTrackingEntryCommandHandler(
         ApplicationDbContext dbContext,
         IUnitOfWork unitOfWork,
         IMediator mediator,
-        CurrentFamilyMemberIdService currentFamilyMemberIdService)
+        IHttpContextAccessor httpContextAccessor)
     : ICommandHandler<CreateWeightTrackingEntryCommand>
 {
     public async Task Handle(CreateWeightTrackingEntryCommand request, CancellationToken cancellationToken)
     {
-        var familyMemberId = currentFamilyMemberIdService.GetFamilyMemberId();
+        var familyMemberId = httpContextAccessor.HttpContext?.GetFamilyMemberId();
+        
         var weightTrackingEntry = WeightTrackingEntryMappings.MapFromSource(request.Model);
 
         dbContext.WeightTrackingEntries.Add(weightTrackingEntry);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         
-        var domainEvent = CreateDomainEvent(request, weightTrackingEntry, familyMemberId);
+        var domainEvent = CreateDomainEvent(request, weightTrackingEntry, familyMemberId!.Value);
         await mediator.Publish(domainEvent, cancellationToken);
     }
 

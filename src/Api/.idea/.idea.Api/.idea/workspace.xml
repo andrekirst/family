@@ -9,7 +9,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="" />
+    <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Controllers/Frontend/WebUI/Calendar/Me/CalendarController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Features/Frontend/WebUI/Calendar/Me/GetCalendarMeListQuery.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/HttpContextExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Database/ApplicationDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Database/ApplicationDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Core/CurrentFamilyMemberIdService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Features/Authentication/LoginCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Features/Authentication/LoginCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Features/Body/CreateWeightTrackingEntryCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Features/Body/CreateWeightTrackingEntryCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/ApiControllerBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/ApiControllerBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Errors.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Errors.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -65,6 +77,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/822f3e243e634f41ab5364e42d67bd0230200/25/225588f5/ServiceProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/93b43812258a444ca2dceb63ff6803356800/13/d97fbb52/EntityFrameworkRequestExecutorBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9cf715cc4ef4480b828b686ffca412ed196a0/0b/1d30ef94/IdentityEntityFrameworkBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c3b8d8542f664d29b0b604911b99a41f34c00/1c/67b21da2/HttpStatusCode.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c61cc76f205b4535a5b4f40700c07900b2d200/08/7e53c04e/ArgumentNullException.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c61cc76f205b4535a5b4f40700c07900b2d200/3d/0c250536/IEnumerable`1.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c61cc76f205b4535a5b4f40700c07900b2d200/e7/da2a6711/Nullable`1.cs" root0="FORCE_HIGHLIGHTING" />
@@ -213,7 +226,7 @@
       <workItem from="1728887261117" duration="25881000" />
       <workItem from="1728973833452" duration="23861000" />
       <workItem from="1729061898162" duration="17637000" />
-      <workItem from="1729149564765" duration="10237000" />
+      <workItem from="1729149564765" duration="13811000" />
     </task>
     <task id="LOCAL-00001" summary="remove chocolate">
       <option name="closed" value="true" />

@@ -19,7 +19,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<GoogleAccountEntity> GoogleAccounts => Set<GoogleAccountEntity>();
     public DbSet<CalendarEntity> Calendars => Set<CalendarEntity>();
     public DbSet<NotificationMessageEntity> NotificationMessages => Set<NotificationMessageEntity>();
-
+    
     public ApplicationDbContext(
         ISystemClock systemClock,
         IHttpContextAccessor httpContextAccessor,

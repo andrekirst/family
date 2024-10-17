@@ -1,3 +1,4 @@
+using System.Net;
 using System.Text;
 using System.Text.Json.Serialization;
 using Api.Database;
@@ -34,6 +35,8 @@ public class Program
             .AddControllers(options =>
             {
                 options.Filters.Add(new AuthorizeFilter());
+                options.Filters.Add(new ProducesResponseTypeAttribute<Error>((int)HttpStatusCode.BadRequest));
+                options.Filters.Add(new ProducesResponseTypeAttribute<Error>((int)HttpStatusCode.InternalServerError));
                 if (!builder.Environment.IsDevelopment())
                 {
                     options.Filters.Add(new RequireHttpsAttribute());   
@@ -112,7 +115,7 @@ public class Program
             var isNotProduction = !builder.Environment.IsProduction();
             
             optionsBuilder
-                .UseNpgsql(builder.Configuration.GetConnectionString("Default"))
+                .UseNpgsql(defaultConnectionString)
                 .EnableDetailedErrors(isNotProduction)
                 .EnableSensitiveDataLogging(isNotProduction)
                 .EnableServiceProviderCaching();
@@ -123,7 +126,7 @@ public class Program
             var isNotProduction = !builder.Environment.IsProduction();
 
             optionsBuilder
-                .UseNpgsql(builder.Configuration.GetConnectionString("Default"))
+                .UseNpgsql(defaultConnectionString)
                 .EnableDetailedErrors(isNotProduction)
                 .EnableSensitiveDataLogging(isNotProduction)
                 .EnableServiceProviderCaching();
@@ -144,7 +147,6 @@ public class Program
 
         builder.Services.AddScoped<ITokenService, TokenService>();
         builder.Services.AddScoped<DomainEventRepository>();
-        builder.Services.AddScoped<CurrentFamilyMemberIdService>();
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddAutoMapper(configure =>
         {

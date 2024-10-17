@@ -15,4 +15,11 @@ public abstract class ApiControllerBase(IMediator mediator) : ControllerBase
 
     protected Task ExecuteCommandAsync(ICommand command, CancellationToken cancellationToken = default)
         => Mediator.Send(command, cancellationToken);
+
+    protected IActionResult HandleDefaultResult<TValue, TError>(Result<TValue, TError> result)
+    {
+        return result.IsSuccess
+            ? Ok(result.Value)
+            : BadRequest(result.Error);
+    }
 }
