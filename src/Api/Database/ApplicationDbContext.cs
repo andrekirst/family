@@ -1,7 +1,7 @@
-﻿using Api.Domain.Body.WeightTracking;
-using Api.Domain.Core;
-using Api.Domain.Core.Authentication.Google;
-using Api.Domain.Core.Messaging;
+﻿using Api.Database.Authentication;
+using Api.Database.Body;
+using Api.Database.Calendar;
+using Api.Database.Core;
 using Api.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Internal;
@@ -17,7 +17,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<WeightTrackingEntity> WeightTrackingEntries => Set<WeightTrackingEntity>();
     public DbSet<DomainEventEntity> DomainEventEntries => Set<DomainEventEntity>();
     public DbSet<GoogleAccountEntity> GoogleAccounts => Set<GoogleAccountEntity>();
-    public DbSet<Domain.Calendar.CalendarEntity> Calendars => Set<Domain.Calendar.CalendarEntity>();
+    public DbSet<CalendarEntity> Calendars => Set<CalendarEntity>();
     public DbSet<NotificationMessageEntity> NotificationMessages => Set<NotificationMessageEntity>();
 
     public ApplicationDbContext(

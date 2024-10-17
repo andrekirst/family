@@ -1,0 +1,12 @@
+namespace Api.Features.Authentication;
+
+public class GoogleLoginRequest
+{
+    public string EMail { get; set; } = default!;
+    public string Name { get; set; } = default!;
+    public string GoogleId { get; set; } = default!;
+    public string GoogleAccessToken { get; set; } = default!;
+    public string? AccessToken { get; set; }
+    public string? LastName { get; set; } = default!;
+    public string? FirstName { get; set; } = default!;
+}

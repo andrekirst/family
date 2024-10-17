@@ -1,4 +1,4 @@
-﻿using Api.Domain.Body.WeightTracking;
+﻿using Api.Features.Body;
 using Api.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

@@ -1,4 +1,4 @@
-using Api.Domain.Core;
+using Api.Database.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Extensions.QueryableExtensions;

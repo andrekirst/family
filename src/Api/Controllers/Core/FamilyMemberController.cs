@@ -1,5 +1,4 @@
-﻿using Api.Domain.Core;
-using Api.Features.Core;
+﻿using Api.Features.Core;
 using Api.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

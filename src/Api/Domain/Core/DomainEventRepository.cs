@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using Api.Database;
+using Api.Database.Core;
 using Api.Infrastructure;
 
 namespace Api.Domain.Core;

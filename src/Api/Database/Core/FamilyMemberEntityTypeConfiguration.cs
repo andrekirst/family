@@ -1,5 +1,4 @@
 ﻿using Api.Domain;
-using Api.Domain.Core;
 using Api.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

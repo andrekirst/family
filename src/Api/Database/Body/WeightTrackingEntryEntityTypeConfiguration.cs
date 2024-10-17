@@ -1,5 +1,4 @@
-﻿using Api.Domain.Body.WeightTracking;
-using Api.Infrastructure;
+﻿using Api.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

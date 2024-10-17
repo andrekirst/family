@@ -13,7 +13,7 @@ public class LabelEntityTypeConfiguration : EntityTypeConfigurationBase<LabelEnt
 
         builder.ToTable("Labels", SchemaNames.Core);
         
-        builder.ConfigureColor(_ => _.Color);
+        builder.ConfigureColor(e => e.Color);
 
         builder
             .Property(p => p.Name)

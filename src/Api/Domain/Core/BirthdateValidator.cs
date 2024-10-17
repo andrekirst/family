@@ -8,7 +8,7 @@ public class BirthdateValidator : AbstractValidator<Birthdate>
 {
     public BirthdateValidator(IStringLocalizer<FamilyMemberController> stringLocalizer)
     {
-        RuleFor(_ => _.Value)
+        RuleFor(b => b.Value)
             .GreaterThan(DateTime.MinValue)
             .WithMessage(stringLocalizer["Birth date must be a correct date"]);
     }

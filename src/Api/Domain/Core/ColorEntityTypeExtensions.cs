@@ -13,7 +13,7 @@ public static class ColorEntityTypeExtensions
         where TType : class
     {
         builder.OwnsOne(colorProperty!)
-            .Property(_ => _.Value)
+            .Property(c => c.Value)
             .HasColumnName(targetColumnName ?? "Color")
             .IsUnicode(false)
             .HasMaxLength(256);

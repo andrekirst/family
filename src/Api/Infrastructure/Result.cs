@@ -45,5 +45,3 @@ public class Result<TValue, TError>
     public Result<TValue, TError> Match(Func<TValue, Result<TValue, TError>> success, Func<TError, Result<TValue, TError>> failure)
         => IsSuccess ? success(Value!) : failure(Error!);
 }
-
-public sealed record Error(string Code, string? Message = null);

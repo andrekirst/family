@@ -1,6 +1,4 @@
-﻿using Api.Domain.Core.Authentication;
-using Api.Domain.Core.Authentication.Credentials;
-using Api.Domain.Core.Authentication.Google;
+﻿using Api.Features.Authentication;
 using Api.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

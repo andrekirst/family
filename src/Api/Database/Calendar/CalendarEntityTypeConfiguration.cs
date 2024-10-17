@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.Database.Calendar;
 
-public class CalendarEntityTypeConfiguration : EntityTypeConfigurationBase<Domain.Calendar.CalendarEntity>
+public class CalendarEntityTypeConfiguration : EntityTypeConfigurationBase<CalendarEntity>
 {
-    public override void Configure(EntityTypeBuilder<Domain.Calendar.CalendarEntity> builder)
+    public override void Configure(EntityTypeBuilder<CalendarEntity> builder)
     {
         base.Configure(builder);
 

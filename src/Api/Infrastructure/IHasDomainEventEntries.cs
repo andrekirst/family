@@ -1,4 +1,4 @@
-﻿using Api.Domain.Core;
+﻿using Api.Database.Core;
 
 namespace Api.Infrastructure;
 

@@ -1,0 +1,20 @@
+using Api.Features.Core;
+
+namespace Api.Features.Authentication;
+
+public sealed class RegisterOidcProviderRequest
+{
+    public string EMail { get; set; } = default!;
+    public string FirstName { get; set; } = default!;
+    public string LastName { get; set; } = default!;
+    public DateTime Birthdate { get; set; }
+    public string? Username { get; set; } = default!;
+    public string ProviderName { get; set; } = default!;
+    
+    // TODO Refactor when we have more identity providers
+    public string? GoogleAccessToken { get; set; }
+    public string? GoogleId { get; set; }
+    
+    public CreateFamilyMemberCommand ToCreateFamilyMemberCommand(string? aspNetUserId) =>
+        new(new CreateFamilyMemberCommandModel(FirstName, LastName, Birthdate, aspNetUserId));
+}

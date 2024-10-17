@@ -1,5 +1,5 @@
 ﻿using Api.Database;
-using Api.Domain.Core;
+using Api.Database.Core;
 using Api.Infrastructure;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
