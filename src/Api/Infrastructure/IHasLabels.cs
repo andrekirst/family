@@ -4,5 +4,5 @@ namespace Api.Infrastructure;
 
 public interface IHasLabels
 {
-    IEnumerable<Label> Labels { get; set; }
+    IEnumerable<LabelEntity> Labels { get; set; }
 }

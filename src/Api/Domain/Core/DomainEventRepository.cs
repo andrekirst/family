@@ -17,7 +17,7 @@ public class DomainEventRepository(
             Converters = { new JsonStringEnumConverter() }
         });
 
-        var entry = new DomainEventEntry
+        var entry = new DomainEventEntity
         {
             EventType = domainEvent.DomainEventName,
             EventVersion = domainEvent.DomainEventVersion,

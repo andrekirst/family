@@ -2,7 +2,7 @@ using Api.Infrastructure;
 
 namespace Api.Domain.Core.Authentication.Google;
 
-public class GoogleAccount : BaseEntity
+public class GoogleAccountEntity : BaseEntity
 {
     public string GoogleId { get; set; } = default!;
     public string? AccessToken { get; set; }

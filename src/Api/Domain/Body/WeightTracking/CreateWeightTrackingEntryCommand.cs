@@ -42,13 +42,13 @@ public class CreateWeightTrackingEntryCommandHandler(
         await mediator.Publish(domainEvent, cancellationToken);
     }
 
-    private static WeightTrackingEntryCreatedDomainEvent CreateDomainEvent(CreateWeightTrackingEntryCommand request, WeightTrackingEntry weightTrackingEntry, Guid familyMemberId)
+    private static WeightTrackingEntryCreatedDomainEvent CreateDomainEvent(CreateWeightTrackingEntryCommand request, WeightTrackingEntity weightTrackingEntity, Guid familyMemberId)
     {
         return new WeightTrackingEntryCreatedDomainEvent(
-            weightTrackingEntry.Id,
-            weightTrackingEntry.MeasuredAt,
-            weightTrackingEntry.WeightUnit,
-            weightTrackingEntry.Weight,
+            weightTrackingEntity.Id,
+            weightTrackingEntity.MeasuredAt,
+            weightTrackingEntity.WeightUnit,
+            weightTrackingEntity.Weight,
             familyMemberId,
             request.FamilyMemberId);
     }

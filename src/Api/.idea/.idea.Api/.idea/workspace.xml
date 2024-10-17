@@ -10,30 +10,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Domain/Core/Authentication/Credentials/LoginCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Domain/Core/Authentication/Credentials/RegisterCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Infrastructure/Errors.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Infrastructure/Result.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Database/Calendar/CalendarEntityTypeConfiguration.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Domain/Calendar/Calendar.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Api.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AuthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Core/Authentication/Google/GoogleLoginCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/Authentication/Google/GoogleLoginCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberLoginService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberLoginService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberRegistrationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/Authentication/IFamilyMemberRegistrationService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Core/Authentication/LoginResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/Authentication/LoginResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Extensions/ModelStateExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Extensions/ModelStateExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/IHasSuccessAndHasError.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/IHasSuccessAndHasError.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webui/next.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/next.config.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webui/services/api/authentication.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/services/api/authentication.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webui/services/api/base.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/services/api/base.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Core/FamilyMember.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/FamilyMember.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="DpaMonitoringSettings">
-    <option name="autoShow" value="false" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -44,6 +30,31 @@
     &quot;assignee&quot;: &quot;andrekirst&quot;
   }
 }</component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="feature/20-create-calendar" />
+                    <option name="lastUsedInstant" value="1729092558" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1729092557" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$/../.." />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/andrekirst/family.git&quot;,
@@ -98,7 +109,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "feature/20-create-calendar",
     "last_opened_file_path": "/home/andrekirst/git/github/andrekirst/family/src/ui/ui.csproj",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -204,7 +215,7 @@
       <workItem from="1728671348749" duration="5611000" />
       <workItem from="1728887261117" duration="25881000" />
       <workItem from="1728973833452" duration="23861000" />
-      <workItem from="1729061898162" duration="10869000" />
+      <workItem from="1729061898162" duration="17637000" />
     </task>
     <task id="LOCAL-00001" summary="remove chocolate">
       <option name="closed" value="true" />

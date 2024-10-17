@@ -8,7 +8,7 @@ public class LabelBaseRelationEntity<TReferenceTable> : BaseEntity
     public Guid LabelId { get; set; }
     
     [ForeignKey(nameof(LabelId))]
-    public Label Label { get; set; } = default!;
+    public LabelEntity LabelEntity { get; set; } = default!;
 
     public Guid ReferenceTableId { get; set; }
     

@@ -1,6 +1,7 @@
 ﻿using Api.Domain.Body.WeightTracking;
 using Api.Domain.Core;
 using Api.Domain.Core.Authentication.Google;
+using Api.Domain.Core.Messaging;
 using Api.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Internal;
@@ -12,10 +13,12 @@ public class ApplicationDbContext : DbContext
     private readonly ISystemClock? _systemClock;
     private readonly HttpContext? _httpContext;
 
-    public DbSet<FamilyMember> FamilyMembers => Set<FamilyMember>();
-    public DbSet<WeightTrackingEntry> WeightTrackingEntries => Set<WeightTrackingEntry>();
-    public DbSet<DomainEventEntry> DomainEventEntries => Set<DomainEventEntry>();
-    public DbSet<GoogleAccount> GoogleAccounts => Set<GoogleAccount>();
+    public DbSet<FamilyMemberEntity> FamilyMembers => Set<FamilyMemberEntity>();
+    public DbSet<WeightTrackingEntity> WeightTrackingEntries => Set<WeightTrackingEntity>();
+    public DbSet<DomainEventEntity> DomainEventEntries => Set<DomainEventEntity>();
+    public DbSet<GoogleAccountEntity> GoogleAccounts => Set<GoogleAccountEntity>();
+    public DbSet<Domain.Calendar.CalendarEntity> Calendars => Set<Domain.Calendar.CalendarEntity>();
+    public DbSet<NotificationMessageEntity> NotificationMessages => Set<NotificationMessageEntity>();
 
     public ApplicationDbContext(
         ISystemClock systemClock,

@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.Database.Core;
 
-public class DomainEventEntryEntityTypeConfiguration : EntityTypeConfigurationBase<DomainEventEntry>
+public class DomainEventEntryEntityTypeConfiguration : EntityTypeConfigurationBase<DomainEventEntity>
 {
-    public override void Configure(EntityTypeBuilder<DomainEventEntry> builder)
+    public override void Configure(EntityTypeBuilder<DomainEventEntity> builder)
     {
         base.Configure(builder);
 

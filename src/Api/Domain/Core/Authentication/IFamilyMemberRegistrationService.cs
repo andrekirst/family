@@ -76,7 +76,7 @@ public class FamilyMemberRegistrationService(
                 nameof(Guid)));
 
         // TODO Refactor when using multiple identity providers
-        dbContext.GoogleAccounts.Add(new GoogleAccount
+        dbContext.GoogleAccounts.Add(new GoogleAccountEntity
         {
             AccessToken = request.GoogleAccessToken,
             GoogleId = request.GoogleId!,

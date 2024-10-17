@@ -51,6 +51,6 @@ public class UpdateWeightTrackingEntryCommandMappings : Profile
 {
     public UpdateWeightTrackingEntryCommandMappings()
     {
-        CreateMap<UpdateWeightTrackingEntryCommandModel, WeightTrackingEntry>();
+        CreateMap<UpdateWeightTrackingEntryCommandModel, WeightTrackingEntity>();
     }
 }

@@ -3,19 +3,19 @@ using Api.Infrastructure;
 
 namespace Api.Domain.Body.WeightTracking;
 
-public class WeightTrackingEntry : BaseEntity
+public class WeightTrackingEntity : BaseEntity
 {
     public DateTime MeasuredAt { get; set; }
     public WeightUnit WeightUnit { get; set; } = WeightUnit.Kilogram;
     public double Weight { get; set; }
     public Guid FamilyMemberId { get; set; }
-    public FamilyMember FamilyMember { get; set; } = default!;
+    public FamilyMemberEntity FamilyMemberEntity { get; set; } = default!;
 }
 
-public class WeightTrackingEntryMappings : IMap<WeightTrackingEntry, CreateWeightTrackingEntryCommandModel>
+public class WeightTrackingEntryMappings : IMap<WeightTrackingEntity, CreateWeightTrackingEntryCommandModel>
 {
-    public static WeightTrackingEntry MapFromSource(CreateWeightTrackingEntryCommandModel model) =>
-        new WeightTrackingEntry
+    public static WeightTrackingEntity MapFromSource(CreateWeightTrackingEntryCommandModel model) =>
+        new WeightTrackingEntity
         {
             MeasuredAt = model.MeasuredAt,
             Weight = model.Weight,

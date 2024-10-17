@@ -5,7 +5,7 @@ namespace Api.Extensions.QueryableExtensions;
 
 public static class FamilyMemberQueryableExtensions
 {
-    public static Task<Guid> GetIdByAspNetUserId(this IQueryable<FamilyMember> query, string aspNetUserId, CancellationToken cancellationToken = default)
+    public static Task<Guid> GetIdByAspNetUserId(this IQueryable<FamilyMemberEntity> query, string aspNetUserId, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(aspNetUserId);
         

@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.Domain.Core.Authentication.Google;
 
-public class GoogleAccountEntityTypeConfiguration : EntityTypeConfigurationBase<GoogleAccount>
+public class GoogleAccountEntityTypeConfiguration : EntityTypeConfigurationBase<GoogleAccountEntity>
 {
     public const string EntityTableName = "GoogleAccounts";
     
-    public override void Configure(EntityTypeBuilder<GoogleAccount> builder)
+    public override void Configure(EntityTypeBuilder<GoogleAccountEntity> builder)
     {
         base.Configure(builder);
 

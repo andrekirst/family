@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.Database.Core;
 
-public class FamilyMemberEntityTypeConfiguration : EntityTypeConfigurationBase<FamilyMember>
+public class FamilyMemberEntityTypeConfiguration : EntityTypeConfigurationBase<FamilyMemberEntity>
 {
     public const string EntityTableName = "FamilyMembers";
 
-    public override void Configure(EntityTypeBuilder<FamilyMember> builder)
+    public override void Configure(EntityTypeBuilder<FamilyMemberEntity> builder)
     {
         base.Configure(builder);
         

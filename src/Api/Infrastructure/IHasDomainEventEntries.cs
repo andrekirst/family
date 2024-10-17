@@ -4,6 +4,6 @@ namespace Api.Infrastructure;
 
 public interface IHasDomainEventEntries
 {
-    ICollection<DomainEventEntry> CreatedByDomainEventEntries { get; set; }
-    ICollection<DomainEventEntry> CreatedForDomainEventEntries { get; set; }
+    ICollection<DomainEventEntity> CreatedByDomainEventEntries { get; set; }
+    ICollection<DomainEventEntity> CreatedForDomainEventEntries { get; set; }
 }

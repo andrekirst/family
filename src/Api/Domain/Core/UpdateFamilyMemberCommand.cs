@@ -61,7 +61,7 @@ public class UpdateFamilyMemberCommandMappings : Profile
 {
     public UpdateFamilyMemberCommandMappings()
     {
-        CreateMap<UpdateFamilyMemberCommandModel, FamilyMember>();
-        CreateMap<FamilyMember, FamilyMemberUpdatedDomainEvent>();
+        CreateMap<UpdateFamilyMemberCommandModel, FamilyMemberEntity>();
+        CreateMap<FamilyMemberEntity, FamilyMemberUpdatedDomainEvent>();
     }
 }

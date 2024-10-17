@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.Database.Core;
 
-public class LabelEntityTypeConfiguration : EntityTypeConfigurationBase<Label>
+public class LabelEntityTypeConfiguration : EntityTypeConfigurationBase<LabelEntity>
 {
-    public override void Configure(EntityTypeBuilder<Label> builder)
+    public override void Configure(EntityTypeBuilder<LabelEntity> builder)
     {
         base.Configure(builder);
 

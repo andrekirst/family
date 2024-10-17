@@ -50,9 +50,9 @@ public class CreateFamilyMemberCommandHandler(
     }
 }
 
-public class CreateFamilyMemberCommandMappings : IMap<FamilyMember, CreateFamilyMemberCommandModel>, IMap<FamilyMemberCreatedDomainEvent, FamilyMember>
+public class CreateFamilyMemberCommandMappings : IMap<FamilyMemberEntity, CreateFamilyMemberCommandModel>, IMap<FamilyMemberCreatedDomainEvent, FamilyMemberEntity>
 {
-    public static FamilyMember MapFromSource(CreateFamilyMemberCommandModel source) =>
+    public static FamilyMemberEntity MapFromSource(CreateFamilyMemberCommandModel source) =>
         new()
         {
             Birthdate = source.Birthdate,
@@ -61,7 +61,7 @@ public class CreateFamilyMemberCommandMappings : IMap<FamilyMember, CreateFamily
             AspNetUserId = source.AspNetUserId
         };
 
-    public static FamilyMemberCreatedDomainEvent MapFromSource(FamilyMember source)
+    public static FamilyMemberCreatedDomainEvent MapFromSource(FamilyMemberEntity source)
     {
         ArgumentNullException.ThrowIfNull(source.FirstName);
         ArgumentNullException.ThrowIfNull(source.LastName);

@@ -31,6 +31,6 @@ public class GetFamilyMembersQueryMappings : Profile
 {
     public GetFamilyMembersQueryMappings()
     {
-        CreateMap<FamilyMember, GetFamilyMembersQueryDto>();
+        CreateMap<FamilyMemberEntity, GetFamilyMembersQueryDto>();
     }
 }
