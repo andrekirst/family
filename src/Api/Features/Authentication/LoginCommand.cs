@@ -45,7 +45,7 @@ public class LoginCommandHandler(
 
         await userManager.AddClaimAsync(
             managedUser,
-            new Claim(ApplicationClaimNames.CurrentFamilyMemberId,
+            new Claim(ApplicationClaimNames.FamilyMemberId,
                 familyMember.Id.ToString(),
                 nameof(Guid)));
 

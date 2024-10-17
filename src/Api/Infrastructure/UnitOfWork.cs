@@ -7,18 +7,11 @@ public interface IUnitOfWork
     Task SaveChangesAsync(CancellationToken cancellationToken = default);
 }
 
-public class UnitOfWork : IUnitOfWork
+public class UnitOfWork(ApplicationDbContext dbContext) : IUnitOfWork
 {
-    private readonly ApplicationDbContext _dbContext;
-
-    public UnitOfWork(ApplicationDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
     }
 }
 

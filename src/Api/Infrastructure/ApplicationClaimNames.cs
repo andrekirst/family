@@ -2,5 +2,5 @@
 
 public static class ApplicationClaimNames
 {
-    public const string CurrentFamilyMemberId = "CurrentFamilyMemberId";
+    public const string FamilyMemberId = "FamilyMemberId";
 }

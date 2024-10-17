@@ -72,7 +72,7 @@ public class FamilyMemberRegistrationService(
 
         await userManager.AddClaimAsync(
             identityUser,
-            new Claim(ApplicationClaimNames.CurrentFamilyMemberId,
+            new Claim(ApplicationClaimNames.FamilyMemberId,
                 familyMemberId.ToString(),
                 nameof(Guid)));
 

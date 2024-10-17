@@ -63,7 +63,7 @@ public class TokenService(
             new Claim(ClaimTypes.NameIdentifier, user.Id),
             new Claim(ClaimTypes.Name, user.UserName),
             new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ApplicationClaimNames.CurrentFamilyMemberId, familyMemberId.ToString(), nameof(Guid))
+            new Claim(ApplicationClaimNames.FamilyMemberId, familyMemberId.ToString(), nameof(Guid))
         ];
     }
 }

@@ -6,7 +6,7 @@ public class CurrentFamilyMemberIdService(IHttpContextAccessor httpContextAccess
 {
     public Guid GetFamilyMemberId()
     {
-        var claimValue = httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(a => a.Type == ApplicationClaimNames.CurrentFamilyMemberId)?.Value;
+        var claimValue = httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(a => a.Type == ApplicationClaimNames.FamilyMemberId)?.Value;
         
         return claimValue == null
             ? throw new CurrentFamilyMemberIdClaimNotFoundException()
