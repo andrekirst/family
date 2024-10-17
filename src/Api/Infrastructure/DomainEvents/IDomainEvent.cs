@@ -1,5 +1,5 @@
 ﻿using MediatR;
 
-namespace Api.Infrastructure;
+namespace Api.Infrastructure.DomainEvents;
 
 public interface IDomainEvent : INotification;

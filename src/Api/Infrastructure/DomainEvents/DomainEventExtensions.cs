@@ -1,4 +1,4 @@
-namespace Api.Infrastructure;
+namespace Api.Infrastructure.DomainEvents;
 
 public static class DomainEventExtensions
 {

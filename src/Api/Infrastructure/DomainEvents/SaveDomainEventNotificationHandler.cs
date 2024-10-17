@@ -1,7 +1,7 @@
 ﻿using Api.Domain.Core;
 using MediatR;
 
-namespace Api.Infrastructure;
+namespace Api.Infrastructure.DomainEvents;
 
 public class SaveDomainEventNotificationHandler<TDomainEvent>(DomainEventRepository domainEventRepository) : INotificationHandler<TDomainEvent>
     where TDomainEvent : IDomainEvent

@@ -9,7 +9,7 @@ export interface getFamilyMembersData
 }
 
 export async function getFamilyMembers(token: string): Promise<getFamilyMembersData[]> {
-    return await get<getFamilyMembersData[]>('/frontend/webui/sidebar/familymembers', token)
+    return await get<getFamilyMembersData[]>('/sidebar/familymembers', token)
         .then((items) => {
             items.forEach((item) => {
                 item.href = `/familymember/${item.id}/start`

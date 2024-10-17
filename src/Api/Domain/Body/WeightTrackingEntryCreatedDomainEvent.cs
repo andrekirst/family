@@ -1,4 +1,4 @@
-﻿using Api.Infrastructure;
+﻿using Api.Infrastructure.DomainEvents;
 
 namespace Api.Domain.Body;
 

@@ -1,13 +1,13 @@
 using System.Net;
-using Api.Features.Frontend.WebUI.Calendar.Me;
+using Api.Features.Calendar.Me;
 using Api.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers.Frontend.WebUI.Calendar.Me;
+namespace Api.Controllers.Calendar.Me;
 
 [ApiController]
-[Route("/api/frontend/webui/calendar/me/calendar")]
+[Route("/api/calendar/me/")]
 public class CalendarController(IMediator mediator) : ApiControllerBase(mediator)
 {
     [HttpGet("list")]

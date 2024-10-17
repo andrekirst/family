@@ -10,17 +10,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Controllers/Frontend/WebUI/Calendar/Me/CalendarController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Features/Frontend/WebUI/Calendar/Me/GetCalendarMeListQuery.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Infrastructure/HttpContextExtensions.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Database/ApplicationDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Database/ApplicationDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Core/CurrentFamilyMemberIdService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Features/Authentication/LoginCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Features/Authentication/LoginCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Features/Body/CreateWeightTrackingEntryCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Features/Body/CreateWeightTrackingEntryCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/ApiControllerBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/ApiControllerBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/Errors.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Errors.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/Frontend/WebUI/Calendar/Me/CalendarController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Calendar/Me/CalendarController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/Frontend/WebUI/SidebarController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Core/SidebarController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Body/WeightTrackingEntryCreatedDomainEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Body/WeightTrackingEntryCreatedDomainEvent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Body/WeightTrackingEntryDeletedDomainEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Body/WeightTrackingEntryDeletedDomainEvent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Body/WeightTrackingEntryUpdatedDomainEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Body/WeightTrackingEntryUpdatedDomainEvent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Calendar/CalendarCreatedDomainEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Calendar/CalendarCreatedDomainEvent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Core/DomainEventRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/DomainEventRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Core/FamilyMemberCreatedDomainEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/FamilyMemberCreatedDomainEvent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Core/FamilyMemberUpdatedDomainEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/FamilyMemberUpdatedDomainEvent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Features/Frontend/WebUI/Calendar/Me/GetCalendarMeListQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Features/Calendar/Me/GetCalendarMeListQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Features/Frontend/WebUI/Sidebar/GetFamilyMembersQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Features/Core/Sidebar/GetFamilyMembersQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/DomainEventAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/DomainEvents/DomainEventAttribute.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/DomainEventExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/DomainEvents/DomainEventExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/IDomainEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/DomainEvents/IDomainEvent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/IDomainEventHasFamilyMemberInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/DomainEvents/IDomainEventHasFamilyMemberInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/SaveDomainEventNotificationHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/DomainEvents/SaveDomainEventNotificationHandler.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -226,7 +232,7 @@
       <workItem from="1728887261117" duration="25881000" />
       <workItem from="1728973833452" duration="23861000" />
       <workItem from="1729061898162" duration="17637000" />
-      <workItem from="1729149564765" duration="13811000" />
+      <workItem from="1729149564765" duration="14578000" />
     </task>
     <task id="LOCAL-00001" summary="remove chocolate">
       <option name="closed" value="true" />

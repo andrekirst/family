@@ -1,12 +1,12 @@
-using Api.Features.Frontend.WebUI.Sidebar;
+using Api.Features.Core.Sidebar;
 using Api.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers.Frontend.WebUI;
+namespace Api.Controllers.Core;
 
 [ApiController]
-[Route("/api/frontend/webui/sidebar")]
+[Route("/api/sidebar")]
 public class SidebarController(IMediator mediator) : ApiControllerBase(mediator)
 {
     [HttpGet("familymembers")]

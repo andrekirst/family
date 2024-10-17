@@ -2,7 +2,7 @@ using Api.Database;
 using Api.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.Features.Frontend.WebUI.Sidebar;
+namespace Api.Features.Core.Sidebar;
 
 public class GetFamilyMembersQuery : IQuery<List<Response>>;
 

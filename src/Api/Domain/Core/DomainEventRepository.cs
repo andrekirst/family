@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using Api.Database;
 using Api.Database.Core;
 using Api.Infrastructure;
+using Api.Infrastructure.DomainEvents;
 
 namespace Api.Domain.Core;
 

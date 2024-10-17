@@ -2,7 +2,7 @@ using Api.Database;
 using Api.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.Features.Frontend.WebUI.Calendar.Me;
+namespace Api.Features.Calendar.Me;
 
 public record GetCalendarMeListQuery : IQuery<Result<GetCalendarMeListQueryResponse>>;
 

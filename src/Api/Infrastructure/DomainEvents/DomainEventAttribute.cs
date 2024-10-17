@@ -1,4 +1,4 @@
-namespace Api.Infrastructure;
+namespace Api.Infrastructure.DomainEvents;
 
 [AttributeUsage(AttributeTargets.Class)]
 public class DomainEventAttribute(string name, int version = 1) : Attribute
