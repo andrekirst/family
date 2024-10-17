@@ -9,13 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Migrations/20241017133000_change_schema.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Migrations/20241017133000_change_schema.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Migrations/ApplicationDbContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webui/app/components/sidebar/navigation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/app/components/sidebar/navigation.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -219,7 +213,7 @@
       <workItem from="1728887261117" duration="25881000" />
       <workItem from="1728973833452" duration="23861000" />
       <workItem from="1729061898162" duration="17637000" />
-      <workItem from="1729149564765" duration="9668000" />
+      <workItem from="1729149564765" duration="10237000" />
     </task>
     <task id="LOCAL-00001" summary="remove chocolate">
       <option name="closed" value="true" />

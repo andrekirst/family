@@ -1,5 +1,5 @@
 import { classNames } from "@/app/lib/string";
-import { CalendarIcon, HomeIcon, UsersIcon } from "@heroicons/react/24/outline";
+import { CalendarDaysIcon, HomeIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 export default function Navigation() {
@@ -13,7 +13,7 @@ export default function Navigation() {
         {
           name: "Kalender",
           href: "/calendar/me/list",
-          icon: CalendarIcon,
+          icon: CalendarDaysIcon,
           current: false
         }
       ];
