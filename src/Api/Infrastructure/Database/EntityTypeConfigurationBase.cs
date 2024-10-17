@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Api.Infrastructure;
+namespace Api.Infrastructure.Database;
 
 public class EntityTypeConfigurationBase<T> : IEntityTypeConfiguration<T>
     where T : BaseEntity

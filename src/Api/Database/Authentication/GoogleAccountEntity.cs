@@ -1,4 +1,4 @@
-using Api.Infrastructure;
+using Api.Infrastructure.Database;
 
 namespace Api.Database.Authentication;
 

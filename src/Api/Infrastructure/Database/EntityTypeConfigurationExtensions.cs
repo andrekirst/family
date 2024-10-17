@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Api.Infrastructure;
+namespace Api.Infrastructure.Database;
 
 public static class EntityTypeConfigurationExtensions
 {

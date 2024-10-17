@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Api.Domain.Core;
 
-namespace Api.Infrastructure;
+namespace Api.Infrastructure.Database;
 
 public class LabelBaseRelationEntity<TReferenceTable> : BaseEntity
 {

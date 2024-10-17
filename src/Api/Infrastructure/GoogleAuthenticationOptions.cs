@@ -1,5 +1,6 @@
 namespace Api.Infrastructure;
 
+// TODO Obsolete?
 public class GoogleAuthenticationOptions
 {
     public string ClientId { get; set; } = null!;

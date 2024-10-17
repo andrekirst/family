@@ -1,8 +1,8 @@
 ﻿using Api.Database.Core;
 
-namespace Api.Infrastructure;
+namespace Api.Infrastructure.Database;
 
-public interface IHasDomainEventEntries
+public interface IHasDomainEventEntities
 {
     ICollection<DomainEventEntity> CreatedByDomainEventEntries { get; set; }
     ICollection<DomainEventEntity> CreatedForDomainEventEntries { get; set; }

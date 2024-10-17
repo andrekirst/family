@@ -18,10 +18,12 @@ public class DomainEventRepository(
             Converters = { new JsonStringEnumConverter() }
         });
 
+        var attribute = domainEvent.GetDomainEventAttribute();
+        
         var entry = new DomainEventEntity
         {
-            EventType = domainEvent.DomainEventName,
-            EventVersion = domainEvent.DomainEventVersion,
+            EventType = attribute.Name,
+            EventVersion = attribute.Version,
             EventData = json
         };
 

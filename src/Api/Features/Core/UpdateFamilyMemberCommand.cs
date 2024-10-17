@@ -3,6 +3,7 @@ using Api.Database;
 using Api.Database.Core;
 using Api.Domain.Core;
 using Api.Infrastructure;
+using Api.Infrastructure.Database;
 using AutoMapper;
 using FluentValidation;
 using MediatR;

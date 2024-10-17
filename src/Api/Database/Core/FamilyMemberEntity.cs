@@ -1,10 +1,10 @@
 ﻿using Api.Database.Body;
 using Api.Domain.Core;
-using Api.Infrastructure;
+using Api.Infrastructure.Database;
 
 namespace Api.Database.Core;
 
-public class FamilyMemberEntity : BaseEntity, IHasLabels, IHasDomainEventEntries
+public class FamilyMemberEntity : BaseEntity, IHasLabelsEntity, IHasDomainEventEntities
 {
     public string? FirstName { get; set; }
     public string? LastName { get; set; }

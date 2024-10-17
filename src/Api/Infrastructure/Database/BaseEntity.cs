@@ -1,4 +1,4 @@
-﻿namespace Api.Infrastructure;
+﻿namespace Api.Infrastructure.Database;
 
 public abstract class BaseEntity : IEntityId, IEntityMetadata, IEntityConcurrency, IEntityRowVersion
 {

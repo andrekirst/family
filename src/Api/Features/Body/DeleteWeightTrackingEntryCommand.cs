@@ -1,6 +1,7 @@
 ﻿using Api.Database;
 using Api.Domain.Body;
 using Api.Infrastructure;
+using Api.Infrastructure.Database;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

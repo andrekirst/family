@@ -2,12 +2,9 @@
 
 namespace Api.Domain.Body;
 
+[DomainEvent("WeightTrackingEntryUpdatedDomainEvent")]
 public record WeightTrackingEntryUpdatedDomainEvent(
     Guid Id,
     DateTime MeasuredAt,
     double Weight,
-    WeightUnit WeightUnit) : IDomainEvent
-{
-    public string DomainEventName => "WeightTrackingEntryUpdatedDomainEvent";
-    public int DomainEventVersion => 1;
-}
+    WeightUnit WeightUnit) : IDomainEvent;

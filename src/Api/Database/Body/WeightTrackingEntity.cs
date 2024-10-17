@@ -2,6 +2,7 @@
 using Api.Domain.Body;
 using Api.Features.Body;
 using Api.Infrastructure;
+using Api.Infrastructure.Database;
 
 namespace Api.Database.Body;
 

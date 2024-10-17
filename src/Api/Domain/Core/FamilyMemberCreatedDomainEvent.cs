@@ -2,13 +2,10 @@
 
 namespace Api.Domain.Core;
 
+[DomainEvent("FamilyMemberCreated")]
 public record FamilyMemberCreatedDomainEvent(
     Guid Id,
     string FirstName,
     string LastName,
     DateTime Birthdate,
-    string? AspNetUserId) : IDomainEvent
-{
-    public string DomainEventName => "FamilyMemberCreatedDomainEvent";
-    public int DomainEventVersion => 1;
-}
+    string? AspNetUserId) : IDomainEvent;

@@ -1,5 +1,5 @@
 ﻿using Api.Database.Core;
-using Api.Infrastructure;
+using Api.Infrastructure.Database;
 
 namespace Api.Domain.Core;
 

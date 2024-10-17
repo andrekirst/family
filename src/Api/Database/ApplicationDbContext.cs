@@ -2,7 +2,7 @@
 using Api.Database.Body;
 using Api.Database.Calendar;
 using Api.Database.Core;
-using Api.Infrastructure;
+using Api.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Internal;
 

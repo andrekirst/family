@@ -1,8 +1,8 @@
 ﻿using Api.Domain.Core;
 
-namespace Api.Infrastructure;
+namespace Api.Infrastructure.Database;
 
-public interface IHasLabels
+public interface IHasLabelsEntity
 {
     IEnumerable<LabelEntity> Labels { get; set; }
 }

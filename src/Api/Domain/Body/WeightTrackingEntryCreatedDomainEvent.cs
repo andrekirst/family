@@ -2,14 +2,11 @@
 
 namespace Api.Domain.Body;
 
+[DomainEvent("WeightTrackingEntryCreated")]
 public record WeightTrackingEntryCreatedDomainEvent(
     Guid Id,
     DateTime MeasuredAt,
     WeightUnit WeightUnit,
     double Weight,
     Guid CreatedByFamilyMemberId,
-    Guid CreatedForFamilyMemberId) : IDomainEvent, IDomainEventHasFamilyMemberInformation
-{
-    public string DomainEventName => "WeightTrackingEntryCreatedDomainEvent";
-    public int DomainEventVersion => 1;
-}
+    Guid CreatedForFamilyMemberId) : IDomainEvent, IDomainEventHasFamilyMemberInformation;

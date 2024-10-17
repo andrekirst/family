@@ -3,6 +3,7 @@ using Api.Database.Body;
 using Api.Domain.Body;
 using Api.Domain.Core;
 using Api.Infrastructure;
+using Api.Infrastructure.Database;
 using FluentValidation;
 using MediatR;
 
