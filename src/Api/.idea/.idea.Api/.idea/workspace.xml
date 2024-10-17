@@ -10,11 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Database/Calendar/CalendarEntityTypeConfiguration.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Domain/Calendar/Calendar.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Migrations/20241017133000_change_schema.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Migrations/20241017133000_change_schema.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Api.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Core/FamilyMember.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/FamilyMember.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Migrations/ApplicationDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webui/app/components/sidebar/navigation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/app/components/sidebar/navigation.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,9 +90,12 @@
   &quot;isMigrated&quot;: true
 }</component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 5
-}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
   <component name="ProjectId" id="2aPQ0UQXWyktihTvYR07d4WOskQ" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -101,30 +104,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.Api: http.executor": "Debug",
-    ".NET Launch Settings Profile.Api: https.executor": "Debug",
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "feature/20-create-calendar",
-    "last_opened_file_path": "/home/andrekirst/git/github/andrekirst/family/src/ui/ui.csproj",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "RiderCSharpFileTemplatesSettingsId",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.Api: http.executor&quot;: &quot;Debug&quot;,
+    &quot;.NET Launch Settings Profile.Api: https.executor&quot;: &quot;Debug&quot;,
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/20-create-calendar&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/andrekirst/git/github/andrekirst/family/src/ui/ui.csproj&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;RiderCSharpFileTemplatesSettingsId&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Api: http">
     <configuration name="Api: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Api.csproj" />
@@ -216,6 +219,7 @@
       <workItem from="1728887261117" duration="25881000" />
       <workItem from="1728973833452" duration="23861000" />
       <workItem from="1729061898162" duration="17637000" />
+      <workItem from="1729149564765" duration="9668000" />
     </task>
     <task id="LOCAL-00001" summary="remove chocolate">
       <option name="closed" value="true" />
@@ -262,19 +266,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/InstallationController.cs</url>
-          <line>25</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/InstallationController.cs" containingFunctionPresentation="Method 'Install'">
-            <startOffsets>
-              <option value="813" />
-            </startOffsets>
-            <endOffsets>
-              <option value="814" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Extensions/ModelStateExtensions.cs</url>
           <line>16</line>

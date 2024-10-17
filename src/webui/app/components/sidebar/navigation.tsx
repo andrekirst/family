@@ -1,5 +1,5 @@
 import { classNames } from "@/app/lib/string";
-import { HomeIcon, UsersIcon } from "@heroicons/react/24/outline";
+import { CalendarIcon, HomeIcon, UsersIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 export default function Navigation() {
@@ -11,9 +11,9 @@ export default function Navigation() {
           current: true
         },
         {
-          name: "Familie",
-          href: "/",
-          icon: UsersIcon,
+          name: "Kalender",
+          href: "/calendar/me/list",
+          icon: CalendarIcon,
           current: false
         }
       ];
