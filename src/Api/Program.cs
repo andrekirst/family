@@ -71,21 +71,13 @@ public class Program
             AllowAutoCreateTopics = true
         };
         
-        var consumerConfig = new ConsumerConfig
-        {
-            BootstrapServers = "localhost:9092",
-            GroupId = "CommandTasksGroup",
-            AllowAutoCreateTopics = true,
-            EnableAutoCommit = false
-        };
-        
         builder.Services.AddSingleton<IProducer<Null, string>>(_ =>
         {
             var producer = new ProducerBuilder<Null, string>(producerConfig).Build();
 
             return producer;
         });
-        builder.Services.AddSingleton<IConsumer<Ignore, string>>(_ => new ConsumerBuilder<Ignore, string>(consumerConfig).Build());
+        // builder.Services.AddSingleton<IConsumer<Ignore, string>>(_ => new ConsumerBuilder<Ignore, string>(consumerConfig).Build());
         builder.Services.AddSingleton<ICommandTaskBus, CommandTaskBus>();
         builder.Services.AddHostedService<Consumer>();
         

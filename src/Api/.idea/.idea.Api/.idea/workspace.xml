@@ -10,22 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Features/Calendar/Me/CreateCalendarCommand.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Api.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/Calendar/Me/CalendarController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/CalendarController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/Core/SidebarController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Core/SidebarController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Features/Authentication/LoginCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Features/Authentication/LoginCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Features/Calendar/Me/GetCalendarMeListQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Features/Calendar/Me/GetCalendarMeListQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/Errors.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Errors.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/HttpContextExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/HttpContextExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Features/Calendar/Me/CreateCalendarCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Features/Calendar/Me/CreateCalendarCommand.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webui/app/calendar/me/create/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/app/calendar/me/create/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webui/app/calendar/me/list/empty.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/app/calendar/me/list/empty.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webui/app/calendar/me/list/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/app/calendar/me/list/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webui/app/components/sidebar/familymembers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/app/components/sidebar/familymembers.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webui/services/api/base.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/services/api/base.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -238,7 +225,7 @@
       <workItem from="1729061898162" duration="17637000" />
       <workItem from="1729149564765" duration="14578000" />
       <workItem from="1729192996044" duration="4386000" />
-      <workItem from="1729238881627" duration="24047000" />
+      <workItem from="1729238881627" duration="25208000" />
     </task>
     <task id="LOCAL-00001" summary="remove chocolate">
       <option name="closed" value="true" />
@@ -310,19 +297,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Features/Calendar/Me/CreateCalendarCommand.cs</url>
-          <line>135</line>
-          <properties documentPath="$PROJECT_DIR$/Features/Calendar/Me/CreateCalendarCommand.cs" containingFunctionPresentation="Method 'Handle'">
-            <startOffsets>
-              <option value="4540" />
-            </startOffsets>
-            <endOffsets>
-              <option value="4541" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="41" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

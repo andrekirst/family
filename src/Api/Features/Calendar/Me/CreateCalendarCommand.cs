@@ -1,4 +1,3 @@
-using System.Reflection;
 using System.Text.Json;
 using Api.Database;
 using Api.Database.Calendar;
@@ -60,64 +59,69 @@ public class CommandTaskBus(IProducer<Null, string> producer) : ICommandTaskBus
     }
 }
 
-public class Consumer(
-    IConsumer<Ignore, string> consumer,
-    ILogger<Consumer> logger,
-    IServiceScopeFactory serviceScopeFactory) : IHostedService, IDisposable
+public class Consumer : BackgroundService
 {
-    // https://stackoverflow.com/questions/64141794/how-to-use-mediator-inside-background-service-in-c-sharp-asp-net-core
-    private Timer? _timer = null;
-    
-    public Task StartAsync(CancellationToken cancellationToken)
+    private readonly ILogger<Consumer> _logger;
+    private readonly IServiceScopeFactory _serviceScopeFactory;
+    private readonly IConsumer<Ignore, string> _consumer;
+
+    public Consumer(
+        ILogger<Consumer> logger,
+        IServiceScopeFactory serviceScopeFactory)
     {
+        _logger = logger;
+        _serviceScopeFactory = serviceScopeFactory;
         var topics = typeof(ICommandTask)
             .Assembly
             .GetTypes()
             .Where(c => c is { IsClass: true, IsAbstract: false } && typeof(ICommandTask).IsAssignableFrom(c))
             .Select(c => $"CommandTask{c.Name}");
         
-        consumer.Subscribe(topics);
-
-        _timer = new Timer(Consume, null, TimeSpan.Zero, TimeSpan.FromSeconds(2));
+        var consumerConfig = new ConsumerConfig
+        {
+            BootstrapServers = "localhost:9092",
+            GroupId = "CommandTasksGroup",
+            AllowAutoCreateTopics = true,
+            EnableAutoCommit = false
+        };
         
-        return Task.CompletedTask;
+        _consumer = new ConsumerBuilder<Ignore, string>(consumerConfig).Build();
+        _consumer.Subscribe(topics);
     }
 
-    private void Consume(object? state)
+    private static Type[]? _cachedImplementationsOfICommandTask;
+    
+    private static Type[] ImplementationsOfICommandTask()
     {
-        using var scope = serviceScopeFactory.CreateScope();
+        return _cachedImplementationsOfICommandTask ??= typeof(ICommandTask)
+            .Assembly
+            .GetTypes()
+            .Where(t => t is { IsClass: true, IsAbstract: false })
+            .ToArray();
+    }
+    
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        using var scope = _serviceScopeFactory.CreateScope();
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-        var canceled = false;
-        while (!canceled)
+        
+        while (!stoppingToken.IsCancellationRequested)
         {
-            try
+            var result = _consumer.Consume(stoppingToken);
+            var commandTaskName = result.Topic[11..];
+            var type = ImplementationsOfICommandTask().Single(t => t.Name == commandTaskName);
+            var commandTask = JsonSerializer.Deserialize(result.Message.Value, type);
+            if (commandTask != null)
             {
-                var result = consumer.Consume();
-                var commandTaskName = result.Topic[11..];
-                var type = typeof(ICommandTask)
-                    .Assembly
-                    .GetTypes()
-                    .Single(t => t is { IsClass: true, IsAbstract: false } && t.Name == commandTaskName);
-                var commandTask = JsonSerializer.Deserialize(result.Message.Value, type);
-                if (commandTask != null) mediator.Send(commandTask);
-                consumer.Commit(result);
+                await mediator.Send(commandTask, stoppingToken);
             }
-            catch (Exception e)
-            {
-                canceled = true;
-                logger.LogError(e, e.Message);
-            }
+            _consumer.Commit(result);
         }
     }
 
-    public Task StopAsync(CancellationToken cancellationToken)
+    public override void Dispose()
     {
-        return Task.CompletedTask;
-    }
-
-    public void Dispose()
-    {
-        _timer?.Dispose();
+        _consumer.Dispose();
     }
 }
 
