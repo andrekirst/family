@@ -10,23 +10,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Features/Calendar/Me/CreateCalendarCommand.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/Frontend/WebUI/Calendar/Me/CalendarController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Calendar/Me/CalendarController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/Frontend/WebUI/SidebarController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Core/SidebarController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Body/WeightTrackingEntryCreatedDomainEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Body/WeightTrackingEntryCreatedDomainEvent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Body/WeightTrackingEntryDeletedDomainEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Body/WeightTrackingEntryDeletedDomainEvent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Body/WeightTrackingEntryUpdatedDomainEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Body/WeightTrackingEntryUpdatedDomainEvent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Calendar/CalendarCreatedDomainEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Calendar/CalendarCreatedDomainEvent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Core/DomainEventRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/DomainEventRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Core/FamilyMemberCreatedDomainEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/FamilyMemberCreatedDomainEvent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Core/FamilyMemberUpdatedDomainEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Core/FamilyMemberUpdatedDomainEvent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Features/Frontend/WebUI/Calendar/Me/GetCalendarMeListQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Features/Calendar/Me/GetCalendarMeListQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Features/Frontend/WebUI/Sidebar/GetFamilyMembersQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Features/Core/Sidebar/GetFamilyMembersQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/DomainEventAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/DomainEvents/DomainEventAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/DomainEventExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/DomainEvents/DomainEventExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/IDomainEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/DomainEvents/IDomainEvent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/IDomainEventHasFamilyMemberInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/DomainEvents/IDomainEventHasFamilyMemberInformation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/SaveDomainEventNotificationHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/DomainEvents/SaveDomainEventNotificationHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Api.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/Calendar/Me/CalendarController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/CalendarController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/Core/SidebarController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Core/SidebarController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Features/Authentication/LoginCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Features/Authentication/LoginCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Features/Calendar/Me/GetCalendarMeListQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Features/Calendar/Me/GetCalendarMeListQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Errors.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Errors.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/HttpContextExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/HttpContextExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webui/app/calendar/me/create/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/app/calendar/me/create/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webui/app/calendar/me/list/empty.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/app/calendar/me/list/empty.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webui/app/calendar/me/list/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/app/calendar/me/list/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webui/app/components/sidebar/familymembers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/app/components/sidebar/familymembers.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webui/services/api/base.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../webui/services/api/base.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +76,10 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/9b1f8cf027694ee687c7939164bdcf6340c00/cb/a63798ca/020000BBpdb1.il" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/9b1f8cf027694ee687c7939164bdcf6340c00/cb/a63798ca/020000BBpdb1Low.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0c7558f9b5904d208d7a8c2cb37cb8f14a400/f8/5f02f8f4/ActivatorUtilities.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/15a31bcbbc0e4a8daa2d2e9dcdb8fa246ca00/0e/d019f4be/ProducerConfig.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/15a31bcbbc0e4a8daa2d2e9dcdb8fa246ca00/0f/4d976123/ClientConfig.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/15a31bcbbc0e4a8daa2d2e9dcdb8fa246ca00/3c/a01fb71b/Consumer`2.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/15a31bcbbc0e4a8daa2d2e9dcdb8fa246ca00/94/1fcb08c2/Config.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3e6cfa91023d4528a577156f118914ae141b0/b2/88787306/JwtSecurityTokenHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5ce17ead15a44f8192c0598d8785e869b2c800/be/0fd6f38a/ArgumentNullException.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5ce17ead15a44f8192c0598d8785e869b2c800/e1/638dfbca/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
@@ -90,6 +93,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d25cebc0e04b4f9894c0ed5eb9e0131a1d600/e7/a66b71d5/ServiceProviderServiceExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d726e3b0069440e0a83f0fe681951fb913600/5a/c88b6965/ClaimsIdentity.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/dc37343e91a74fa08a5cd84f35e6e7f2b2d000/31/cd316406/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/eb367f896c6844e48ca6beeea10bc10130400/5a/78d04b80/ServiceProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/eb367f896c6844e48ca6beeea10bc10130400/77/40a4d663/CallSiteFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/eed1cc81c5394859923f394ceb0571884a400/ae/166361fb/PathString.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/12f8d680aa1c5ae78dc1fb7cf8212be01e323372dbe3b9b87360e27c58936a/IRequest.cs" root0="FORCE_HIGHLIGHTING" />
@@ -106,9 +110,9 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2aPQ0UQXWyktihTvYR07d4WOskQ" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -117,30 +121,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.Api: http.executor&quot;: &quot;Debug&quot;,
-    &quot;.NET Launch Settings Profile.Api: https.executor&quot;: &quot;Debug&quot;,
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/20-create-calendar&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/andrekirst/git/github/andrekirst/family/src/ui/ui.csproj&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;RiderCSharpFileTemplatesSettingsId&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.Api: http.executor": "Debug",
+    ".NET Launch Settings Profile.Api: https.executor": "Debug",
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "feature/20-create-calendar",
+    "last_opened_file_path": "/home/andrekirst/git/github/andrekirst/family/src/ui/ui.csproj",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "bigdataide_conn_settings",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Api: http">
     <configuration name="Api: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Api.csproj" />
@@ -233,6 +237,8 @@
       <workItem from="1728973833452" duration="23861000" />
       <workItem from="1729061898162" duration="17637000" />
       <workItem from="1729149564765" duration="14578000" />
+      <workItem from="1729192996044" duration="4386000" />
+      <workItem from="1729238881627" duration="24047000" />
     </task>
     <task id="LOCAL-00001" summary="remove chocolate">
       <option name="closed" value="true" />
@@ -304,6 +310,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Features/Calendar/Me/CreateCalendarCommand.cs</url>
+          <line>135</line>
+          <properties documentPath="$PROJECT_DIR$/Features/Calendar/Me/CreateCalendarCommand.cs" containingFunctionPresentation="Method 'Handle'">
+            <startOffsets>
+              <option value="4540" />
+            </startOffsets>
+            <endOffsets>
+              <option value="4541" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="41" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers.Core;
 
 [ApiController]
-[Route("/api/sidebar")]
+[Route("/api/[controller]")]
 public class SidebarController(IMediator mediator) : ApiControllerBase(mediator)
 {
     [HttpGet("familymembers")]

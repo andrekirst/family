@@ -5,8 +5,10 @@ using Api.Database;
 using Api.Domain;
 using Api.Domain.Core;
 using Api.Extensions;
+using Api.Features.Calendar.Me;
 using Api.Features.Core;
 using Api.Infrastructure;
+using Confluent.Kafka;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -16,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Error = Api.Infrastructure.Error;
 using ISystemClock = Microsoft.Extensions.Internal.ISystemClock;
 using SystemClock = Microsoft.Extensions.Internal.SystemClock;
 
@@ -62,6 +65,30 @@ public class Program
             });
         });
 
+        var producerConfig = new ProducerConfig
+        {
+            BootstrapServers = "localhost:9092",
+            AllowAutoCreateTopics = true
+        };
+        
+        var consumerConfig = new ConsumerConfig
+        {
+            BootstrapServers = "localhost:9092",
+            GroupId = "CommandTasksGroup",
+            AllowAutoCreateTopics = true,
+            EnableAutoCommit = false
+        };
+        
+        builder.Services.AddSingleton<IProducer<Null, string>>(_ =>
+        {
+            var producer = new ProducerBuilder<Null, string>(producerConfig).Build();
+
+            return producer;
+        });
+        builder.Services.AddSingleton<IConsumer<Ignore, string>>(_ => new ConsumerBuilder<Ignore, string>(consumerConfig).Build());
+        builder.Services.AddSingleton<ICommandTaskBus, CommandTaskBus>();
+        builder.Services.AddHostedService<Consumer>();
+        
         builder.Services.AddHttpClient();
         builder.Services.UseGoogleAuthenticationOptions();
         builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));

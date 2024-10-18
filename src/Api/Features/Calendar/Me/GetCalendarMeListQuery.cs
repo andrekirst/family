@@ -13,13 +13,7 @@ public class ListQueryHandler(
 {
     public async Task<Result<GetCalendarMeListQueryResponse>> Handle(GetCalendarMeListQuery request, CancellationToken cancellationToken)
     {
-        var getFamilyMemberIdResult = httpContextAccessor.HttpContext?.GetFamilyMemberId()!;
-        if (getFamilyMemberIdResult.IsError)
-        {
-            return getFamilyMemberIdResult.Error!;
-        }
-
-        var familyMemberId = getFamilyMemberIdResult.Value;
+        var familyMemberId = httpContextAccessor.HttpContext?.GetFamilyMemberId()!;
 
         var query = await dbContext.Calendars.AsNoTracking()
             .Where(c => c.FamilyMemberId == familyMemberId)

@@ -13,6 +13,23 @@ function secureHeader(token: string): HeadersInit | undefined {
     };
 }
 
+export function toJson(formData: FormData): string {
+    var object: any = {};
+    formData.forEach((value, key) => {
+        // Reflect.has in favor of: object.hasOwnProperty(key)
+        if(!Reflect.has(object, key)){
+            object[key] = value;
+            return;
+        }
+        if(!Array.isArray(object[key])){
+            object[key] = [object[key]];    
+        }
+        object[key].push(value);
+    });
+    var json = JSON.stringify(object);
+    return json;
+}
+
 export async function get<TResult>(endpoint: string, token: string): Promise<TResult> {
     const url = buildUrl(endpoint);
     const response = fetch(
@@ -49,6 +66,7 @@ export async function postAnonymous(endpoint: string, body: BodyInit | null | un
         {
             body: body,
             headers: {
+                'Accept': 'application/json, text/plainm */*',
                 'Content-Type': 'application/json'
             },
             method: 'POST'

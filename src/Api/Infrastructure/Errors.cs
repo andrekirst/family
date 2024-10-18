@@ -4,12 +4,12 @@ namespace Api.Infrastructure;
 
 public static class Errors
 {
-    public static Error NoHttpContext => new Error("HttpContext:Null");
-    public static Error InvalidFamilyMemberIdFormat => new Error("FamilyMemberId:InvalidFormat");
+    public static Error NoHttpContext() => new Error("HttpContext:Null");
+    public static Error InvalidFamilyMemberIdFormat() => new Error("FamilyMemberId:InvalidFormat");
 
     public static class Authentication
     {
-        public static Error BadCredentials => new Error("Authentication:BadCredentials");
+        public static Error BadCredentials() => new Error("Authentication:BadCredentials");
         public static Error CouldNotLoginToProvider(string providerName) => new Error("Authentication:CouldNotLoginToProvider", $"Could not login to provider {providerName}");
 
         public static Error IdentityResult(IEnumerable<IdentityError> identityErrors)
