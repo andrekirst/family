@@ -10,9 +10,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0bd898d5-e0de-43b2-95a9-bff88ab85021" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Extensions/TimeSpanExtensions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/DomainEvents/DomainEventBus.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/DomainEvents/DomainEventHeaderKeys.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/DomainEvents/DomainEventsConsumer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/DomainEvents/IDomainEventBus.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/DomainEvents/ServiceRegistrations.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/KafkaOptions.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Api/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/CalendarController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/CalendarController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Features/Calendar/Me/CreateCalendarCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Features/Calendar/Me/CreateCalendarCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/ICommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/ICommandHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +91,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d25cebc0e04b4f9894c0ed5eb9e0131a1d600/e7/a66b71d5/ServiceProviderServiceExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d726e3b0069440e0a83f0fe681951fb913600/5a/c88b6965/ClaimsIdentity.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/dc37343e91a74fa08a5cd84f35e6e7f2b2d000/31/cd316406/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/df269ffeaf874b758bf361f2f3028098b2d200/41/01dc759f/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/eb367f896c6844e48ca6beeea10bc10130400/5a/78d04b80/ServiceProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/eb367f896c6844e48ca6beeea10bc10130400/77/40a4d663/CallSiteFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/eed1cc81c5394859923f394ceb0571884a400/ae/166361fb/PathString.cs" root0="FORCE_HIGHLIGHTING" />
@@ -108,30 +120,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.Api: http.executor": "Debug",
-    ".NET Launch Settings Profile.Api: https.executor": "Debug",
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "feature/20-create-calendar",
-    "last_opened_file_path": "/home/andrekirst/git/github/andrekirst/family/src/ui/ui.csproj",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "bigdataide_conn_settings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.Api: http.executor&quot;: &quot;Debug&quot;,
+    &quot;.NET Launch Settings Profile.Api: https.executor&quot;: &quot;Debug&quot;,
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/20-create-calendar&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/andrekirst/git/github/andrekirst/family/src/ui/ui.csproj&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;bigdataide_conn_settings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Api: http">
     <configuration name="Api: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Api.csproj" />
@@ -225,7 +237,8 @@
       <workItem from="1729061898162" duration="17637000" />
       <workItem from="1729149564765" duration="14578000" />
       <workItem from="1729192996044" duration="4386000" />
-      <workItem from="1729238881627" duration="25208000" />
+      <workItem from="1729238881627" duration="25804000" />
+      <workItem from="1729493489791" duration="13716000" />
     </task>
     <task id="LOCAL-00001" summary="remove chocolate">
       <option name="closed" value="true" />
@@ -297,6 +310,58 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Infrastructure/DomainEvents/DomainEventsConsumer.cs</url>
+          <line>38</line>
+          <properties documentPath="$PROJECT_DIR$/Infrastructure/DomainEvents/DomainEventsConsumer.cs" containingFunctionPresentation="Method 'ImplementationOfIDomainEvent'">
+            <startOffsets>
+              <option value="1259" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1260" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Infrastructure/DomainEvents/DomainEventsConsumer.cs</url>
+          <line>69</line>
+          <properties documentPath="$PROJECT_DIR$/Infrastructure/DomainEvents/DomainEventsConsumer.cs" containingFunctionPresentation="Lambda expression inside Method 'ExecuteAsync'">
+            <startOffsets>
+              <option value="2385" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2507" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Infrastructure/DomainEvents/DomainEventsConsumer.cs</url>
+          <line>80</line>
+          <properties documentPath="$PROJECT_DIR$/Infrastructure/DomainEvents/DomainEventsConsumer.cs" containingFunctionPresentation="Lambda expression inside Method 'ExecuteAsync'">
+            <startOffsets>
+              <option value="2906" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2923" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Infrastructure/DomainEvents/SaveDomainEventNotificationHandler.cs</url>
+          <line>9</line>
+          <properties documentPath="$PROJECT_DIR$/Infrastructure/DomainEvents/SaveDomainEventNotificationHandler.cs" containingFunctionPresentation="Method 'Handle'">
+            <startOffsets>
+              <option value="364" />
+            </startOffsets>
+            <endOffsets>
+              <option value="365" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="40" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -5,10 +5,9 @@ using Api.Database;
 using Api.Domain;
 using Api.Domain.Core;
 using Api.Extensions;
-using Api.Features.Calendar.Me;
 using Api.Features.Core;
 using Api.Infrastructure;
-using Confluent.Kafka;
+using Api.Infrastructure.DomainEvents;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -21,9 +20,6 @@ using Microsoft.OpenApi.Models;
 using Error = Api.Infrastructure.Error;
 using ISystemClock = Microsoft.Extensions.Internal.ISystemClock;
 using SystemClock = Microsoft.Extensions.Internal.SystemClock;
-
-// TODO
-// https://medium.com/geekculture/how-to-add-jwt-authentication-to-an-asp-net-core-api-84e469e9f019
 
 namespace Api;
 
@@ -65,25 +61,12 @@ public class Program
             });
         });
 
-        var producerConfig = new ProducerConfig
-        {
-            BootstrapServers = "localhost:9092",
-            AllowAutoCreateTopics = true
-        };
-        
-        builder.Services.AddSingleton<IProducer<Null, string>>(_ =>
-        {
-            var producer = new ProducerBuilder<Null, string>(producerConfig).Build();
-
-            return producer;
-        });
-        // builder.Services.AddSingleton<IConsumer<Ignore, string>>(_ => new ConsumerBuilder<Ignore, string>(consumerConfig).Build());
-        builder.Services.AddSingleton<ICommandTaskBus, CommandTaskBus>();
-        builder.Services.AddHostedService<Consumer>();
+        // TODO
+        await builder.AddDomainEventHandling();
         
         builder.Services.AddHttpClient();
         builder.Services.UseGoogleAuthenticationOptions();
-        builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
+        builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.OptionsName));
         builder.Services
             .AddAuthentication(options =>
             {
@@ -188,14 +171,6 @@ public class Program
 
         var app = builder.Build();
 
-        //app.UseRequestLocalization(options =>
-        //{
-        //    options.ApplyCurrentCultureToResponseHeaders = true;
-        //    // TODO
-        //    options.DefaultRequestCulture = new RequestCulture("de-DE");
-        //});
-
-        // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();

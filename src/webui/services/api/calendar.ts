@@ -1,4 +1,4 @@
-import { get, post } from "./base"
+import { get, isSuccessHttpStatusCode, post } from "./base"
 
 export interface getCalendarMeListData
 {
@@ -15,5 +15,5 @@ export async function getCalendarMeList(token: string): Promise<getCalendarMeLis
 
 export async function createCalendar(token: string, body: BodyInit | null | undefined): Promise<boolean> {
     var response = await post('/calendar', body, token);
-    return response.ok;
+    return isSuccessHttpStatusCode(response.status);
 }

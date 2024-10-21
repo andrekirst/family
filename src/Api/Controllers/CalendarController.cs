@@ -24,9 +24,9 @@ public class CalendarController(IMediator mediator) : ApiControllerBase(mediator
     {
         var command = new CreateCalendarCommand(request);
         var result = await ExecuteCommandAsync(command, cancellationToken);
-        return result
-            ? Ok()
-            : BadRequest();
+        return result.IsSuccess
+            ? CreatedAtAction(nameof(GetCalendar), new { id = result.Value!.CalendarId }, result.Value!.CalendarId)
+            : BadRequest(result.Error);
     }
 
     [HttpGet("{id:guid}")]

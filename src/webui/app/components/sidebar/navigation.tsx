@@ -1,14 +1,29 @@
 import { classNames } from "@/app/lib/string";
 import { CalendarDaysIcon, HomeIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+interface NavigationItem {
+    name: string,
+    href: string,
+    icon: any,
+    current: boolean
+}
+
+type Func<T> = (args: T) => boolean;
 
 export default function Navigation() {
-    const navigation = [
+
+    const pathname = usePathname();
+
+    console.log('pathname', pathname);
+
+    const navigation: NavigationItem[] = [
         {
           name: "Dashboard",
           href: "/",
           icon: HomeIcon,
-          current: true
+          current: false
         },
         {
           name: "Kalender",
@@ -17,6 +32,17 @@ export default function Navigation() {
           current: false
         }
       ];
+
+    navigation.forEach((item) => {
+        if(item.href === pathname) {
+            item.current = true;
+        }
+
+        // TODO Dynamisch gestalten
+        if(item.name === 'Kalender' && pathname.startsWith('/calendar')) {
+            item.current = true;
+        }
+    })
 
     return (
         <li>
