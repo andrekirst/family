@@ -14,8 +14,8 @@ public class ApplicationDbContext : DbContext
     private readonly HttpContext? _httpContext;
 
     public DbSet<FamilyMemberEntity> FamilyMembers => Set<FamilyMemberEntity>();
-    public DbSet<WeightTrackingEntity> WeightTrackingEntries => Set<WeightTrackingEntity>();
-    public DbSet<DomainEventEntity> DomainEventEntries => Set<DomainEventEntity>();
+    public DbSet<WeightTrackingEntity> WeightTrackings => Set<WeightTrackingEntity>();
+    public DbSet<DomainEventEntity> DomainEvents => Set<DomainEventEntity>();
     public DbSet<GoogleAccountEntity> GoogleAccounts => Set<GoogleAccountEntity>();
     public DbSet<CalendarEntity> Calendars => Set<CalendarEntity>();
     public DbSet<NotificationMessageEntity> NotificationMessages => Set<NotificationMessageEntity>();

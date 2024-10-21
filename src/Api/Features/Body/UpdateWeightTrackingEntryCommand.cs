@@ -24,7 +24,7 @@ public class UpdateWeightTrackingEntryCommandValidator : AbstractValidator<Updat
             .OverridePropertyName(nameof(CreateWeightTrackingEntryCommand.Model.Weight));
 
         RuleFor(command => command.Id)
-            .MustAsync(dbContext.WeightTrackingEntries.Exists);
+            .MustAsync(dbContext.WeightTrackings.Exists);
     }
 }
 
@@ -37,7 +37,7 @@ public class UpdateWeightTrackingEntryCommandHandler(
 {
     public async Task Handle(UpdateWeightTrackingEntryCommand request, CancellationToken cancellationToken)
     {
-        var entry = await dbContext.WeightTrackingEntries
+        var entry = await dbContext.WeightTrackings
             .Where(wte => wte.Id == request.Id)
             .SingleAsync(cancellationToken);
 

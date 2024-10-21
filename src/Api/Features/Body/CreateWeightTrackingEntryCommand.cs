@@ -38,7 +38,7 @@ public class CreateWeightTrackingEntryCommandHandler(
         
         var weightTrackingEntry = WeightTrackingEntryMappings.MapFromSource(request.Model);
 
-        dbContext.WeightTrackingEntries.Add(weightTrackingEntry);
+        dbContext.WeightTrackings.Add(weightTrackingEntry);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         
         var domainEvent = CreateDomainEvent(request, weightTrackingEntry, familyMemberId!.Value);

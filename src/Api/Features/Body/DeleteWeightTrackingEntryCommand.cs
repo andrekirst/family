@@ -19,10 +19,10 @@ public class DeleteWeightTrackingEntryCommandValidator : AbstractValidator<Delet
             .MustAsync(dbContext.FamilyMembers.Exists);
 
         RuleFor(command => command.Id)
-            .MustAsync(dbContext.WeightTrackingEntries.Exists);
+            .MustAsync(dbContext.WeightTrackings.Exists);
 
         RuleFor(command => command)
-            .MustAsync((command, token) => dbContext.WeightTrackingEntries.AnyAsync(wte => wte.Id == command.Id, token));
+            .MustAsync((command, token) => dbContext.WeightTrackings.AnyAsync(wte => wte.Id == command.Id, token));
     }
 }
 
@@ -32,7 +32,7 @@ public class DeleteWeightTrackingEntryCommandHandler(
 {
     public async Task Handle(DeleteWeightTrackingEntryCommand request, CancellationToken cancellationToken)
     {
-        var entryForDomainEvent = await dbContext.WeightTrackingEntries.AsNoTracking()
+        var entryForDomainEvent = await dbContext.WeightTrackings.AsNoTracking()
             .Where(wte => wte.Id == request.Id)
             .Select(wte => new
             {
@@ -43,7 +43,7 @@ public class DeleteWeightTrackingEntryCommandHandler(
             })
             .SingleAsync(cancellationToken);
 
-        var deletedRows = await dbContext.WeightTrackingEntries
+        var deletedRows = await dbContext.WeightTrackings
             .Where(wte => wte.Id == request.Id)
             .ExecuteDeleteAsync(cancellationToken);
 
