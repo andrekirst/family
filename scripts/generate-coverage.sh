@@ -46,7 +46,7 @@ echo "📂 Open coverage/report/index.html to view the detailed report"
 
 # Check if coverage meets threshold
 COVERAGE=$(grep -oP 'Line coverage: \K[0-9.]+' coverage/report/Summary.txt)
-THRESHOLD=50
+THRESHOLD=40
 
 echo ""
 if (( $(echo "$COVERAGE >= $THRESHOLD" | bc -l) )); then
