@@ -12,6 +12,8 @@ namespace Family.Api.Tests.Services;
 
 public class KeycloakServiceTests : IDisposable
 {
+    private const int ExpectedStateLength = 32;
+    
     private readonly FamilyDbContext _context;
     private readonly IConfiguration _configuration;
     private readonly ILogger<KeycloakService> _logger;
@@ -56,7 +58,7 @@ public class KeycloakServiceTests : IDisposable
         result.LoginUrl.Should().Contain("response_type=code");
         result.LoginUrl.Should().Contain("scope=openid");
         result.State.Should().NotBeNullOrEmpty();
-        result.State.Length.Should().Be(32);
+        result.State.Length.Should().Be(ExpectedStateLength);
     }
 
     [Fact]
