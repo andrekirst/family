@@ -112,24 +112,70 @@ Du agierst als erfahrenen KI-Entwickler im Projekt. Deine Hauptaufgabe ist es, *
 ## Entwicklungs-Workflow
 
 1. Wähle ein offenes GitHub-Issue, welches mit dem Label `ready-to-ai-dev` versehen ist
-2. Erstelle einen Feature-Branch mit sprechendem Namen
-3. Setze das Label des GitHub-Issue auf `in progress`
-4. Erstelle für die Implementierung eine strukturierte Todo-Liste mit allen erforderlichen Aufgaben
-5. Implementiere die Lösung schrittweise anhand der Todo-Liste:
-   5.1. **Nach jedem abgeschlossenen Todo-Punkt einen Commit durchführen**
-   5.2. Es sollen positive und negative Tests erstellt werden
-   5.3. Die CodeCoverage sollte immer über 50% liegen
-   5.4. Verwende möglichst kleine und sinnvolle Commits mit conventional commit messages
-6. Bevor der **Pull Request** erstellt wird, muss der gesamte Code buildfähig sein und lokal alle Tests erfolgreich sein
-7. Erstelle einen **Pull Request**, der das Issue referenziert (`Fixes #123`)
-8. Warte auf menschliches Review – merge **nicht selbst**
+2. **Aufwandsschätzung**: Erstelle eine Schätzung in Personentagen, wie lange die Implementierung normalerweise dauern würde, wenn es ein menschlicher Entwickler umsetzen müsste:
+   - Aufgliederung in einzelne Teilaufgaben
+   - Schätzung pro Teilaufgabe
+   - Gesamtschätzung als Kommentar im GitHub-Issue hinzufügen
+3. Erstelle einen Feature-Branch mit sprechendem Namen
+4. Setze das Label des GitHub-Issue auf `in progress`
+5. Erstelle für die Implementierung eine strukturierte Todo-Liste mit allen erforderlichen Aufgaben
+6. Implementiere die Lösung schrittweise anhand der Todo-Liste:
+   6.1. **Nach jedem abgeschlossenen Todo-Punkt einen Commit durchführen**
+   6.2. **Nach jedem Commit einen Push zum Remote-Branch durchführen**
+   6.3. **Bei Abschluss einer Aufgabe diese im GitHub-Issue abhaken**
+   6.4. Es sollen positive und negative Tests erstellt werden
+   6.5. Die CodeCoverage sollte immer über 50% liegen
+   6.6. Verwende möglichst kleine und sinnvolle Commits mit conventional commit messages
+7. Bevor der **Pull Request** erstellt wird, muss der gesamte Code buildfähig sein und lokal alle Tests erfolgreich sein
+8. Erstelle einen **Pull Request**, der das Issue referenziert (`Fixes #123`)
+9. Warte auf menschliches Review – merge **nicht selbst**
 
 ### Commit-Richtlinien
 
 - **Granulare Commits**: Nach jedem abgeschlossenen Todo-Punkt committen
+- **Immediate Push**: Nach jedem Commit direkt zum Remote-Branch pushen
+- **Issue Tracking**: Bei Abschluss einer Aufgabe diese im GitHub-Issue abhaken
 - **Conventional Commits**: Verwende das Format `type(scope): description`
 - **Aussagekräftige Messages**: Beschreibe WAS und WARUM geändert wurde
 - **Atomare Änderungen**: Ein Commit sollte eine logische Einheit darstellen
+
+### Aufwandsschätzung
+
+Bei jedem Issue eine realistische Schätzung erstellen:
+
+- **Analyse-Phase**: Zeit für Verständnis und Planung
+- **Implementierung**: Kernfunktionalität und Business Logic
+- **Testing**: Unit Tests, Integration Tests, Manuelles Testing
+- **Dokumentation**: Code-Dokumentation, API-Docs, Setup-Guides
+- **Review & Refactoring**: Code-Review-Zyklen und Optimierungen
+- **Deployment**: Build-Konfiguration und Deployment-Vorbereitung
+
+Beispiel-Format für Issue-Kommentar:
+
+```text
+Aufwandsschätzung (menschlicher Entwickler):
+
+Analyse & Planung: 0.5 Tage
+- Keycloak-Integration recherchieren
+- Architektur-Entscheidungen treffen
+
+Implementierung: 2.0 Tage  
+- Docker Setup konfigurieren
+- Authentication Service implementieren
+- GraphQL Schema erweitern
+- Entity Framework Modelle
+
+Testing: 1.0 Tag
+- Unit Tests für Service-Layer
+- Integration Tests mit Testcontainers
+- Manuelle API-Tests
+
+Dokumentation: 0.5 Tage
+- Setup-Anleitung erstellen
+- API-Dokumentation
+
+**Gesamtschätzung: 4.0 Personentage**
+```
 
 ## Zusammenarbeit mit menschlichen Entwicklern
 
