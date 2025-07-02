@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database für Keycloak
+  postgres-keycloak:
+    image: postgres:16
+    container_name: family-postgres-keycloak
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+    volumes:
+      - postgres_keycloak_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - family-network
+
+  # PostgreSQL Database für Family Application
+  postgres-app:
+    image: postgres:16
+    container_name: family-postgres-app
+    environment:
+      POSTGRES_DB: family
+      POSTGRES_USER: family
+      POSTGRES_PASSWORD: family
+    volumes:
+      - postgres_app_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - family-network
+
+  # Keycloak Identity Provider
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0
+    container_name: family-keycloak
+    environment:
+      # Database Configuration
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres-keycloak:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloak
+      
+      # Admin User
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      
+      # Keycloak Configuration
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_STRICT_HTTPS: false
+      KC_HTTP_ENABLED: true
+      KC_HEALTH_ENABLED: true
+      KC_METRICS_ENABLED: true
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-keycloak
+    command: start-dev --import-realm
+    volumes:
+      - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json:ro
+    networks:
+      - family-network
+
+  # Family API (für lokale Entwicklung)
+  family-api:
+    build:
+      context: .
+      dockerfile: src/api/Family.Api/Dockerfile
+    container_name: family-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8081
+      ConnectionStrings__DefaultConnection: "Host=postgres-app;Database=family;Username=family;Password=family"
+      Keycloak__Authority: "http://keycloak:8080/realms/family"
+      Keycloak__Audience: "family-api"
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres-app
+      - keycloak
+    networks:
+      - family-network
+    profiles:
+      - full-stack
+
+volumes:
+  postgres_keycloak_data:
+  postgres_app_data:
+
+networks:
+  family-network:
+    driver: bridge
