@@ -1,4 +1,7 @@
 using Family.Api.Data;
+using Family.Api.GraphQL.Mutations;
+using Family.Api.GraphQL.Queries;
+using Family.Api.GraphQL.Types;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -55,6 +58,27 @@ builder.Services.AddAuthorization(options =>
               .RequireClaim("family_roles", "family-admin"));
 });
 
+// Configure GraphQL
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<Query>()
+    .AddMutationType<Mutation>()
+    .AddTypeExtension<UserQueries>()
+    .AddTypeExtension<AuthenticationMutations>()
+    .AddType<UserType>()
+    .AddType<LoginInputType>()
+    .AddType<LoginCallbackInputType>()
+    .AddType<RefreshTokenInputType>()
+    .AddType<LoginInitiationPayloadType>()
+    .AddType<LoginPayloadType>()
+    .AddType<LogoutPayloadType>()
+    .AddType<RefreshTokenPayloadType>()
+    .AddProjections()
+    .AddFiltering()
+    .AddSorting()
+    .AddAuthorization()
+    .RegisterDbContext<FamilyDbContext>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -72,6 +96,9 @@ app.UseHttpsRedirection();
 // Authentication & Authorization
 app.UseAuthentication();
 app.UseAuthorization();
+
+// GraphQL endpoint
+app.MapGraphQL();
 
 app.Run();
 
