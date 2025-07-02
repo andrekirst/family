@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using System.Net;
+using System.Net.Mime;
 using System.Text;
 
 namespace Family.Api.Tests.Services;
@@ -152,7 +153,7 @@ public class MockHttpMessageHandler : HttpMessageHandler
     {
         var response = new HttpResponseMessage(_statusCode)
         {
-            Content = new StringContent(_content, Encoding.UTF8, "application/json")
+            Content = new StringContent(_content, Encoding.UTF8, MediaTypeNames.Application.Json)
         };
 
         return Task.FromResult(response);
