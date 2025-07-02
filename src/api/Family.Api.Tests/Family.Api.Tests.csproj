@@ -9,6 +9,16 @@
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <!-- Code Coverage Configuration -->
+    <CollectCoverage>true</CollectCoverage>
+    <CoverletOutputFormat>cobertura,opencover</CoverletOutputFormat>
+    <CoverletOutput>../../../coverage/</CoverletOutput>
+    <Exclude>[*.Tests]*,[*]*.Program,[*]*.Startup</Exclude>
+    <ExcludeByAttribute>Obsolete,GeneratedCode,CompilerGenerated</ExcludeByAttribute>
+    <ExcludeByFile>**/Program.cs,**/Startup.cs,**/*Designer.cs,**/Migrations/*.cs</ExcludeByFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="AutoFixture" />
     <PackageReference Include="FluentAssertions" />
@@ -21,6 +31,10 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="coverlet.collector">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.msbuild">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

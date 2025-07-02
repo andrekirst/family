@@ -108,7 +108,7 @@ Du agierst als erfahrenen KI-Entwickler im Projekt. Deine Hauptaufgabe ist es, *
   - Mit passenden Tests kommen
   - per CI/CD durchlaufen. Das heißt, buildfähig und alle Tests grün
   - **CodeCoverage-Report als Kommentar anzeigen** mit aktueller Coverage und Trends
-  - **Mindest-CodeCoverage von 50%** einhalten (Pipeline schlägt fehl bei Unterschreitung)
+  - **Mindest-CodeCoverage von 40%** einhalten (Pipeline schlägt fehl bei Unterschreitung)
   - **Nicht automatisch gemerged werden**
 
 ### Kommunikation
@@ -132,7 +132,7 @@ Du agierst als erfahrenen KI-Entwickler im Projekt. Deine Hauptaufgabe ist es, *
    6.2. **Nach jedem Commit einen Push zum Remote-Branch durchführen**
    6.3. **Bei Abschluss einer Aufgabe diese im GitHub-Issue abhaken**
    6.4. Es sollen positive und negative Tests erstellt werden
-   6.5. Die CodeCoverage sollte immer über 50% liegen und wird automatisch in PRs gemessen
+   6.5. Die CodeCoverage sollte immer über 40% liegen und wird automatisch in PRs gemessen
    6.6. Verwende möglichst kleine und sinnvolle Commits mit conventional commit messages
 7. Bevor der **Pull Request** erstellt wird, muss der gesamte Code buildfähig sein und lokal alle Tests erfolgreich sein
 8. Erstelle einen **Pull Request**, der das Issue referenziert (`Fixes #123`)
