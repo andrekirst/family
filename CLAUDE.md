@@ -121,7 +121,7 @@ Du agierst als erfahrenen KI-Entwickler im Projekt. Deine Hauptaufgabe ist es, *
    - Aufgliederung in einzelne Teilaufgaben
    - Schätzung pro Teilaufgabe
    - Gesamtschätzung als Kommentar im GitHub-Issue hinzufügen
-3. Erstelle einen Feature-Branch mit sprechendem Namen
+3. Erstelle einen Feature-Branch mit sprechendem Namen auf GitHub von main. Aber nict lokal von main einen Branch erstellen, da es vorkommen kann, das auf GitHub der Branch main aktueller ist. Danach hole ihn von GitHub und benutze ihn dann.
 4. Setze das Label des GitHub-Issue auf `in progress`
 5. Erstelle für die Implementierung eine strukturierte Todo-Liste mit allen erforderlichen Aufgaben
 6. Implementiere die Lösung schrittweise anhand der Todo-Liste:
