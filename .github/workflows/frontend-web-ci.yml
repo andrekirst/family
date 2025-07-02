@@ -1,0 +1,60 @@
+name: Frontend Web CI
+
+on:
+  push:
+    branches: [ main, develop, feature/* ]
+    paths: 
+      - 'src/frontend/web/**'
+      - '.github/workflows/frontend-web-ci.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths: 
+      - 'src/frontend/web/**'
+      - '.github/workflows/frontend-web-ci.yml'
+
+defaults:
+  run:
+    working-directory: ./src/frontend/web
+
+jobs:
+  test:
+    name: Test Frontend Web
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: './src/frontend/web/package-lock.json'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run lint
+      run: npm run lint
+      
+    - name: Run unit tests
+      run: npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
+      
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./src/frontend/web/coverage/web/lcov.info
+        flags: frontend-web
+        name: frontend-web-coverage
+      continue-on-error: true
+        
+    - name: Build application
+      run: npm run build
+      
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: frontend-web-build
+        path: ./src/frontend/web/dist/
+        retention-days: 7
