@@ -2,6 +2,7 @@ using Family.Api.Data;
 using Family.Api.GraphQL.Mutations;
 using Family.Api.GraphQL.Queries;
 using Family.Api.GraphQL.Types;
+using Family.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -14,6 +15,10 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<FamilyDbContext>(options =>
     options.UseNpgsql(connectionString));
+
+// Register services
+builder.Services.AddHttpClient<IKeycloakService, KeycloakService>();
+builder.Services.AddScoped<IKeycloakService, KeycloakService>();
 
 // Configure Keycloak Authentication
 var keycloakAuthority = builder.Configuration["Keycloak:Authority"] 
