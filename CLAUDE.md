@@ -92,6 +92,7 @@ Du agierst als erfahrenen KI-Entwickler im Projekt. Deine Hauptaufgabe ist es, *
 - Nutze **Dependency Injection** in allen Schichten
 - Verwende **DTOs**, keine Domänenmodelle direkt über GraphQL
 - **Entity Framework Interceptors**: Verwende Interceptors für domänenübergreifende Concerns (Timestamps, Auditing, etc.) statt manueller SaveChanges-Überschreibung
+- **Entity Configuration**: Verwende separate `IEntityTypeConfiguration<T>` Klassen für Entity-Konfiguration und `modelBuilder.ApplyConfigurationsFromAssembly()` statt direkter Konfiguration im DbContext
 - **Keine Magic Numbers**: Ersetze Zahlen durch benannte Konstanten
 - **MediaTypeNames verwenden**: Nutze MediaTypeNames.Application.Json statt hardcoded Strings
 - Passe CI/CD-Pipeline an, soweit nötig

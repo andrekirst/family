@@ -16,79 +16,8 @@ public class FamilyDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // User configuration
-        modelBuilder.Entity<User>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-            
-            entity.HasIndex(e => e.KeycloakSubjectId)
-                .IsUnique()
-                .HasDatabaseName("IX_Users_KeycloakSubjectId");
-            
-            entity.HasIndex(e => e.Email)
-                .IsUnique()
-                .HasDatabaseName("IX_Users_Email");
-
-            entity.Property(e => e.Id)
-                .HasDefaultValueSql("gen_random_uuid()");
-
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-            entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-            entity.Property(e => e.Email)
-                .IsRequired()
-                .HasMaxLength(320);
-
-            entity.Property(e => e.KeycloakSubjectId)
-                .IsRequired()
-                .HasMaxLength(255);
-
-            entity.Property(e => e.FirstName)
-                .HasMaxLength(100);
-
-            entity.Property(e => e.LastName)
-                .HasMaxLength(100);
-
-            entity.Property(e => e.PreferredLanguage)
-                .HasMaxLength(10)
-                .HasDefaultValue("de");
-
-            entity.Property(e => e.IsActive)
-                .HasDefaultValue(true);
-        });
-
-        // UserRole configuration
-        modelBuilder.Entity<UserRole>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-
-            entity.HasIndex(e => new { e.UserId, e.RoleName })
-                .IsUnique()
-                .HasDatabaseName("IX_UserRoles_UserId_RoleName");
-
-            entity.Property(e => e.Id)
-                .HasDefaultValueSql("gen_random_uuid()");
-
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-            entity.Property(e => e.RoleName)
-                .IsRequired()
-                .HasMaxLength(100);
-
-            entity.Property(e => e.Source)
-                .HasMaxLength(100)
-                .HasDefaultValue("keycloak");
-
-            // Foreign key relationship
-            entity.HasOne(e => e.User)
-                .WithMany(e => e.UserRoles)
-                .HasForeignKey(e => e.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-        });
+        // Apply all entity configurations from the current assembly
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(FamilyDbContext).Assembly);
 
         // Apply naming convention for PostgreSQL
         foreach (var entity in modelBuilder.Model.GetEntityTypes())
@@ -109,7 +38,6 @@ public class FamilyDbContext : DbContext
             }
         }
     }
-
 
     private static string ToSnakeCase(string? input)
     {
