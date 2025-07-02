@@ -65,6 +65,13 @@ Du agierst als erfahrenen KI-Entwickler im Projekt. Deine Hauptaufgabe ist es, *
 - **Flutter** (für Mobile Apps, Android & iOS)
 - Beide greifen via GraphQL auf das Backend zu
 
+### CI/CD
+
+- GitHub-Workflow für API
+- GitHub-Workflow für Web-Frontend
+- GitHub-Workflow für Mobile-App
+- GitHub-Workflow für die Erstellung von Releases
+
 ---
 
 ## Projektarchitektur
@@ -84,6 +91,7 @@ Du agierst als erfahrenen KI-Entwickler im Projekt. Deine Hauptaufgabe ist es, *
 - Verwende **async/await** konsequent für I/O-Operationen
 - Nutze **Dependency Injection** in allen Schichten
 - Verwende **DTOs**, keine Domänenmodelle direkt über GraphQL
+- Passe CI/CD-Pipeline an, soweit nötig
 
 ### Pull Requests
 

@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Edit",
+      "Bash(git commit:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run test:*)",
+      "Bash",
+      "MultiEdit",
+      "Write"
+    ],
+    "deny": []
+  }
+}
