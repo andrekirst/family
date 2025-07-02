@@ -1,11 +1,10 @@
+using Family.Api.Models.Base;
 using System.ComponentModel.DataAnnotations;
 
 namespace Family.Api.Models;
 
-public class User
+public class User : BaseEntity
 {
-    [Key]
-    public Guid Id { get; set; }
 
     [Required]
     [MaxLength(255)]
@@ -27,10 +26,6 @@ public class User
 
     public bool IsActive { get; set; } = true;
 
-    public DateTime CreatedAt { get; set; }
-
-    public DateTime UpdatedAt { get; set; }
-
     public DateTime? LastLoginAt { get; set; }
 
     // Navigation properties
@@ -40,10 +35,8 @@ public class User
     public string FullName => $"{FirstName} {LastName}".Trim();
 }
 
-public class UserRole
+public class UserRole : BaseEntity
 {
-    [Key]
-    public Guid Id { get; set; }
 
     [Required]
     public Guid UserId { get; set; }
@@ -54,8 +47,6 @@ public class UserRole
 
     [MaxLength(100)]
     public string? Source { get; set; } // "keycloak", "application", etc.
-
-    public DateTime CreatedAt { get; set; }
 
     // Navigation properties
     public virtual User User { get; set; } = null!;

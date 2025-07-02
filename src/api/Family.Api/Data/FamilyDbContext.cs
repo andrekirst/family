@@ -110,36 +110,6 @@ public class FamilyDbContext : DbContext
         }
     }
 
-    public override int SaveChanges()
-    {
-        UpdateTimestamps();
-        return base.SaveChanges();
-    }
-
-    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        UpdateTimestamps();
-        return await base.SaveChangesAsync(cancellationToken);
-    }
-
-    private void UpdateTimestamps()
-    {
-        var entries = ChangeTracker
-            .Entries()
-            .Where(e => e.Entity is User && (e.State == EntityState.Added || e.State == EntityState.Modified));
-
-        foreach (var entityEntry in entries)
-        {
-            if (entityEntry.Entity is User user)
-            {
-                if (entityEntry.State == EntityState.Added)
-                {
-                    user.CreatedAt = DateTime.UtcNow;
-                }
-                user.UpdatedAt = DateTime.UtcNow;
-            }
-        }
-    }
 
     private static string ToSnakeCase(string? input)
     {

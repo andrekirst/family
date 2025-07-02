@@ -1,4 +1,5 @@
 using Family.Api.Data;
+using Family.Api.Data.Interceptors;
 using Family.Api.GraphQL.Mutations;
 using Family.Api.GraphQL.Queries;
 using Family.Api.GraphQL.Types;
@@ -16,7 +17,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
     ?? "Host=localhost;Database=family;Username=family;Password=family";
 
 builder.Services.AddDbContext<FamilyDbContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseNpgsql(connectionString)
+           .AddInterceptors(new AuditableEntityInterceptor()));
 
 // Register services
 builder.Services.AddHttpClient<IKeycloakService, KeycloakService>();
