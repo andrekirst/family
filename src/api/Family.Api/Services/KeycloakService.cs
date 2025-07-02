@@ -10,6 +10,8 @@ namespace Family.Api.Services;
 
 public class KeycloakService : IKeycloakService
 {
+    private const int StateLength = 32;
+    
     private readonly HttpClient _httpClient;
     private readonly IConfiguration _configuration;
     private readonly FamilyDbContext _context;
@@ -29,10 +31,10 @@ public class KeycloakService : IKeycloakService
 
     public Task<LoginInitiationResult> InitiateLoginAsync()
     {
-        var state = GenerateRandomString(32);
+        var state = GenerateRandomString(StateLength);
         var authority = _configuration["Keycloak:Authority"];
         var clientId = _configuration["Keycloak:ClientId"];
-        var redirectUri = "http://localhost:8081/auth/callback"; // TODO: Make configurable
+        var redirectUri = _configuration["Keycloak:RedirectUri"] ?? "http://localhost:8081/auth/callback";
         
         var loginUrl = $"{authority}/protocol/openid-connect/auth" +
                       $"?client_id={clientId}" +
@@ -51,7 +53,7 @@ public class KeycloakService : IKeycloakService
             var tokenEndpoint = _configuration["Keycloak:TokenEndpoint"];
             var clientId = _configuration["Keycloak:ClientId"];
             var clientSecret = _configuration["Keycloak:ClientSecret"];
-            var redirectUri = "http://localhost:8081/auth/callback"; // TODO: Make configurable
+            var redirectUri = _configuration["Keycloak:RedirectUri"] ?? "http://localhost:8081/auth/callback";
 
             var tokenRequest = new FormUrlEncodedContent(new[]
             {
