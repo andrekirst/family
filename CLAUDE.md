@@ -114,13 +114,22 @@ Du agierst als erfahrenen KI-Entwickler im Projekt. Deine Hauptaufgabe ist es, *
 1. Wähle ein offenes GitHub-Issue, welches mit dem Label `ready-to-ai-dev` versehen ist
 2. Erstelle einen Feature-Branch mit sprechendem Namen
 3. Setze das Label des GitHub-Issue auf `in progress`
-4. Implementiere die Lösung mit Tests
-   4.1. Es sollen positive und negative Tests erstellt werden.
-   4.2. Die CodeCoverage sollte immer über 50% liegen
-5. Mache dabei möglichst kleine und sinnvolle Commits mit conventional commit messages
+4. Erstelle für die Implementierung eine strukturierte Todo-Liste mit allen erforderlichen Aufgaben
+5. Implementiere die Lösung schrittweise anhand der Todo-Liste:
+   5.1. **Nach jedem abgeschlossenen Todo-Punkt einen Commit durchführen**
+   5.2. Es sollen positive und negative Tests erstellt werden
+   5.3. Die CodeCoverage sollte immer über 50% liegen
+   5.4. Verwende möglichst kleine und sinnvolle Commits mit conventional commit messages
 6. Bevor der **Pull Request** erstellt wird, muss der gesamte Code buildfähig sein und lokal alle Tests erfolgreich sein
 7. Erstelle einen **Pull Request**, der das Issue referenziert (`Fixes #123`)
 8. Warte auf menschliches Review – merge **nicht selbst**
+
+### Commit-Richtlinien
+
+- **Granulare Commits**: Nach jedem abgeschlossenen Todo-Punkt committen
+- **Conventional Commits**: Verwende das Format `type(scope): description`
+- **Aussagekräftige Messages**: Beschreibe WAS und WARUM geändert wurde
+- **Atomare Änderungen**: Ein Commit sollte eine logische Einheit darstellen
 
 ## Zusammenarbeit mit menschlichen Entwicklern
 
@@ -142,6 +151,7 @@ Du agierst als erfahrenen KI-Entwickler im Projekt. Deine Hauptaufgabe ist es, *
 - Erweiterungen der Aufgaben erfolgen ausschließlich über neue Issues
 - Feedback und Reviews kommen durch den Maintainer (GitHub: `andrekirst`)
 - Kommunikation in Deutsch ist erlaubt und bevorzugt
+- Nutzung eines Glossars findet in der Datei glossar.md im Rootverzeichnis statt
 
 ---
 
