@@ -30,14 +30,150 @@ jobs:
     - name: Build solution
       run: dotnet build Family.sln --no-restore --configuration Release
     
-    - name: Run tests with coverage
-      run: dotnet test Family.sln --no-build --configuration Release --verbosity normal --collect:"XPlat Code Coverage" --settings codecoverage.runsettings --results-directory ./coverage
+    - name: Run Unit Tests
+      run: dotnet test Family.sln --no-build --configuration Release --verbosity normal --filter "Category=Unit" --logger "trx;LogFileName=unit-tests.trx" --results-directory ./test-results/unit --collect:"XPlat Code Coverage" --settings codecoverage.runsettings
+    
+    - name: Run Integration Tests  
+      run: dotnet test Family.sln --no-build --configuration Release --verbosity normal --filter "Category=Integration" --logger "trx;LogFileName=integration-tests.trx" --results-directory ./test-results/integration --collect:"XPlat Code Coverage" --settings codecoverage.runsettings
+    
+    - name: Merge Coverage Reports
+      run: |
+        mkdir -p ./coverage
+        find ./test-results -name "coverage.cobertura.xml" -exec cp {} ./coverage/ \;
+        # Rename to avoid conflicts
+        counter=1
+        for file in ./coverage/coverage.cobertura.xml; do
+          if [ $counter -gt 1 ]; then
+            mv "$file" "./coverage/coverage-${counter}.cobertura.xml"
+          fi
+          counter=$((counter + 1))
+        done
     
     - name: Install ReportGenerator tool
       run: dotnet tool install -g dotnet-reportgenerator-globaltool
     
+    - name: Parse Test Results
+      run: |
+        # Create test results summary
+        mkdir -p ./test-results/summary
+        
+        # Parse Unit Tests
+        if [ -f "./test-results/unit/unit-tests.trx" ]; then
+          echo "Parsing Unit Test Results..."
+          python3 << 'EOF'
+        import xml.etree.ElementTree as ET
+        import json
+        import os
+        
+        def parse_trx(file_path, category):
+            try:
+                tree = ET.parse(file_path)
+                root = tree.getroot()
+                
+                # Define namespace
+                ns = {'ns': 'http://microsoft.com/schemas/VisualStudio/TeamTest/2010'}
+                
+                # Get test run summary
+                counters = root.find('.//ns:Counters', ns)
+                if counters is not None:
+                    total = int(counters.get('total', 0))
+                    passed = int(counters.get('passed', 0))
+                    failed = int(counters.get('failed', 0))
+                    duration = root.find('.//ns:Times', ns)
+                    duration_text = duration.get('finish') if duration is not None else 'Unknown'
+                else:
+                    total = passed = failed = 0
+                    duration_text = 'Unknown'
+                
+                # Get individual test results
+                tests = []
+                for test_result in root.findall('.//ns:UnitTestResult', ns):
+                    test_name = test_result.get('testName', 'Unknown')
+                    outcome = test_result.get('outcome', 'Unknown')
+                    duration_attr = test_result.get('duration', '00:00:00')
+                    
+                    tests.append({
+                        'name': test_name,
+                        'outcome': outcome,
+                        'duration': duration_attr
+                    })
+                
+                return {
+                    'category': category,
+                    'total': total,
+                    'passed': passed, 
+                    'failed': failed,
+                    'duration': duration_text,
+                    'tests': tests
+                }
+            except Exception as e:
+                print(f"Error parsing {file_path}: {e}")
+                return {'category': category, 'total': 0, 'passed': 0, 'failed': 0, 'duration': 'Unknown', 'tests': []}
+        
+        # Parse unit tests
+        unit_results = parse_trx('./test-results/unit/unit-tests.trx', 'Unit')
+        with open('./test-results/summary/unit-results.json', 'w') as f:
+            json.dump(unit_results, f, indent=2)
+        EOF
+        fi
+        
+        # Parse Integration Tests  
+        if [ -f "./test-results/integration/integration-tests.trx" ]; then
+          echo "Parsing Integration Test Results..."
+          python3 << 'EOF'
+        import xml.etree.ElementTree as ET
+        import json
+        
+        def parse_trx(file_path, category):
+            try:
+                tree = ET.parse(file_path)
+                root = tree.getroot()
+                
+                ns = {'ns': 'http://microsoft.com/schemas/VisualStudio/TeamTest/2010'}
+                
+                counters = root.find('.//ns:Counters', ns)
+                if counters is not None:
+                    total = int(counters.get('total', 0))
+                    passed = int(counters.get('passed', 0))
+                    failed = int(counters.get('failed', 0))
+                    duration = root.find('.//ns:Times', ns)
+                    duration_text = duration.get('finish') if duration is not None else 'Unknown'
+                else:
+                    total = passed = failed = 0
+                    duration_text = 'Unknown'
+                
+                tests = []
+                for test_result in root.findall('.//ns:UnitTestResult', ns):
+                    test_name = test_result.get('testName', 'Unknown')
+                    outcome = test_result.get('outcome', 'Unknown')
+                    duration_attr = test_result.get('duration', '00:00:00')
+                    
+                    tests.append({
+                        'name': test_name,
+                        'outcome': outcome,
+                        'duration': duration_attr
+                    })
+                
+                return {
+                    'category': category,
+                    'total': total,
+                    'passed': passed,
+                    'failed': failed, 
+                    'duration': duration_text,
+                    'tests': tests
+                }
+            except Exception as e:
+                print(f"Error parsing {file_path}: {e}")
+                return {'category': category, 'total': 0, 'passed': 0, 'failed': 0, 'duration': 'Unknown', 'tests': []}
+        
+        integration_results = parse_trx('./test-results/integration/integration-tests.trx', 'Integration')
+        with open('./test-results/summary/integration-results.json', 'w') as f:
+            json.dump(integration_results, f, indent=2)
+        EOF
+        fi
+    
     - name: Generate coverage report
-      run: reportgenerator -reports:"coverage/**/coverage.cobertura.xml" -targetdir:"coverage/report" -reporttypes:Html_Dark,Badges,MarkdownSummaryGithub,TextSummary -assemblyfilters:"-*.Tests"
+      run: reportgenerator -reports:"test-results/**/coverage.cobertura.xml" -targetdir:"coverage/report" -reporttypes:Html_Dark,Badges,MarkdownSummaryGithub,TextSummary -assemblyfilters:"-*.Tests"
     
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v4
@@ -54,6 +190,16 @@ jobs:
         path: coverage/report/
         retention-days: 30
     
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results
+        path: |
+          test-results/
+          !test-results/**/coverage.cobertura.xml
+        retention-days: 30
+    
     - name: Check coverage threshold
       run: |
         COVERAGE=$(grep -oP 'Line coverage: \K[0-9.]+' coverage/report/Summary.txt)
@@ -64,26 +210,77 @@ jobs:
         fi
         echo "Coverage threshold met: ${COVERAGE}% >= 40%"
     
-    - name: Comment PR with coverage
+    - name: Comment PR with test results and coverage
       if: github.event_name == 'pull_request'
       uses: actions/github-script@v7
       with:
         script: |
           const fs = require('fs');
           try {
+            // Read test results
+            let unitResults = { category: 'Unit', total: 0, passed: 0, failed: 0, duration: 'Unknown', tests: [] };
+            let integrationResults = { category: 'Integration', total: 0, passed: 0, failed: 0, duration: 'Unknown', tests: [] };
+            
+            try {
+              if (fs.existsSync('./test-results/summary/unit-results.json')) {
+                unitResults = JSON.parse(fs.readFileSync('./test-results/summary/unit-results.json', 'utf8'));
+              }
+            } catch (e) {
+              console.warn('Could not read unit test results:', e.message);
+            }
+            
+            try {
+              if (fs.existsSync('./test-results/summary/integration-results.json')) {
+                integrationResults = JSON.parse(fs.readFileSync('./test-results/summary/integration-results.json', 'utf8'));
+              }
+            } catch (e) {
+              console.warn('Could not read integration test results:', e.message);
+            }
+            
+            // Read coverage data
             const summary = fs.readFileSync('coverage/report/MarkdownSummaryGithub.md', 'utf8');
             const textSummary = fs.readFileSync('coverage/report/Summary.txt', 'utf8');
-            
             const coverageMatch = textSummary.match(/Line coverage: ([\d.]+)%/);
             const coverage = coverageMatch ? coverageMatch[1] : 'Unknown';
             
-            const comment = `## 📊 Code Coverage Report
+            // Build test results section
+            function buildTestSection(results) {
+              if (results.total === 0) return `- No ${results.category.toLowerCase()} tests found`;
+              
+              const statusIcon = results.failed === 0 ? '✅' : '❌';
+              let section = `#### ${results.category} Tests (${results.total} tests) ${statusIcon}\n`;
+              section += `**Passed**: ${results.passed} | **Failed**: ${results.failed}\n\n`;
+              
+              if (results.tests && results.tests.length > 0) {
+                results.tests.forEach(test => {
+                  const icon = test.outcome === 'Passed' ? '✅' : test.outcome === 'Failed' ? '❌' : '⚠️';
+                  section += `- ${icon} ${test.name}\n`;
+                });
+              }
+              
+              return section;
+            }
+            
+            const totalTests = unitResults.total + integrationResults.total;
+            const totalPassed = unitResults.passed + integrationResults.passed;
+            const totalFailed = unitResults.failed + integrationResults.failed;
+            
+            const comment = `## 🧪 Test Results Summary
+            
+            ### Family.Api.Tests
+            **Total**: ${totalTests} tests | **Passed**: ${totalPassed} ✅ | **Failed**: ${totalFailed} ${totalFailed > 0 ? '❌' : '✅'}
+            
+            ${buildTestSection(unitResults)}
+            
+            ${buildTestSection(integrationResults)}
+            
+            ## 📊 Code Coverage Report
             
             **Coverage: ${coverage}%** ${coverage >= 40 ? '✅' : '❌'}
             
             ${summary}
             
-            📁 [View detailed coverage report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            📁 [View detailed reports](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
             
             ---
             *Coverage threshold: 40% | Generated by Family CI/CD*`;
@@ -95,5 +292,5 @@ jobs:
               body: comment
             });
           } catch (error) {
-            console.error('Error posting coverage comment:', error);
+            console.error('Error posting test and coverage comment:', error);
           }

@@ -45,6 +45,7 @@ public class KeycloakServiceTests : IDisposable
     }
 
     [Fact]
+    [Trait("Category", "Unit")]
     public async Task InitiateLoginAsync_ShouldReturnLoginUrl()
     {
         // Arrange
@@ -63,6 +64,7 @@ public class KeycloakServiceTests : IDisposable
     }
 
     [Fact]
+    [Trait("Category", "Unit")]
     public async Task DirectLoginAsync_WithInvalidCredentials_ShouldReturnFailure()
     {
         // Arrange
@@ -84,6 +86,7 @@ public class KeycloakServiceTests : IDisposable
     }
 
     [Fact]
+    [Trait("Category", "Unit")]
     public async Task RefreshTokenAsync_WithValidToken_ShouldReturnNewTokens()
     {
         // Arrange
@@ -111,6 +114,7 @@ public class KeycloakServiceTests : IDisposable
     }
 
     [Fact]
+    [Trait("Category", "Unit")]
     public async Task LogoutAsync_ShouldReturnSuccess()
     {
         // Arrange

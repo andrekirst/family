@@ -14,7 +14,8 @@ public class FamilyApiIntegrationTests : IClassFixture<WebApplicationFactory<Pro
         _factory = factory;
     }
 
-    [Fact] 
+    [Fact]
+    [Trait("Category", "Integration")]
     public async Task Get_Root_ReturnsNotFound()
     {
         var client = _factory.CreateClient();
@@ -25,6 +26,7 @@ public class FamilyApiIntegrationTests : IClassFixture<WebApplicationFactory<Pro
     }
 
     [Fact]
+    [Trait("Category", "Integration")]
     public async Task Get_Swagger_ReturnsSuccess_InDevelopment()
     {
         var client = _factory.WithWebHostBuilder(builder =>
