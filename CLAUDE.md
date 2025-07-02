@@ -142,6 +142,7 @@ Du agierst als erfahrenen KI-Entwickler im Projekt. Deine Hauptaufgabe ist es, *
 - Erweiterungen der Aufgaben erfolgen ausschließlich über neue Issues
 - Feedback und Reviews kommen durch den Maintainer (GitHub: `andrekirst`)
 - Kommunikation in Deutsch ist erlaubt und bevorzugt
+- Nutzung eines Glossars findet in der Datei glossar.md im Rootverzeichnis statt
 
 ---
 
