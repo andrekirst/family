@@ -20,13 +20,9 @@ public class DirectLoginHandler : IRequestHandler<DirectLoginCommand, LoginPaylo
 
         if (result.IsSuccess)
         {
-            return new LoginPayload(
-                result.AccessToken,
-                result.RefreshToken,
-                result.User,
-                null);
+            return LoginPayload.Success(result.AccessToken!, result.RefreshToken, result.User!);
         }
 
-        return new LoginPayload(null, null, null, result.Errors);
+        return LoginPayload.Failure(result.Errors);
     }
 }

@@ -12,7 +12,17 @@ public record LoginPayload(
     string? AccessToken,
     string? RefreshToken,
     User? User,
-    IReadOnlyList<string>? Errors);
+    IReadOnlyList<string>? Errors)
+{
+    public static LoginPayload Success(string accessToken, string? refreshToken, User user) =>
+        new(accessToken, refreshToken, user, null);
+
+    public static LoginPayload Failure(params string[] errors) =>
+        new(null, null, null, errors);
+
+    public static LoginPayload Failure(IReadOnlyList<string> errors) =>
+        new(null, null, null, errors);
+}
 
 public record LogoutPayload(bool Success, IReadOnlyList<string>? Errors);
 
@@ -21,7 +31,17 @@ public record RefreshTokenInput(string RefreshToken);
 public record RefreshTokenPayload(
     string? AccessToken,
     string? RefreshToken,
-    IReadOnlyList<string>? Errors);
+    IReadOnlyList<string>? Errors)
+{
+    public static RefreshTokenPayload Success(string accessToken, string? refreshToken) =>
+        new(accessToken, refreshToken, null);
+
+    public static RefreshTokenPayload Failure(params string[] errors) =>
+        new(null, null, errors);
+
+    public static RefreshTokenPayload Failure(IReadOnlyList<string> errors) =>
+        new(null, null, errors);
+}
 
 public class LoginInputType : InputObjectType<LoginInput>
 {

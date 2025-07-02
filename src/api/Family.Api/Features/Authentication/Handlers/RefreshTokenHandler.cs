@@ -20,12 +20,9 @@ public class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, RefreshT
 
         if (result.IsSuccess)
         {
-            return new RefreshTokenPayload(
-                result.AccessToken,
-                result.RefreshToken,
-                null);
+            return RefreshTokenPayload.Success(result.AccessToken!, result.RefreshToken);
         }
 
-        return new RefreshTokenPayload(null, null, result.Errors);
+        return RefreshTokenPayload.Failure(result.Errors);
     }
 }

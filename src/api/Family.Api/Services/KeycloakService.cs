@@ -70,7 +70,7 @@ public class KeycloakService : IKeycloakService
             if (!response.IsSuccessStatusCode)
             {
                 _logger.LogError("Token exchange failed: {StatusCode} - {Content}", response.StatusCode, content);
-                return new LoginResult(false, null, null, null, new[] { "Authentication failed" });
+                return LoginResult.Failure("Authentication failed");
             }
 
             var tokenResponse = JsonSerializer.Deserialize<JsonElement>(content);
@@ -81,21 +81,21 @@ public class KeycloakService : IKeycloakService
 
             if (string.IsNullOrEmpty(accessToken))
             {
-                return new LoginResult(false, null, null, null, new[] { "Invalid token response" });
+                return LoginResult.Failure("Invalid token response");
             }
 
             var user = await SyncUserFromKeycloakAsync(accessToken);
             if (user == null)
             {
-                return new LoginResult(false, null, null, null, new[] { "Failed to sync user data" });
+                return LoginResult.Failure("Failed to sync user data");
             }
 
-            return new LoginResult(true, accessToken, refreshToken, user, Array.Empty<string>());
+            return LoginResult.Success(accessToken, refreshToken, user);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error completing login");
-            return new LoginResult(false, null, null, null, new[] { "Login completion failed" });
+            return LoginResult.Failure("Login completion failed");
         }
     }
 
@@ -123,7 +123,7 @@ public class KeycloakService : IKeycloakService
             if (!response.IsSuccessStatusCode)
             {
                 _logger.LogError("Direct login failed: {StatusCode} - {Content}", response.StatusCode, content);
-                return new LoginResult(false, null, null, null, new[] { "Invalid credentials" });
+                return LoginResult.Failure("Invalid credentials");
             }
 
             var tokenResponse = JsonSerializer.Deserialize<JsonElement>(content);
@@ -134,25 +134,25 @@ public class KeycloakService : IKeycloakService
 
             if (string.IsNullOrEmpty(accessToken))
             {
-                return new LoginResult(false, null, null, null, new[] { "Invalid token response" });
+                return LoginResult.Failure("Invalid token response");
             }
 
             var user = await SyncUserFromKeycloakAsync(accessToken);
             if (user == null)
             {
-                return new LoginResult(false, null, null, null, new[] { "Failed to sync user data" });
+                return LoginResult.Failure("Failed to sync user data");
             }
 
             // Update last login time
             user.LastLoginAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
 
-            return new LoginResult(true, accessToken, refreshToken, user, Array.Empty<string>());
+            return LoginResult.Success(accessToken, refreshToken, user);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error during direct login");
-            return new LoginResult(false, null, null, null, new[] { "Login failed" });
+            return LoginResult.Failure("Login failed");
         }
     }
 
@@ -178,7 +178,7 @@ public class KeycloakService : IKeycloakService
             if (!response.IsSuccessStatusCode)
             {
                 _logger.LogError("Token refresh failed: {StatusCode} - {Content}", response.StatusCode, content);
-                return new RefreshTokenResult(false, null, null, new[] { "Token refresh failed" });
+                return RefreshTokenResult.Failure("Token refresh failed");
             }
 
             var tokenResponse = JsonSerializer.Deserialize<JsonElement>(content);
@@ -187,12 +187,17 @@ public class KeycloakService : IKeycloakService
                 ? refreshProp.GetString() 
                 : refreshToken; // Some providers don't return new refresh token
 
-            return new RefreshTokenResult(true, accessToken, newRefreshToken, Array.Empty<string>());
+            if (string.IsNullOrEmpty(accessToken))
+            {
+                return RefreshTokenResult.Failure("Invalid token response");
+            }
+
+            return RefreshTokenResult.Success(accessToken, newRefreshToken);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error refreshing token");
-            return new RefreshTokenResult(false, null, null, new[] { "Token refresh failed" });
+            return RefreshTokenResult.Failure("Token refresh failed");
         }
     }
 
@@ -218,15 +223,15 @@ public class KeycloakService : IKeycloakService
             if (!response.IsSuccessStatusCode)
             {
                 _logger.LogWarning("Logout failed: {StatusCode}", response.StatusCode);
-                return new LogoutResult(false, new[] { "Logout failed" });
+                return LogoutResult.Failure("Logout failed");
             }
 
-            return new LogoutResult(true, Array.Empty<string>());
+            return LogoutResult.Success();
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error during logout");
-            return new LogoutResult(false, new[] { "Logout failed" });
+            return LogoutResult.Failure("Logout failed");
         }
     }
 
