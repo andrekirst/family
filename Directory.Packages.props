@@ -31,6 +31,11 @@
     <PackageVersion Include="HotChocolate.Authorization" Version="14.2.0" />
   </ItemGroup>
 
+  <!-- CQRS Dependencies -->
+  <ItemGroup>
+    <PackageVersion Include="MediatR" Version="12.4.1" />
+  </ItemGroup>
+
   <!-- Test Dependencies -->
   <ItemGroup>
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />

@@ -24,6 +24,9 @@ builder.Services.AddDbContext<FamilyDbContext>(options =>
 builder.Services.AddHttpClient<IKeycloakService, KeycloakService>();
 builder.Services.AddScoped<IKeycloakService, KeycloakService>();
 
+// Register MediatR
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
 // Configure Keycloak Authentication
 var keycloakAuthority = builder.Configuration["Keycloak:Authority"] 
     ?? "http://localhost:8080/realms/family";

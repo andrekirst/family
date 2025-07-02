@@ -1,5 +1,7 @@
+using Family.Api.Features.Authentication.Commands;
+using Family.Api.Features.Authentication.Queries;
 using Family.Api.GraphQL.Types;
-using Family.Api.Services;
+using MediatR;
 
 namespace Family.Api.GraphQL.Mutations;
 
@@ -7,72 +9,42 @@ namespace Family.Api.GraphQL.Mutations;
 public class AuthenticationMutations
 {
     public async Task<LoginInitiationPayload> InitiateLoginAsync(
-        [Service] IKeycloakService keycloakService)
+        [Service] IMediator mediator,
+        CancellationToken cancellationToken)
     {
-        var result = await keycloakService.InitiateLoginAsync();
-        return new LoginInitiationPayload(result.LoginUrl, result.State);
+        return await mediator.Send(new InitiateLoginQuery(), cancellationToken);
     }
 
     public async Task<LoginPayload> CompleteLoginAsync(
         LoginCallbackInput input,
-        [Service] IKeycloakService keycloakService)
+        [Service] IMediator mediator,
+        CancellationToken cancellationToken)
     {
-        var result = await keycloakService.CompleteLoginAsync(input.AuthorizationCode, input.State);
-        
-        if (result.IsSuccess)
-        {
-            return new LoginPayload(
-                result.AccessToken,
-                result.RefreshToken,
-                result.User,
-                null);
-        }
-
-        return new LoginPayload(null, null, null, result.Errors);
+        return await mediator.Send(new CompleteLoginCommand(input.AuthorizationCode, input.State), cancellationToken);
     }
 
     public async Task<LoginPayload> DirectLoginAsync(
         LoginInput input,
-        [Service] IKeycloakService keycloakService)
+        [Service] IMediator mediator,
+        CancellationToken cancellationToken)
     {
-        var result = await keycloakService.DirectLoginAsync(input.Email, input.Password);
-        
-        if (result.IsSuccess)
-        {
-            return new LoginPayload(
-                result.AccessToken,
-                result.RefreshToken,
-                result.User,
-                null);
-        }
-
-        return new LoginPayload(null, null, null, result.Errors);
+        return await mediator.Send(new DirectLoginCommand(input.Email, input.Password), cancellationToken);
     }
 
     public async Task<RefreshTokenPayload> RefreshTokenAsync(
         RefreshTokenInput input,
-        [Service] IKeycloakService keycloakService)
+        [Service] IMediator mediator,
+        CancellationToken cancellationToken)
     {
-        var result = await keycloakService.RefreshTokenAsync(input.RefreshToken);
-        
-        if (result.IsSuccess)
-        {
-            return new RefreshTokenPayload(
-                result.AccessToken,
-                result.RefreshToken,
-                null);
-        }
-
-        return new RefreshTokenPayload(null, null, result.Errors);
+        return await mediator.Send(new RefreshTokenCommand(input.RefreshToken), cancellationToken);
     }
 
     public async Task<LogoutPayload> LogoutAsync(
         string accessToken,
-        [Service] IKeycloakService keycloakService)
+        [Service] IMediator mediator,
+        CancellationToken cancellationToken)
     {
-        var result = await keycloakService.LogoutAsync(accessToken);
-        
-        return new LogoutPayload(result.IsSuccess, result.Errors);
+        return await mediator.Send(new LogoutCommand(accessToken), cancellationToken);
     }
 }
 

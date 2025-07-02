@@ -19,6 +19,7 @@
     <PackageReference Include="HotChocolate.AspNetCore" />
     <PackageReference Include="HotChocolate.Data.EntityFramework" />
     <PackageReference Include="HotChocolate.Authorization" />
+    <PackageReference Include="MediatR" />
   </ItemGroup>
 
 </Project>
