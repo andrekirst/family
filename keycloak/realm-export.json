@@ -1,0 +1,270 @@
+{
+  "id": "family",
+  "realm": "family",
+  "displayName": "Family Application",
+  "displayNameHtml": "<div class=\"kc-logo-text\"><span>Family Application</span></div>",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": true,
+  "registrationEmailAsUsername": true,
+  "rememberMe": true,
+  "verifyEmail": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "permanentLockout": false,
+  "maxFailureWaitSeconds": 900,
+  "minimumQuickLoginWaitSeconds": 60,
+  "waitIncrementSeconds": 60,
+  "quickLoginCheckMilliSeconds": 1000,
+  "maxDeltaTimeSeconds": 43200,
+  "failureFactor": 30,
+  "defaultRole": {
+    "id": "default-role-family",
+    "name": "default-role-family",
+    "description": "${role_default-role-family}",
+    "composite": true,
+    "clientRole": false,
+    "containerId": "family"
+  },
+  "requiredCredentials": ["password"],
+  "passwordPolicy": "length(8) and digits(1) and lowerCase(1) and upperCase(1) and specialChars(1)",
+  "otpPolicyType": "totp",
+  "otpPolicyAlgorithm": "HmacSHA1",
+  "otpPolicyInitialCounter": 0,
+  "otpPolicyDigits": 6,
+  "otpPolicyLookAheadWindow": 1,
+  "otpPolicyPeriod": 30,
+  "supportedLocales": ["de", "en"],
+  "defaultLocale": "de",
+  "internationalizationEnabled": true,
+  "clients": [
+    {
+      "id": "family-api",
+      "clientId": "family-api",
+      "name": "Family API",
+      "description": "Backend API for Family Application",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "family-api-secret-change-in-production",
+      "registrationAccessToken": "",
+      "redirectUris": [
+        "http://localhost:8081/*",
+        "https://localhost:8081/*",
+        "http://localhost:5000/*",
+        "https://localhost:5001/*"
+      ],
+      "webOrigins": [
+        "http://localhost:8081",
+        "https://localhost:8081",
+        "http://localhost:5000",
+        "https://localhost:5001",
+        "http://localhost:3000",
+        "https://localhost:3000"
+      ],
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "publicClient": false,
+      "frontchannelLogout": false,
+      "protocol": "openid-connect",
+      "attributes": {
+        "access.token.lifespan": "1800",
+        "client.secret.creation.time": "1704067200",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "oidc.ciba.grant.enabled": "false",
+        "backchannel.logout.session.required": "true",
+        "backchannel.logout.revoke.offline.tokens": "false"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "profile",
+        "roles",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    },
+    {
+      "id": "family-web",
+      "clientId": "family-web",
+      "name": "Family Web Application",
+      "description": "Frontend Web Application for Family",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "redirectUris": [
+        "http://localhost:3000/*",
+        "https://localhost:3000/*"
+      ],
+      "webOrigins": [
+        "http://localhost:3000",
+        "https://localhost:3000"
+      ],
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
+      "frontchannelLogout": false,
+      "protocol": "openid-connect",
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "oidc.ciba.grant.enabled": "false"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "profile",
+        "roles",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    }
+  ],
+  "roles": {
+    "realm": [
+      {
+        "id": "family-user",
+        "name": "family-user",
+        "description": "Standard user role for family members",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "family"
+      },
+      {
+        "id": "family-admin",
+        "name": "family-admin",
+        "description": "Administrator role for family management",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "family"
+      }
+    ]
+  },
+  "users": [
+    {
+      "id": "test-user-1",
+      "username": "test@family.local",
+      "email": "test@family.local",
+      "emailVerified": true,
+      "firstName": "Test",
+      "lastName": "User",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Test123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-role-family",
+        "family-user"
+      ],
+      "clientRoles": {},
+      "attributes": {
+        "locale": ["de"]
+      }
+    },
+    {
+      "id": "admin-user-1",
+      "username": "admin@family.local",
+      "email": "admin@family.local",
+      "emailVerified": true,
+      "firstName": "Admin",
+      "lastName": "User",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Admin123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-role-family",
+        "family-user",
+        "family-admin"
+      ],
+      "clientRoles": {},
+      "attributes": {
+        "locale": ["de"]
+      }
+    }
+  ],
+  "clientScopes": [
+    {
+      "id": "family-scope",
+      "name": "family",
+      "description": "Family application specific claims",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "true"
+      },
+      "protocolMappers": [
+        {
+          "id": "family-role-mapper",
+          "name": "family-roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "family_roles",
+            "jsonType.label": "String"
+          }
+        }
+      ]
+    }
+  ],
+  "browserFlow": "browser",
+  "registrationFlow": "registration",
+  "directGrantFlow": "direct grant",
+  "resetCredentialsFlow": "reset credentials",
+  "clientAuthenticationFlow": "clients",
+  "dockerAuthenticationFlow": "docker auth",
+  "attributes": {
+    "cibaBackchannelTokenDeliveryMode": "poll",
+    "cibaExpiresIn": "120",
+    "cibaInterval": "5",
+    "cibaAuthRequestedUserHint": "login_hint",
+    "parRequestUriLifespan": "60",
+    "frontendUrl": "",
+    "consoleDisplayName": "Family Realm"
+  },
+  "userManagedAccessAllowed": false,
+  "clientProfiles": {
+    "profiles": []
+  },
+  "clientPolicies": {
+    "policies": []
+  }
+}

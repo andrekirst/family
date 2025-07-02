@@ -1,6 +1,94 @@
+using Family.Api.Data;
+using Family.Api.Data.Interceptors;
+using Family.Api.GraphQL.Mutations;
+using Family.Api.GraphQL.Queries;
+using Family.Api.GraphQL.Types;
+using Family.Api.Services;
+using HotChocolate.Authorization;
+using HotChocolate.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+    ?? "Host=localhost;Database=family;Username=family;Password=family";
+
+builder.Services.AddDbContext<FamilyDbContext>(options =>
+    options.UseNpgsql(connectionString)
+           .AddInterceptors(new AuditableEntityInterceptor()));
+
+// Register services
+builder.Services.AddHttpClient<IKeycloakService, KeycloakService>();
+builder.Services.AddScoped<IKeycloakService, KeycloakService>();
+
+// Register MediatR
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+// Configure Keycloak Authentication
+var keycloakAuthority = builder.Configuration["Keycloak:Authority"] 
+    ?? "http://localhost:8080/realms/family";
+var keycloakAudience = builder.Configuration["Keycloak:Audience"] 
+    ?? "family-api";
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = keycloakAuthority;
+        options.Audience = keycloakAudience;
+        options.RequireHttpsMetadata = false; // Only for development
+        
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ClockSkew = TimeSpan.FromMinutes(5)
+        };
+        
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                context.Response.Headers.Add("Token-Expired", "true");
+                return Task.CompletedTask;
+            }
+        };
+    });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("FamilyUser", policy =>
+        policy.RequireAuthenticatedUser()
+              .RequireClaim("family_roles", "family-user"));
+    
+    options.AddPolicy("FamilyAdmin", policy =>
+        policy.RequireAuthenticatedUser()
+              .RequireClaim("family_roles", "family-admin"));
+});
+
+// Configure GraphQL
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<Query>()
+    .AddMutationType<Mutation>()
+    .AddTypeExtension<UserQueries>()
+    .AddTypeExtension<AuthenticationMutations>()
+    .AddType<UserType>()
+    .AddType<LoginInputType>()
+    .AddType<LoginCallbackInputType>()
+    .AddType<RefreshTokenInputType>()
+    .AddType<LoginInitiationPayloadType>()
+    .AddType<LoginPayloadType>()
+    .AddType<LogoutPayloadType>()
+    .AddType<RefreshTokenPayloadType>()
+    .AddProjections()
+    .AddFiltering()
+    .AddSorting();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -14,6 +102,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Authentication & Authorization
+app.UseAuthentication();
+app.UseAuthorization();
+
+// GraphQL endpoint
+app.MapGraphQL();
 
 app.Run();
 
