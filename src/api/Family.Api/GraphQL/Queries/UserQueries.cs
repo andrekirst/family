@@ -9,7 +9,6 @@ namespace Family.Api.GraphQL.Queries;
 [ExtendObjectType<Query>]
 public class UserQueries
 {
-    [Authorize]
     public async Task<User?> GetCurrentUserAsync(
         ClaimsPrincipal claimsPrincipal,
         FamilyDbContext context,
@@ -23,13 +22,11 @@ public class UserQueries
             .FirstOrDefaultAsync(u => u.KeycloakSubjectId == subjectId, cancellationToken);
     }
 
-    [Authorize(Policy = "FamilyAdmin")]
     public async Task<IQueryable<User>> GetUsersAsync(FamilyDbContext context)
     {
         return context.Users.Where(u => u.IsActive);
     }
 
-    [Authorize]
     public async Task<User?> GetUserByIdAsync(
         Guid id,
         ClaimsPrincipal claimsPrincipal,

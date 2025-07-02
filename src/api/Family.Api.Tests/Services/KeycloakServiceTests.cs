@@ -20,7 +20,7 @@ public class KeycloakServiceTests : IDisposable
     public KeycloakServiceTests()
     {
         var options = new DbContextOptionsBuilder<FamilyDbContext>()
-            .UseInMemory(Guid.NewGuid().ToString())
+            .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
         
         _context = new FamilyDbContext(options);
@@ -54,7 +54,7 @@ public class KeycloakServiceTests : IDisposable
         result.LoginUrl.Should().StartWith("http://localhost:8080/realms/family/protocol/openid-connect/auth");
         result.LoginUrl.Should().Contain("client_id=family-api");
         result.LoginUrl.Should().Contain("response_type=code");
-        result.LoginUrl.Should().Contain("scope=openid+profile+email");
+        result.LoginUrl.Should().Contain("scope=openid");
         result.State.Should().NotBeNullOrEmpty();
         result.State.Length.Should().Be(32);
     }

@@ -1,3 +1,5 @@
+using Family.Api.Models;
+
 namespace Family.Api.GraphQL.Types;
 
 public record LoginInput(string Email, string Password);

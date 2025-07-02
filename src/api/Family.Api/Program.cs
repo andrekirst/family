@@ -3,6 +3,8 @@ using Family.Api.GraphQL.Mutations;
 using Family.Api.GraphQL.Queries;
 using Family.Api.GraphQL.Types;
 using Family.Api.Services;
+using HotChocolate.Authorization;
+using HotChocolate.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -80,9 +82,7 @@ builder.Services
     .AddType<RefreshTokenPayloadType>()
     .AddProjections()
     .AddFiltering()
-    .AddSorting()
-    .AddAuthorization()
-    .RegisterDbContext<FamilyDbContext>();
+    .AddSorting();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

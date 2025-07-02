@@ -38,7 +38,7 @@ public class AuthenticationIntegrationTests : IClassFixture<WebApplicationFactor
 
                 services.AddDbContext<FamilyDbContext>(options =>
                 {
-                    options.UseInMemory("InMemoryDbForTesting");
+                    options.UseInMemoryDatabase("InMemoryDbForTesting");
                 });
 
                 // Mock Keycloak service
@@ -97,7 +97,7 @@ public class AuthenticationIntegrationTests : IClassFixture<WebApplicationFactor
 
                 services.AddDbContext<FamilyDbContext>(options =>
                 {
-                    options.UseInMemory("InMemoryDbForTesting");
+                    options.UseInMemoryDatabase("InMemoryDbForTesting");
                 });
             });
         }).CreateClient();
