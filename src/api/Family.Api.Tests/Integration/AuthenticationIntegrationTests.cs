@@ -20,6 +20,7 @@ public class AuthenticationIntegrationTests : IClassFixture<WebApplicationFactor
     }
 
     [Fact]
+    [Trait("Category", "Integration")]
     public async Task DirectLogin_WithValidCredentials_ShouldReturnSuccess()
     {
         // Arrange
@@ -79,6 +80,7 @@ public class AuthenticationIntegrationTests : IClassFixture<WebApplicationFactor
     }
 
     [Fact]
+    [Trait("Category", "Integration")]
     public async Task GraphQL_Endpoint_ShouldBeAccessible()
     {
         // Arrange
@@ -112,6 +114,7 @@ public class AuthenticationIntegrationTests : IClassFixture<WebApplicationFactor
     }
 
     [Fact]
+    [Trait("Category", "Integration")]
     public async Task Swagger_Endpoint_ShouldBeAccessible()
     {
         // Arrange
