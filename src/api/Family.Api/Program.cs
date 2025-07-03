@@ -4,6 +4,7 @@ using Family.Api.GraphQL.Mutations;
 using Family.Api.GraphQL.Queries;
 using Family.Api.GraphQL.Types;
 using Family.Api.Services;
+using Family.Infrastructure.Caching.Extensions;
 using HotChocolate.Authorization;
 using HotChocolate.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -20,9 +21,12 @@ builder.Services.AddDbContext<FamilyDbContext>(options =>
     options.UseNpgsql(connectionString)
            .AddInterceptors(new AuditableEntityInterceptor()));
 
+// Register caching services
+builder.Services.AddFamilyCaching(builder.Configuration);
+
 // Register services
-builder.Services.AddHttpClient<IKeycloakService, KeycloakService>();
-builder.Services.AddScoped<IKeycloakService, KeycloakService>();
+builder.Services.AddHttpClient<IKeycloakService, CachedKeycloakService>();
+builder.Services.AddScoped<IKeycloakService, CachedKeycloakService>();
 
 // Register MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));

@@ -22,4 +22,8 @@
     <PackageReference Include="MediatR" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\infrastructure\Family.Infrastructure.Caching\Family.Infrastructure.Caching.csproj" />
+  </ItemGroup>
+
 </Project>

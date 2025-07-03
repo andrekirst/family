@@ -68,6 +68,23 @@ services:
       retries: 3
       start_period: 60s
 
+  # Redis Cache für L2 Caching
+  redis:
+    image: redis:7-alpine
+    container_name: family-redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - family-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
   # Family API
   family-api:
     build:
@@ -80,8 +97,12 @@ services:
       ConnectionStrings__DefaultConnection: "Host=postgres-app;Database=family;Username=family;Password=family"
       Keycloak__Authority: "http://keycloak:8080/realms/family"
       Keycloak__Audience: "family-api"
+      Cache__RedisConnectionString: "redis:6379"
     ports:
       - "8081:8081"
+    depends_on:
+      - postgres-app
+      - redis
     networks:
       - family-network
     profiles:
@@ -106,6 +127,7 @@ services:
 volumes:
   postgres_keycloak_data:
   postgres_app_data:
+  redis_data:
 
 networks:
   family-network:

@@ -98,6 +98,7 @@ Du agierst als erfahrenen KI-Entwickler im Projekt. Deine Hauptaufgabe ist es, *
 - **Factory Methods für Records**: Verwende statische Factory Methods für bessere Lesbarkeit statt unleserlicher `null, null, null` Konstruktor-Aufrufe
 - **Keine Magic Numbers**: Ersetze Zahlen durch benannte Konstanten
 - **MediaTypeNames verwenden**: Nutze MediaTypeNames.Application.Json statt hardcoded Strings
+- **Docker Compose Updates**: Bei Infrastruktur-Änderungen (neue Services wie Redis, Kafka, etc.) ist IMMER die `docker-compose.yml` Datei anzupassen und die entsprechenden Umgebungsvariablen für die Services zu konfigurieren
 - Passe CI/CD-Pipeline an, soweit nötig
 
 ### Pull Requests
