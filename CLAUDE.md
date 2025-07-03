@@ -125,7 +125,16 @@ Du agierst als erfahrenen KI-Entwickler im Projekt. Deine Hauptaufgabe ist es, *
    - Aufgliederung in einzelne Teilaufgaben
    - Schätzung pro Teilaufgabe
    - Gesamtschätzung als Kommentar im GitHub-Issue hinzufügen
-3. Erstelle einen Feature-Branch mit sprechendem Namen auf GitHub von main. Aber nict lokal von main einen Branch erstellen, da es vorkommen kann, das auf GitHub der Branch main aktueller ist. Danach hole ihn von GitHub und benutze ihn dann.
+3. **Feature-Branch erstellen** - ZWINGEND für jede Issue-Implementierung:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout -b feature/issue-XX-kurze-beschreibung
+   git push -u origin feature/issue-XX-kurze-beschreibung
+   ```
+   - **Branch-Naming-Konvention**: `feature/issue-XX-kurze-beschreibung`, `bugfix/issue-XX-kurze-beschreibung`, `docs/issue-XX-kurze-beschreibung`
+   - **WICHTIG**: Jede Issue-Implementierung erfolgt in einem separaten Feature-Branch
+   - **NIEMALS** auf bestehenden Feature-Branches oder direkt auf `main` arbeiten
 4. Setze das Label des GitHub-Issue auf `in progress`
 5. Erstelle für die Implementierung eine strukturierte Todo-Liste mit allen erforderlichen Aufgaben
 6. Implementiere die Lösung schrittweise anhand der Todo-Liste:
