@@ -84,6 +84,23 @@ services:
     profiles:
       - full-stack
 
+  # Family Web Frontend (Angular)
+  family-web:
+    build:
+      context: ./src/frontend/web
+      dockerfile: Dockerfile
+    container_name: family-web
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "4200:80"
+    depends_on:
+      - family-api
+    networks:
+      - family-network
+    profiles:
+      - full-stack
+
 volumes:
   postgres_keycloak_data:
   postgres_app_data:
