@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Family.Infrastructure.Caching", "src\infrastructure\Family.Infrastructure.Caching\Family.Infrastructure.Caching.csproj", "{EBCE5B83-E1E9-4766-964A-292060754A54}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Family.Infrastructure.CQRS", "src\infrastructure\Family.Infrastructure.CQRS\Family.Infrastructure.CQRS.csproj", "{DCFC2743-B415-4C7D-BFCE-1331A398A747}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{EBCE5B83-E1E9-4766-964A-292060754A54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBCE5B83-E1E9-4766-964A-292060754A54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBCE5B83-E1E9-4766-964A-292060754A54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCFC2743-B415-4C7D-BFCE-1331A398A747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCFC2743-B415-4C7D-BFCE-1331A398A747}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCFC2743-B415-4C7D-BFCE-1331A398A747}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCFC2743-B415-4C7D-BFCE-1331A398A747}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2F2574E2-2124-43B9-A33B-C85443AA469E} = {74382EC2-CAB2-4522-A473-28A4328AD03A}
@@ -43,5 +49,6 @@ Global
 		{372FD927-6E3E-4859-9A8B-5651B253ADE9} = {2F2574E2-2124-43B9-A33B-C85443AA469E}
 		{5778C912-8801-4047-AD07-2336EE2FFE78} = {74382EC2-CAB2-4522-A473-28A4328AD03A}
 		{EBCE5B83-E1E9-4766-964A-292060754A54} = {5778C912-8801-4047-AD07-2336EE2FFE78}
+		{DCFC2743-B415-4C7D-BFCE-1331A398A747} = {5778C912-8801-4047-AD07-2336EE2FFE78}
 	EndGlobalSection
 EndGlobal
