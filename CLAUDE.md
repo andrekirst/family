@@ -210,4 +210,242 @@ Dokumentation: 0.5 Tage
 
 ---
 
-**Letzte Aktualisierung:** 2025-07-02
+## Cloud Design Patterns
+
+Die Family-Plattform nutzt bewährte Cloud Design Patterns für eine skalierbare, resiliente und wartbare Architektur. Diese Patterns basieren auf dem [Microsoft Azure Well-Architected Framework](https://learn.microsoft.com/en-us/azure/well-architected/) und unterstützen die Säulen: Reliability, Security, Cost Optimization, Operational Excellence und Performance Efficiency.
+
+### Datenmanagement Patterns
+
+#### Cache-Aside
+**Zweck**: Load data on demand into a cache from a data store  
+**Anwendung**: Redis für häufig abgefragte Daten (Benutzerprofile, Konfigurationen)  
+**Implementierung**:
+- C#: `IMemoryCache` und Redis mit `StackExchange.Redis`
+- Automatisches Cache-Invalidation bei Datenänderungen
+- TTL-basierte Expiration für verschiedene Datentypen
+
+#### CQRS (Command Query Responsibility Segregation)
+**Zweck**: Separate read and write operations for better performance and scalability  
+**Anwendung**: GraphQL Mutations (Commands) und Queries getrennt behandeln  
+**Implementierung**:
+- Command-Handler für Schreiboperationen mit Event-Erzeugung
+- Query-Handler für Leseoperationen mit optimierten Read-Models
+- MediatR für Command/Query-Dispatching
+
+#### Event Sourcing
+**Zweck**: Append-only store for complete event history  
+**Anwendung**: Familienereignisse, Terminänderungen, Medikamentenverlauf  
+**Implementierung**:
+- Event Store mit PostgreSQL und Kafka
+- Domain Events als unveränderliche Records
+- Event-Replay für Zustandsrekonstruktion und Debugging
+
+#### Sharding
+**Zweck**: Partition data across multiple databases for scalability  
+**Anwendung**: Aufteilung von Familiendaten nach Familie-ID  
+**Implementierung**:
+- PostgreSQL-Partitionierung nach Family-Tenant
+- Entity Framework mit Custom DbContext pro Shard
+- Routing-Layer für Shard-Selection basierend auf User-Context
+
+### Messaging Patterns
+
+#### Asynchronous Request-Reply
+**Zweck**: Decouple backend processing from frontend hosts  
+**Anwendung**: Lange laufende Operationen (Datenimport, Berichte)  
+**Implementierung**:
+- Kafka für asynchrone Nachrichten
+- Correlation-IDs für Request-Reply-Matching
+- SignalR für Real-time Updates an Frontend
+
+#### Choreography
+**Zweck**: Coordinate service interactions through events  
+**Anwendung**: Familienworkflows (Terminbuchung → Erinnerung → Benachrichtigung)  
+**Implementierung**:
+- Domain Events über Kafka Topics
+- Event-Handler in verschiedenen Bounded Contexts
+- Saga-Pattern für komplexe Geschäftsprozesse
+
+#### Claim Check
+**Zweck**: Split large messages into claim and payload for efficiency  
+**Anwendung**: Große Dateiuploads (Bilder, Dokumente)  
+**Implementierung**:
+- Metadata in Kafka-Message, Datei in Blob Storage
+- Azure Blob Storage oder lokale File Storage
+- Referenz-URLs mit begrenzter Gültigkeit
+
+#### Competing Consumers
+**Zweck**: Multiple concurrent consumers process messages from queue  
+**Anwendung**: Email-Versand, Push-Notifications, Datenverarbeitung  
+**Implementierung**:
+- Kafka Consumer Groups für parallele Verarbeitung
+- Idempotente Message-Handler
+- Dead Letter Queue für fehlgeschlagene Nachrichten
+
+#### Publisher/Subscriber
+**Zweck**: Decouple applications that require asynchronous communication  
+**Anwendung**: Domain Events zwischen Bounded Contexts  
+**Implementierung**:
+- Kafka Topics für Event-Publishing
+- Multiple Subscriber pro Event-Type
+- Event Schema Registry für Versionierung
+
+#### Queue-Based Load Leveling
+**Zweck**: Use queue to smooth intermittent heavy loads  
+**Anwendung**: Batch-Import von Kalenderdaten, Massive Benachrichtigungen  
+**Implementierung**:
+- Kafka für Message-Buffering
+- Rate-Limited Consumers
+- Auto-Scaling basierend auf Queue-Depth
+
+### Design & Implementation Patterns
+
+#### Ambassador
+**Zweck**: Helper services that send network requests on behalf of consumers  
+**Anwendung**: External API-Integration (Schul-APIs, Kalender-Services)  
+**Implementierung**:
+- HttpClient mit Polly für Retry/Circuit-Breaker
+- API-Gateway als Ambassador für externe Services
+- Request/Response-Transformation und -Validierung
+
+#### Anti-Corruption Layer
+**Zweck**: Façade between modern applications and legacy systems  
+**Anwendung**: Integration mit bestehenden Schulsystemen oder Kalendern  
+**Implementierung**:
+- Adapter-Pattern für externe API-Integration
+- DTOs für Datenkonvertierung
+- Separate Bounded Context für Legacy-Integration
+
+#### External Configuration Store
+**Zweck**: Centralize configuration management  
+**Anwendung**: Feature Flags, API-Endpoints, Umgebungskonfiguration  
+**Implementierung**:
+- Azure App Configuration oder PostgreSQL
+- IConfiguration mit Hot-Reload
+- Feature Flag Management für A/B-Testing
+
+#### Gateway Offloading
+**Zweck**: Offload shared functionality to a gateway proxy  
+**Anwendung**: Authentication, Rate Limiting, Request Logging  
+**Implementierung**:
+- Ocelot oder YARP als API Gateway
+- JWT-Validierung im Gateway
+- Cross-cutting Concerns zentral behandelt
+
+### Resilienz Patterns
+
+#### Circuit Breaker
+**Zweck**: Handle faults when connecting to remote services/resources  
+**Anwendung**: Externe API-Calls, Datenbankverbindungen  
+**Implementierung**:
+- Polly Circuit Breaker für HttpClient
+- Fallback-Mechanismen für kritische Services
+- Health Checks für Circuit Breaker State
+
+#### Health Endpoint Monitoring
+**Zweck**: Implement functional checks for applications and services  
+**Anwendung**: Kubernetes Liveness/Readiness Probes, Load Balancer Health Checks  
+**Implementierung**:
+- ASP.NET Core Health Checks
+- Custom Health Checks für Datenbank, Redis, Kafka
+- Health Dashboard für Monitoring
+
+#### Quarantine
+**Zweck**: Isolate instances that are failing or behaving abnormally  
+**Anwendung**: Fehlerhafte Nachrichten, problematische User-Requests  
+**Implementierung**:
+- Dead Letter Queue für fehlgeschlagene Messages
+- Request-Blacklisting für anomales Verhalten
+- Automatic Retry mit Exponential Backoff
+
+#### Retry
+**Zweck**: Enable applications to handle transient failures transparently  
+**Anwendung**: Netzwerk-Timeouts, temporäre Service-Ausfälle  
+**Implementierung**:
+- Polly Retry Policies mit Exponential Backoff
+- Jitter für Thundering Herd Prevention
+- Max Retry Count und Circuit Breaker Integration
+
+#### Saga
+**Zweck**: Manage data consistency across microservices in distributed transactions  
+**Anwendung**: Familienregistrierung, Komplexe Buchungsprozesse  
+**Implementierung**:
+- Choreography-based Sagas mit Domain Events
+- Compensation Actions für Rollback
+- Saga State Management mit Event Sourcing
+
+### Sicherheits Patterns
+
+#### Federated Identity
+**Zweck**: Delegate authentication to external identity provider  
+**Anwendung**: Keycloak für zentrale Authentifizierung  
+**Implementierung**:
+- OpenID Connect/OAuth2 mit Keycloak
+- JWT Token-Validierung in ASP.NET Core
+- Multi-Tenant Support über Keycloak Realms
+
+#### Gatekeeper
+**Zweck**: Protect applications using dedicated host instance as broker  
+**Anwendung**: API Gateway als Security-Proxy  
+**Implementierung**:
+- YARP Gateway mit Authentication-Middleware
+- Request-Validation und Authorization
+- Rate Limiting und DDoS-Protection
+
+#### Rate Limiting
+**Zweck**: Control consumption of resources by applications, tenants, or services  
+**Anwendung**: API-Call Limits pro Familie/Benutzer  
+**Implementierung**:
+- Redis-basierte Rate Limiting
+- Different Limits pro API-Endpoint
+- Graceful Degradation bei Limit-Überschreitung
+
+### Performance & Skalierungs Patterns
+
+#### Deployment Stamps
+**Zweck**: Deploy multiple independent copies of application components  
+**Anwendung**: Multi-Tenant Deployment pro Familie oder Region  
+**Implementierung**:
+- Kubernetes Namespaces pro Tenant
+- Separate Database-Instances für große Familien
+- Load Balancer für Stamp-Selection
+
+#### Geode
+**Zweck**: Deploy backend services in geographical regions close to frontend users  
+**Anwendung**: CDN für statische Assets, regionale API-Deployments  
+**Implementierung**:
+- Azure CDN oder CloudFlare für Assets
+- Geo-DNS für regionale API-Endpoints
+- Data Replication zwischen Regionen
+
+### Pattern-Integration in Family-Architektur
+
+#### Technologie-Zuordnung
+- **Cache-Aside**: Redis mit ASP.NET Core
+- **CQRS/Event Sourcing**: MediatR + Kafka + PostgreSQL
+- **Circuit Breaker/Retry**: Polly
+- **Pub/Sub**: Kafka
+- **Health Monitoring**: ASP.NET Core Health Checks
+- **Rate Limiting**: Redis + Custom Middleware
+- **Configuration**: ASP.NET Core IConfiguration
+
+#### Testing-Strategien
+- **Unit Tests**: Pattern-spezifische Handler und Services
+- **Integration Tests**: End-to-End Pattern-Flows mit Testcontainers
+- **Performance Tests**: Load Testing für Resilienz-Patterns
+- **Chaos Engineering**: Fault Injection für Resilienz-Validierung
+
+#### Monitoring & Observability
+- **Metrics**: Pattern-spezifische Metriken (Circuit Breaker State, Cache Hit Rate)
+- **Distributed Tracing**: Request-Flow über Pattern-Grenzen hinweg
+- **Structured Logging**: Pattern-Context in Log-Events
+- **Alerting**: Pattern-basierte Alerts (Circuit Breaker Open, High Error Rate)
+
+### Referenzen
+- [Microsoft Cloud Design Patterns](https://learn.microsoft.com/en-us/azure/architecture/patterns/)
+- [Azure Well-Architected Framework](https://learn.microsoft.com/en-us/azure/well-architected/)
+- [.NET Application Architecture Guides](https://learn.microsoft.com/en-us/dotnet/architecture/)
+
+---
+
+**Letzte Aktualisierung:** 2025-07-03
