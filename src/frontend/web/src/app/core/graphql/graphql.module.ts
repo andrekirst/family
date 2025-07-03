@@ -1,5 +1,4 @@
-import { provideApollo as provideApolloBase, Apollo } from 'apollo-angular';
-import { provideHttpClient } from '@angular/common/http';
+import { provideApollo as provideApolloBase } from 'apollo-angular';
 import { InMemoryCache } from '@apollo/client/core';
 
 import { environment } from '../../../environments/environment';

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 })
 export class ApolloConfigService {
   
-  constructor(private http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   getUri(): string {
     return environment.apiUrl;
