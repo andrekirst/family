@@ -30,6 +30,11 @@ services:
       - "5432:5432"
     networks:
       - family-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U family -d family"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   # Keycloak Identity Provider
   keycloak:
@@ -47,11 +52,11 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: admin
       
       # Keycloak Configuration
-      KC_HOSTNAME_STRICT: false
-      KC_HOSTNAME_STRICT_HTTPS: false
-      KC_HTTP_ENABLED: true
-      KC_HEALTH_ENABLED: true
-      KC_METRICS_ENABLED: true
+      KC_HOSTNAME_STRICT: "false"
+      KC_HOSTNAME_STRICT_HTTPS: "false"
+      KC_HTTP_ENABLED: "true"
+      KC_HEALTH_ENABLED: "true"
+      KC_METRICS_ENABLED: "true"
     ports:
       - "8080:8080"
     depends_on:
@@ -61,8 +66,14 @@ services:
       - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json:ro
     networks:
       - family-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/realms/master || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 
-  # Family API (für lokale Entwicklung)
+  # Family API
   family-api:
     build:
       context: .
@@ -77,11 +88,14 @@ services:
     ports:
       - "8081:8081"
     depends_on:
-      - postgres-app
-      - keycloak
+      postgres-app:
+        condition: service_healthy
+      keycloak:
+        condition: service_healthy
     networks:
       - family-network
     profiles:
+      - api
       - full-stack
 
   # Family Web Frontend (Angular)
