@@ -38,16 +38,11 @@ jobs:
     - name: Run lint
       run: npm run lint
       
-    - name: Run unit tests
-      run: npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
+    - name: Install Playwright browsers
+      run: npx playwright install chromium
       
-    - name: Upload coverage reports
-      uses: codecov/codecov-action@v4
-      with:
-        file: ./src/frontend/web/coverage/web/lcov.info
-        flags: frontend-web
-        name: frontend-web-coverage
-      continue-on-error: true
+    - name: Run tests
+      run: npm test
         
     - name: Build application
       run: npm run build

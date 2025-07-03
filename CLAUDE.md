@@ -64,6 +64,7 @@ Du agierst als erfahrenen KI-Entwickler im Projekt. Deine Hauptaufgabe ist es, *
 
 - **Angular** (für Web)
 - **Flutter** (für Mobile Apps, Android & iOS)
+- **Tests**: **Playwright** für End-to-End und Integration Tests (Angular)
 - Beide greifen via GraphQL auf das Backend zu
 
 ### CI/CD
