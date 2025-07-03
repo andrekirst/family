@@ -58,12 +58,13 @@ jobs:
     
     steps:
     - name: Validate PR description contains issue reference
+      env:
+        PR_BODY: ${{ github.event.pull_request.body }}
       run: |
-        PR_BODY="${{ github.event.pull_request.body }}"
         echo "Validating PR description contains issue reference"
         
         # Check if PR body contains proper issue reference
-        if [[ $PR_BODY =~ [Ff]ixes[[:space:]]+\#[0-9]+ ]] || [[ $PR_BODY =~ [Cc]loses[[:space:]]+\#[0-9]+ ]] || [[ $PR_BODY =~ [Rr]esolves[[:space:]]+\#[0-9]+ ]]; then
+        if [[ "$PR_BODY" =~ [Ff]ixes[[:space:]]+\#[0-9]+ ]] || [[ "$PR_BODY" =~ [Cc]loses[[:space:]]+\#[0-9]+ ]] || [[ "$PR_BODY" =~ [Rr]esolves[[:space:]]+\#[0-9]+ ]]; then
           echo "✅ PR description contains proper issue reference"
         else
           echo "❌ PR description should contain issue reference"
