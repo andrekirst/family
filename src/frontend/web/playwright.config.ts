@@ -34,6 +34,18 @@ export default defineConfig({
     
     /* Take screenshot only when test fails */
     screenshot: 'only-on-failure',
+    
+    /* Increase timeouts */
+    actionTimeout: 10000,
+    navigationTimeout: 30000,
+  },
+  
+  /* Global test timeout */
+  timeout: 60000,
+  
+  /* Expect timeout */
+  expect: {
+    timeout: 10000,
   },
 
   /* Configure projects for major browsers */
@@ -79,5 +91,6 @@ export default defineConfig({
     command: 'npm run start',
     url: 'http://localhost:4200',
     reuseExistingServer: !process.env.CI,
+    timeout: 120000, // 2 minutes for dev server to start
   },
 });

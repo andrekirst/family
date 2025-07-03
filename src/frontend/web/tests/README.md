@@ -10,8 +10,24 @@ Das Testsystem verwendet Playwright als Test-Framework und deckt folgende Bereic
 - **Anwendungsstart**: Prüft, ob die Anwendung ordnungsgemäß lädt
 - **Seitentitel**: Verifiziert, dass die Anwendung einen gültigen Titel hat
 
-### 2. Authentifizierung-Tests (`auth.spec.ts`)
-Umfassende Tests für die Authentifizierungslogik:
+### 2. Authentifizierung-Tests (verschiedene Varianten)
+
+#### `auth-ci.spec.ts` - CI/CD optimiert (5 Tests) ✅
+- Schnelle, stabile Tests für Pipeline
+- Login-Formular und Navigation
+- Mock-Authentifizierung
+- **Status: 5/5 Tests erfolgreich**
+
+#### `auth-optimized.spec.ts` - Vollständige Tests (11 Tests) ✅  
+- Umfassende UI-Tests mit optimierten Timeouts
+- Formularvalidierung und Interaktionen
+- Mock-Authentifizierung und OAuth
+- **Status: 11/11 Tests erfolgreich**
+
+#### `auth.spec.ts` - Legacy Tests (komplexe Szenarien)
+- Detaillierte Authentifizierungslogik
+- Erweiterte OAuth-Flows
+- **Status: Experimentell**
 
 #### Login-Funktionalität
 - ✅ Anzeige des Login-Formulars für nicht-authentifizierte Benutzer
