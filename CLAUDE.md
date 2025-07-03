@@ -99,6 +99,19 @@ Du agierst als erfahrenen KI-Entwickler im Projekt. Deine Hauptaufgabe ist es, *
 - **Keine Magic Numbers**: Ersetze Zahlen durch benannte Konstanten
 - **MediaTypeNames verwenden**: Nutze MediaTypeNames.Application.Json statt hardcoded Strings
 - **Docker Compose Updates**: Bei Infrastruktur-Änderungen (neue Services wie Redis, Kafka, etc.) ist IMMER die `docker-compose.yml` Datei anzupassen und die entsprechenden Umgebungsvariablen für die Services zu konfigurieren
+- **Mehrsprachigkeits-Richtlinien**: 
+  - Alle benutzerorientierten Texte (Validierungsmeldungen, Fehlermeldungen, UI-Labels) müssen mehrsprachig implementiert werden
+  - Verwende das ASP.NET Core Localization System mit IStringLocalizer
+  - Erstelle Resource-Dateien (.resx) für Deutsch (`*.de.resx`) und Englisch (`*.en.resx`)
+  - Nutze Namespace-basierte Resource-Organisation (z.B. `Features.Users.Resources`)
+  - Standard-Sprache ist Deutsch (`de`), Fallback ist Englisch (`en`)
+  - Keine hardcodierten deutschen oder englischen Texte im Code - IMMER über Localization
+- **Authorization Constants**: 
+  - Verwende NIEMALS hardcodierte Policy- oder Role-Namen als Strings
+  - Definiere alle Authorization-Konstanten in separaten Constants-Klassen im `Family.Api.Authorization` Namespace
+  - Struktur: `Policies.cs` für Policy-Namen, `Roles.cs` für Role-Claim-Werte, `Claims.cs` für Claim-Type-Namen
+  - Beispiel: `[Authorize(Policy = Policies.FamilyUser)]` statt `[Authorize(Policy = "FamilyUser")]`
+  - Update IMMER alle vorhandenen hardcodierten Strings bei neuen Authorization-Features
 - Passe CI/CD-Pipeline an, soweit nötig
 
 ### Pull Requests
