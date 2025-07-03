@@ -13,8 +13,8 @@ export class ApolloConfigService {
     return environment.apiUrl;
   }
 
-  getHeaders(): { [key: string]: string } {
-    const headers: { [key: string]: string } = {};
+  getHeaders(): Record<string, string> {
+    const headers: Record<string, string> = {};
     
     const token = localStorage.getItem('accessToken');
     if (token) {
