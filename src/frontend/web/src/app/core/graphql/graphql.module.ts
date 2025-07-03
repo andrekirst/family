@@ -5,7 +5,7 @@ import { setContext } from '@apollo/client/link/context';
 
 const uri = 'http://localhost:8081/graphql'; // Family API GraphQL endpoint
 
-export function apolloOptionsFactory(): ApolloClientOptions<any> {
+export function apolloOptionsFactory(): ApolloClientOptions<unknown> {
   const httpLink = createHttpLink({
     uri,
   });

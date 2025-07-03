@@ -113,8 +113,10 @@ describe('LoginComponent', () => {
     
     // Mock window.location.href
     const originalLocation = window.location;
-    delete (window as any).location;
-    window.location = { ...originalLocation, href: '' };
+    Object.defineProperty(window, 'location', {
+      value: { ...originalLocation, href: '' },
+      writable: true
+    });
     
     component.loginWithOAuth();
     
@@ -122,7 +124,10 @@ describe('LoginComponent', () => {
     expect(window.location.href).toBe('https://keycloak.example.com/auth');
     
     // Restore original location
-    window.location = originalLocation;
+    Object.defineProperty(window, 'location', {
+      value: originalLocation,
+      writable: true
+    });
   });
 
   it('should handle OAuth login failure', () => {

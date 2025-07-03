@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -290,14 +290,12 @@ import { User } from '../../core/graphql/types';
     }
   `]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   currentUser$: Observable<User | null>;
 
-  constructor(private authService: AuthService) {
-    this.currentUser$ = this.authService.currentUser$;
-  }
+  private authService = inject(AuthService);
 
-  ngOnInit(): void {
-    // Component initialization logic if needed
+  constructor() {
+    this.currentUser$ = this.authService.currentUser$;
   }
 }

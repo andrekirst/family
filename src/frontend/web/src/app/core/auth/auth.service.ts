@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { BehaviorSubject, Observable, map, tap, catchError, of } from 'rxjs';
 import { Router } from '@angular/router';
@@ -35,10 +35,10 @@ export class AuthService {
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
   public isLoading$ = this.isLoadingSubject.asObservable();
 
-  constructor(
-    private apollo: Apollo,
-    private router: Router
-  ) {
+  private apollo = inject(Apollo);
+  private router = inject(Router);
+
+  constructor() {
     this.initializeAuthState();
   }
 

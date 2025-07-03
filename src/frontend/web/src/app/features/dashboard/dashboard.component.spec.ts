@@ -7,7 +7,6 @@ import { User } from '../../core/graphql/types';
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
-  let authService: jasmine.SpyObj<AuthService>;
 
   const mockUser: User = {
     id: '1',
@@ -35,7 +34,6 @@ describe('DashboardComponent', () => {
 
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
-    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
   });
 
   it('should create', () => {
@@ -94,7 +92,6 @@ describe('DashboardComponent', () => {
     TestBed.overrideProvider(AuthService, { useValue: authServiceSpy });
     
     const newFixture = TestBed.createComponent(DashboardComponent);
-    const newComponent = newFixture.componentInstance;
     newFixture.detectChanges();
     
     const compiled = newFixture.nativeElement as HTMLElement;

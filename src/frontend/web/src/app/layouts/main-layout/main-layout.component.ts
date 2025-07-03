@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -219,12 +219,12 @@ export class MainLayoutComponent implements OnInit {
   currentUser$: Observable<User | null>;
   isHandset$: Observable<boolean>;
 
-  constructor(
-    private breakpointObserver: BreakpointObserver,
-    private authService: AuthService,
-    private router: Router,
-    private snackBar: MatSnackBar
-  ) {
+  private breakpointObserver = inject(BreakpointObserver);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private snackBar = inject(MatSnackBar);
+
+  constructor() {
     this.currentUser$ = this.authService.currentUser$;
     this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
       .pipe(

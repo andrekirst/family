@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -99,7 +99,7 @@ import { AuthService } from '../../../core/auth/auth.service';
               class="full-width submit-button"
               [disabled]="loginForm.invalid || (isLoading$ | async) || false">
               <mat-spinner diameter="20" *ngIf="isLoading$ | async"></mat-spinner>
-              <span *ngIf="!(isLoading$ | async)">Anmelden</span>
+              <span *ngIf="(isLoading$ | async) === false">Anmelden</span>
             </button>
           </form>
         </mat-card-content>
@@ -180,12 +180,12 @@ export class LoginComponent implements OnInit {
   hidePassword = true;
   isLoading$: Observable<boolean>;
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router,
-    private snackBar: MatSnackBar
-  ) {
+  private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private snackBar = inject(MatSnackBar);
+
+  constructor() {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
