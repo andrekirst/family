@@ -5,6 +5,7 @@ using Family.Api.GraphQL.Queries;
 using Family.Api.GraphQL.Types;
 using Family.Api.Services;
 using Family.Infrastructure.Caching.Extensions;
+using Family.Infrastructure.CQRS.Extensions;
 using HotChocolate.Authorization;
 using HotChocolate.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -24,12 +25,12 @@ builder.Services.AddDbContext<FamilyDbContext>(options =>
 // Register caching services
 builder.Services.AddFamilyCaching(builder.Configuration);
 
+// Register CQRS services
+builder.Services.AddCQRS(typeof(Program).Assembly);
+
 // Register services
 builder.Services.AddHttpClient<IKeycloakService, CachedKeycloakService>();
 builder.Services.AddScoped<IKeycloakService, CachedKeycloakService>();
-
-// Register MediatR
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 // Configure Keycloak Authentication
 var keycloakAuthority = builder.Configuration["Keycloak:Authority"] 
