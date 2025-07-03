@@ -1,44 +1,20 @@
-import { NgModule } from '@angular/core';
-import { APOLLO_OPTIONS } from 'apollo-angular';
-import { ApolloClientOptions, InMemoryCache, createHttpLink } from '@apollo/client/core';
-import { setContext } from '@apollo/client/link/context';
+import { provideApollo as provideApolloBase, Apollo } from 'apollo-angular';
+import { provideHttpClient } from '@angular/common/http';
+import { InMemoryCache } from '@apollo/client/core';
 
-const uri = 'http://localhost:8081/graphql'; // Family API GraphQL endpoint
+import { environment } from '../../../environments/environment';
 
-export function apolloOptionsFactory(): ApolloClientOptions<unknown> {
-  const httpLink = createHttpLink({
-    uri,
-  });
-
-  const authLink = setContext((_, { headers }) => {
-    // Get authentication token from localStorage
-    const token = localStorage.getItem('accessToken');
-    
+export function provideApollo() {
+  return provideApolloBase(() => {
     return {
-      headers: {
-        ...headers,
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      link: null, // Will be set by HttpLink
+      uri: environment.apiUrl,
+      cache: new InMemoryCache(),
+      defaultOptions: {
+        watchQuery: {
+          errorPolicy: 'all',
+        },
       },
     };
   });
-
-  return {
-    link: authLink.concat(httpLink),
-    cache: new InMemoryCache(),
-    defaultOptions: {
-      watchQuery: {
-        errorPolicy: 'all',
-      },
-    },
-  };
 }
-
-@NgModule({
-  providers: [
-    {
-      provide: APOLLO_OPTIONS,
-      useFactory: apolloOptionsFactory,
-    },
-  ],
-})
-export class GraphQLModule {}
