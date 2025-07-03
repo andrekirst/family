@@ -41,7 +41,7 @@ jobs:
         echo "Validating PR title: $PR_TITLE"
         
         # Check if PR title contains issue reference
-        if [[ $PR_TITLE =~ #[0-9]+ ]] || [[ $PR_TITLE =~ [Ff]ixes[[:space:]]+#[0-9]+ ]] || [[ $PR_TITLE =~ [Cc]loses[[:space:]]+#[0-9]+ ]]; then
+        if [[ $PR_TITLE =~ \#[0-9]+ ]] || [[ $PR_TITLE =~ [Ff]ixes[[:space:]]+\#[0-9]+ ]] || [[ $PR_TITLE =~ [Cc]loses[[:space:]]+\#[0-9]+ ]]; then
           echo "✅ PR title contains issue reference"
         else
           echo "❌ PR title should reference an issue"
@@ -63,7 +63,7 @@ jobs:
         echo "Validating PR description contains issue reference"
         
         # Check if PR body contains proper issue reference
-        if [[ $PR_BODY =~ [Ff]ixes[[:space:]]+#[0-9]+ ]] || [[ $PR_BODY =~ [Cc]loses[[:space:]]+#[0-9]+ ]] || [[ $PR_BODY =~ [Rr]esolves[[:space:]]+#[0-9]+ ]]; then
+        if [[ $PR_BODY =~ [Ff]ixes[[:space:]]+\#[0-9]+ ]] || [[ $PR_BODY =~ [Cc]loses[[:space:]]+\#[0-9]+ ]] || [[ $PR_BODY =~ [Rr]esolves[[:space:]]+\#[0-9]+ ]]; then
           echo "✅ PR description contains proper issue reference"
         else
           echo "❌ PR description should contain issue reference"
@@ -92,7 +92,11 @@ jobs:
         INVALID_COMMITS=""
         
         while IFS= read -r commit; do
-          if [[ ! $commit =~ ^($VALID_TYPES)(\(.+\))?:\ .+ ]]; then
+          # Skip merge commits
+          if [[ $commit =~ ^Merge[[:space:]] ]]; then
+            continue
+          fi
+          if [[ ! $commit =~ ^($VALID_TYPES)(\(.+\))?:[[:space:]].+ ]]; then
             INVALID_COMMITS="$INVALID_COMMITS\n- $commit"
           fi
         done <<< "$COMMITS"
