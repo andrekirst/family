@@ -33,7 +33,12 @@ public class CacheService : ICacheService
         var fullKey = BuildKey(key);
         var options = CreateDefaultOptions();
 
-        return await GetOrCreateInternalAsync(fullKey, factory, options, cancellationToken);
+        return await _hybridCache.GetOrCreateAsync<object, T>(
+            fullKey,
+            state: null!,
+            factory: async (_, ct) => await factory(ct),
+            options: options,
+            cancellationToken: cancellationToken);
     }
 
     public async Task<T?> GetOrCreateAsync<T>(
@@ -43,7 +48,13 @@ public class CacheService : ICacheService
         CancellationToken cancellationToken = default)
     {
         var fullKey = BuildKey(key);
-        return await GetOrCreateInternalAsync(fullKey, factory, options, cancellationToken);
+        
+        return await _hybridCache.GetOrCreateAsync<object, T>(
+            fullKey,
+            state: null!,
+            factory: async (_, ct) => await factory(ct),
+            options: options,
+            cancellationToken: cancellationToken);
     }
 
     public async Task<T?> GetOrCreateAsync<T>(
@@ -54,42 +65,72 @@ public class CacheService : ICacheService
         CancellationToken cancellationToken = default)
     {
         var fullKey = BuildKey(dataType, key);
-        var options = CreateOptionsForDataType(dataType, tags);
+        var options = CreateOptionsForDataType(dataType);
 
-        return await GetOrCreateInternalAsync(fullKey, factory, options, cancellationToken);
+        return await _hybridCache.GetOrCreateAsync<object, T>(
+            fullKey,
+            state: null!,
+            factory: async (_, ct) => await factory(ct),
+            options: options,
+            tags: tags,
+            cancellationToken: cancellationToken);
+    }
+
+    public async Task SetAsync<T>(
+        string key,
+        T value,
+        CancellationToken cancellationToken = default)
+    {
+        var fullKey = BuildKey(key);
+        var options = CreateDefaultOptions();
+        
+        await _hybridCache.SetAsync(fullKey, value, options, cancellationToken: cancellationToken);
+    }
+
+    public async Task SetAsync<T>(
+        string key,
+        T value,
+        HybridCacheEntryOptions options,
+        CancellationToken cancellationToken = default)
+    {
+        var fullKey = BuildKey(key);
+        await _hybridCache.SetAsync(fullKey, value, options, cancellationToken: cancellationToken);
+    }
+
+    public async Task SetAsync<T>(
+        string dataType,
+        string key,
+        T value,
+        string[]? tags = null,
+        TimeSpan? expiration = null,
+        CancellationToken cancellationToken = default)
+    {
+        var fullKey = BuildKey(dataType, key);
+        var options = CreateOptionsForDataType(dataType, expiration);
+        
+        await _hybridCache.SetAsync(fullKey, value, options, tags, cancellationToken);
     }
 
     public async Task RemoveAsync(string key, CancellationToken cancellationToken = default)
     {
         var fullKey = BuildKey(key);
-        
-        try
-        {
-            await _hybridCache.RemoveAsync(fullKey, cancellationToken);
-            _logger.LogDebug("Cache entry removed: {Key}", fullKey);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogWarning(ex, "Failed to remove cache entry: {Key}", fullKey);
-        }
+        await _hybridCache.RemoveAsync(fullKey, cancellationToken);
+    }
+
+    public async Task RemoveAsync(string dataType, string key, CancellationToken cancellationToken = default)
+    {
+        var fullKey = BuildKey(dataType, key);
+        await _hybridCache.RemoveAsync(fullKey, cancellationToken);
     }
 
     public async Task RemoveByTagAsync(string tag, CancellationToken cancellationToken = default)
     {
-        try
-        {
-            await _hybridCache.RemoveByTagAsync(tag, cancellationToken);
-            _logger.LogDebug("Cache entries removed by tag: {Tag}", tag);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogWarning(ex, "Failed to remove cache entries by tag: {Tag}", tag);
-        }
+        await _hybridCache.RemoveByTagAsync(tag, cancellationToken);
     }
 
     public async Task RemoveByTagsAsync(string[] tags, CancellationToken cancellationToken = default)
     {
-        var tasks = tags.Select(tag => RemoveByTagAsync(tag, cancellationToken));
+        var tasks = tags.Select(tag => _hybridCache.RemoveByTagAsync(tag, cancellationToken).AsTask());
         await Task.WhenAll(tasks);
     }
 
@@ -103,36 +144,6 @@ public class CacheService : ICacheService
         return $"{_configuration.KeyPrefix}:{dataType}:{key}";
     }
 
-    private async Task<T?> GetOrCreateInternalAsync<T>(
-        string key,
-        Func<CancellationToken, Task<T>> factory,
-        HybridCacheEntryOptions options,
-        CancellationToken cancellationToken)
-    {
-        try
-        {
-            var result = await _hybridCache.GetOrCreateAsync(key, factory, options, cancellationToken);
-            
-            if (result != null)
-            {
-                _logger.LogDebug("Cache hit for key: {Key}", key);
-            }
-            else
-            {
-                _logger.LogDebug("Cache miss for key: {Key}", key);
-            }
-
-            return result;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Cache operation failed for key: {Key}", key);
-            
-            // Fallback to direct factory call if cache fails
-            return await factory(cancellationToken);
-        }
-    }
-
     private HybridCacheEntryOptions CreateDefaultOptions()
     {
         return new HybridCacheEntryOptions
@@ -142,31 +153,21 @@ public class CacheService : ICacheService
         };
     }
 
-    private HybridCacheEntryOptions CreateOptionsForDataType(string dataType, string[]? additionalTags = null)
+    private HybridCacheEntryOptions CreateOptionsForDataType(string dataType, TimeSpan? customExpiration = null)
     {
-        var policy = _configuration.Policies.GetValueOrDefault(dataType);
-        var options = policy != null
-            ? new HybridCacheEntryOptions
+        if (_configuration.Policies.TryGetValue(dataType, out var policy))
+        {
+            return new HybridCacheEntryOptions
             {
-                Expiration = policy.Expiration,
+                Expiration = customExpiration ?? policy.Expiration,
                 LocalCacheExpiration = policy.LocalExpiration
-            }
-            : CreateDefaultOptions();
-
-        // Build tags
-        var tags = new List<string> { dataType };
-        
-        if (policy?.Tags?.Length > 0)
-        {
-            tags.AddRange(policy.Tags);
-        }
-        
-        if (additionalTags?.Length > 0)
-        {
-            tags.AddRange(additionalTags);
+            };
         }
 
-        options.Tags = tags.ToArray();
-        return options;
+        return new HybridCacheEntryOptions
+        {
+            Expiration = customExpiration ?? _configuration.DefaultExpiration,
+            LocalCacheExpiration = _configuration.DefaultLocalExpiration
+        };
     }
 }

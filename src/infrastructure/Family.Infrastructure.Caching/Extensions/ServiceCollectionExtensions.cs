@@ -23,12 +23,11 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration)
     {
         // Configure cache settings
-        services.Configure<CacheConfiguration>(
-            configuration.GetSection(CacheConfiguration.SectionName));
+        services.Configure<CacheConfiguration>(options =>
+            configuration.GetSection(CacheConfiguration.SectionName).Bind(options));
 
-        var cacheConfig = configuration
-            .GetSection(CacheConfiguration.SectionName)
-            .Get<CacheConfiguration>() ?? new CacheConfiguration();
+        var cacheConfig = new CacheConfiguration();
+        configuration.GetSection(CacheConfiguration.SectionName).Bind(cacheConfig);
 
         // Add HybridCache with configuration
         services.AddHybridCache(options =>

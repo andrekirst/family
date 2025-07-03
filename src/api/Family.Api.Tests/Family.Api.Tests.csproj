@@ -40,11 +40,13 @@
     </PackageReference>
     <PackageReference Include="Testcontainers" />
     <PackageReference Include="Testcontainers.PostgreSql" />
+    <PackageReference Include="Testcontainers.Redis" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Family.Api\Family.Api.csproj" />
+    <ProjectReference Include="..\..\infrastructure\Family.Infrastructure.Caching\Family.Infrastructure.Caching.csproj" />
   </ItemGroup>
 
 </Project>
