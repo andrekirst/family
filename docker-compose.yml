@@ -46,12 +46,12 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       
-      # Keycloak Configuration
-      KC_HOSTNAME_STRICT: false
-      KC_HOSTNAME_STRICT_HTTPS: false
-      KC_HTTP_ENABLED: true
-      KC_HEALTH_ENABLED: true
-      KC_METRICS_ENABLED: true
+      # Keycloak Configuration for development
+      KC_HTTP_ENABLED: "true"
+      KC_HEALTH_ENABLED: "true"
+      KC_METRICS_ENABLED: "true"
+      # Disable hostname validation for development
+      KC_HOSTNAME_STRICT: "false"
     ports:
       - "8080:8080"
     depends_on:
@@ -61,8 +61,14 @@ services:
       - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json:ro
     networks:
       - family-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/realms/master || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 
-  # Family API (für lokale Entwicklung)
+  # Family API
   family-api:
     build:
       context: .
@@ -76,9 +82,22 @@ services:
       Keycloak__Audience: "family-api"
     ports:
       - "8081:8081"
-    depends_on:
-      - postgres-app
-      - keycloak
+    networks:
+      - family-network
+    profiles:
+      - api
+      - full-stack
+
+  # Family Web Frontend (Angular)
+  family-web:
+    build:
+      context: ./src/frontend/web
+      dockerfile: Dockerfile
+    container_name: family-web
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "4200:80"
     networks:
       - family-network
     profiles:
