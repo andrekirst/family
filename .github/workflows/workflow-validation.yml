@@ -1,0 +1,178 @@
+name: Workflow Validation
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  validate-branch-naming:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Validate branch naming convention
+      run: |
+        BRANCH_NAME="${{ github.head_ref }}"
+        echo "Validating branch name: $BRANCH_NAME"
+        
+        # Check if branch follows naming convention
+        if [[ $BRANCH_NAME =~ ^(feature|bugfix|docs|hotfix)/issue-[0-9]+-[a-z0-9-]+$ ]]; then
+          echo "✅ Branch name follows naming convention"
+        else
+          echo "❌ Branch name does not follow naming convention"
+          echo "Expected format: {feature|bugfix|docs|hotfix}/issue-XX-description"
+          echo "Examples:"
+          echo "  - feature/issue-35-workflow-branch-creation"
+          echo "  - bugfix/issue-42-authentication-fix"
+          echo "  - docs/issue-50-api-documentation"
+          exit 1
+        fi
+
+  validate-pr-title:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Validate PR title contains issue reference
+      run: |
+        PR_TITLE="${{ github.event.pull_request.title }}"
+        echo "Validating PR title: $PR_TITLE"
+        
+        # Check if PR title contains issue reference
+        if [[ $PR_TITLE =~ \#[0-9]+ ]] || [[ $PR_TITLE =~ [Ff]ixes[[:space:]]+\#[0-9]+ ]] || [[ $PR_TITLE =~ [Cc]loses[[:space:]]+\#[0-9]+ ]]; then
+          echo "✅ PR title contains issue reference"
+        else
+          echo "❌ PR title should reference an issue"
+          echo "Expected formats:"
+          echo "  - 'Fixes #35: Description'"
+          echo "  - 'Closes #35: Description'"
+          echo "  - 'Description (#35)'"
+          exit 1
+        fi
+
+  validate-pr-description:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Validate PR description contains issue reference
+      env:
+        PR_BODY: ${{ github.event.pull_request.body }}
+      run: |
+        echo "Validating PR description contains issue reference"
+        
+        # Check if PR body contains proper issue reference
+        if [[ "$PR_BODY" =~ [Ff]ixes[[:space:]]+\#[0-9]+ ]] || [[ "$PR_BODY" =~ [Cc]loses[[:space:]]+\#[0-9]+ ]] || [[ "$PR_BODY" =~ [Rr]esolves[[:space:]]+\#[0-9]+ ]]; then
+          echo "✅ PR description contains proper issue reference"
+        else
+          echo "❌ PR description should contain issue reference"
+          echo "Expected keywords: 'Fixes #XX', 'Closes #XX', or 'Resolves #XX'"
+          exit 1
+        fi
+
+  validate-conventional-commits:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Validate conventional commit format
+      run: |
+        # Get commits in this PR
+        COMMITS=$(git log --format="%s" origin/main..HEAD)
+        
+        echo "Validating commit messages:"
+        echo "$COMMITS"
+        
+        VALID_TYPES="feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert"
+        INVALID_COMMITS=""
+        
+        while IFS= read -r commit; do
+          # Skip merge commits
+          if [[ $commit =~ ^Merge[[:space:]] ]]; then
+            continue
+          fi
+          if [[ ! $commit =~ ^($VALID_TYPES)(\(.+\))?:[[:space:]].+ ]]; then
+            INVALID_COMMITS="$INVALID_COMMITS\n- $commit"
+          fi
+        done <<< "$COMMITS"
+        
+        if [[ -n "$INVALID_COMMITS" ]]; then
+          echo "❌ Invalid commit messages found:"
+          echo -e "$INVALID_COMMITS"
+          echo ""
+          echo "Expected format: type(scope): description"
+          echo "Valid types: $VALID_TYPES"
+          echo "Examples:"
+          echo "  - feat(auth): add OAuth2 integration"
+          echo "  - fix(api): resolve null reference error"
+          echo "  - docs(workflow): update guidelines"
+          exit 1
+        else
+          echo "✅ All commit messages follow conventional commit format"
+        fi
+
+  check-direct-main-commits:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 2
+        
+    - name: Check for direct commits to main
+      run: |
+        # Check if this is a merge commit (has 2 parents)
+        PARENT_COUNT=$(git cat-file -p HEAD | grep "^parent " | wc -l)
+        
+        if [[ $PARENT_COUNT -eq 1 ]]; then
+          echo "❌ Direct commit to main branch detected!"
+          echo "All changes to main must go through pull requests."
+          echo "Commit: $(git log -1 --oneline)"
+          exit 1
+        else
+          echo "✅ Merge commit detected - this is allowed"
+        fi
+
+  validate-issue-labels:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Extract issue number from branch
+      id: extract_issue
+      run: |
+        BRANCH_NAME="${{ github.head_ref }}"
+        if [[ $BRANCH_NAME =~ issue-([0-9]+) ]]; then
+          ISSUE_NUMBER="${BASH_REMATCH[1]}"
+          echo "issue_number=$ISSUE_NUMBER" >> $GITHUB_OUTPUT
+          echo "Found issue number: $ISSUE_NUMBER"
+        else
+          echo "No issue number found in branch name"
+          exit 0
+        fi
+    
+    - name: Check issue has correct labels
+      if: steps.extract_issue.outputs.issue_number
+      run: |
+        ISSUE_NUMBER="${{ steps.extract_issue.outputs.issue_number }}"
+        
+        # Get issue labels using GitHub API
+        LABELS=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          "https://api.github.com/repos/${{ github.repository }}/issues/$ISSUE_NUMBER" | \
+          jq -r '.labels[].name' | tr '\n' ' ')
+        
+        echo "Issue #$ISSUE_NUMBER labels: $LABELS"
+        
+        # Check if issue has 'in progress' label
+        if [[ $LABELS =~ "in progress" ]]; then
+          echo "✅ Issue #$ISSUE_NUMBER has 'in progress' label"
+        else
+          echo "⚠️ Issue #$ISSUE_NUMBER should have 'in progress' label during development"
+        fi
