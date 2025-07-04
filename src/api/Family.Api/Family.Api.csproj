@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\infrastructure\Family.Infrastructure.Caching\Family.Infrastructure.Caching.csproj" />
     <ProjectReference Include="..\..\infrastructure\Family.Infrastructure.CQRS\Family.Infrastructure.CQRS.csproj" />
+    <ProjectReference Include="..\..\infrastructure\Family.Infrastructure.Resilience\Family.Infrastructure.Resilience.csproj" />
   </ItemGroup>
 
 </Project>

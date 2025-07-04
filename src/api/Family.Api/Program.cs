@@ -8,9 +8,11 @@ using Family.Api.GraphQL.Types;
 using Family.Api.Services;
 using Family.Infrastructure.Caching.Extensions;
 using Family.Infrastructure.CQRS.Extensions;
+using Family.Infrastructure.Resilience.Extensions;
 using HotChocolate.Authorization;
 using HotChocolate.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -30,6 +32,12 @@ builder.Services.AddFamilyCaching(builder.Configuration);
 
 // Register CQRS services
 builder.Services.AddCQRS(typeof(Program).Assembly);
+
+// Register resilience services
+builder.Services.AddResilience(builder.Configuration);
+
+// Register health checks
+builder.Services.AddFamilyHealthChecks(builder.Configuration);
 
 // Configure Localization
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
@@ -138,6 +146,23 @@ app.UseAuthorization();
 
 // GraphQL endpoint
 app.MapGraphQL();
+
+// Health check endpoints
+app.MapHealthChecks("/health");
+app.MapHealthChecks("/health/ready", new HealthCheckOptions
+{
+    Predicate = check => check.Tags.Contains("ready")
+});
+app.MapHealthChecks("/health/live", new HealthCheckOptions
+{
+    Predicate = check => check.Tags.Contains("live")
+});
+
+// Health checks UI
+if (app.Environment.IsDevelopment())
+{
+    app.MapHealthChecksUI(options => options.UIPath = "/health-ui");
+}
 
 app.Run();
 
