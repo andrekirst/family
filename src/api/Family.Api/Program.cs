@@ -9,6 +9,7 @@ using Family.Api.GraphQL.Types;
 using Family.Api.Services;
 using Family.Infrastructure.Caching.Extensions;
 using Family.Infrastructure.CQRS.Extensions;
+using Family.Infrastructure.EventSourcing.Extensions;
 using Family.Infrastructure.Resilience.Extensions;
 using HotChocolate.Authorization;
 using HotChocolate.Data;
@@ -38,9 +39,10 @@ builder.Services.AddCQRS(typeof(Program).Assembly);
 builder.Services.AddResilience(builder.Configuration);
 
 // Register Event Store services
-builder.Services.AddEventStore();
+builder.Services.AddEventSourcing(builder.Configuration);
 
 // Register health checks
+builder.Services.AddApiHealthChecks(builder.Configuration);
 builder.Services.AddFamilyHealthChecks(builder.Configuration);
 
 // Configure Localization
