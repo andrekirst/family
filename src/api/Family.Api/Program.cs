@@ -45,6 +45,9 @@ builder.Services.AddEventSourcing(builder.Configuration);
 builder.Services.AddScoped<Family.Api.Features.Families.IFamilyRepository, Family.Api.Features.Families.FamilyRepository>();
 builder.Services.AddScoped<Family.Api.Services.IDomainEventPublisher, Family.Api.Services.DomainEventPublisher>();
 
+// Register User services
+builder.Services.AddScoped<Family.Api.Features.Users.Services.IFirstTimeUserService, Family.Api.Features.Users.Services.FirstTimeUserService>();
+
 // Register health checks
 builder.Services.AddApiHealthChecks(builder.Configuration);
 builder.Services.AddFamilyHealthChecks(builder.Configuration);
@@ -135,6 +138,7 @@ builder.Services
     .AddType<Family.Api.GraphQL.Types.FamilyMemberType>()
     .AddType<Family.Api.GraphQL.Types.CreateFamilyInputType>()
     .AddType<Family.Api.GraphQL.Types.CreateFamilyPayloadType>()
+    .AddType<Family.Api.GraphQL.Types.FirstTimeUserInfoType>()
     .AddProjections()
     .AddFiltering()
     .AddSorting();
