@@ -15,6 +15,8 @@ public class Family : AggregateRoot
     [Required]
     public Guid OwnerId { get; private set; }
     
+    public new DateTime UpdatedAt { get; private set; } = DateTime.UtcNow;
+    
     public IReadOnlyList<FamilyMember> Members => _members.AsReadOnly();
     
     public Family()
@@ -93,7 +95,10 @@ public class Family : AggregateRoot
     public void Apply(FamilyMemberAdded memberAdded)
     {
         var role = Enum.Parse<FamilyRole>(memberAdded.Role);
-        var member = new FamilyMember(memberAdded.MemberUserId, role, memberAdded.JoinedAt);
+        var member = new FamilyMember(memberAdded.MemberUserId, role, memberAdded.JoinedAt)
+        {
+            FamilyId = memberAdded.AggregateId
+        };
         _members.Add(member);
     }
 
