@@ -33,8 +33,8 @@ public class GetUserByEmailQueryTests
         };
 
         var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
-        localizer["EmailRequired"].Returns("Email is required");
-        localizer["EmailInvalid"].Returns("Invalid email format");
+        localizer["EmailRequired"].Returns(new LocalizedString("EmailRequired", "Email is required"));
+        localizer["EmailInvalid"].Returns(new LocalizedString("EmailInvalid", "Invalid email format"));
         
         var validator = new GetUserByEmailQueryValidator(localizer);
         var result = validator.Validate(query);
@@ -55,8 +55,8 @@ public class GetUserByEmailQueryTests
         };
 
         var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
-        localizer["EmailRequired"].Returns("Email is required");
-        localizer["EmailInvalid"].Returns("Invalid email format");
+        localizer["EmailRequired"].Returns(new LocalizedString("EmailRequired", "Email is required"));
+        localizer["EmailInvalid"].Returns(new LocalizedString("EmailInvalid", "Invalid email format"));
         
         var validator = new GetUserByEmailQueryValidator(localizer);
         var result = validator.Validate(query);
@@ -74,8 +74,8 @@ public class GetUserByEmailQueryTests
         };
 
         var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
-        localizer["EmailRequired"].Returns("Email is required");
-        localizer["EmailInvalid"].Returns("Invalid email format");
+        localizer["EmailRequired"].Returns(new LocalizedString("EmailRequired", "Email is required"));
+        localizer["EmailInvalid"].Returns(new LocalizedString("EmailInvalid", "Invalid email format"));
         
         var validator = new GetUserByEmailQueryValidator(localizer);
         var result = validator.Validate(query);

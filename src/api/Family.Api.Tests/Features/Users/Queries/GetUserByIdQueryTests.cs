@@ -30,7 +30,7 @@ public class GetUserByIdQueryTests
         };
 
         var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
-        localizer["UserIdRequired"].Returns("User ID is required");
+        localizer["UserIdRequired"].Returns(new LocalizedString("UserIdRequired", "User ID is required"));
         
         var validator = new GetUserByIdQueryValidator(localizer);
         var result = validator.Validate(query);
@@ -48,7 +48,7 @@ public class GetUserByIdQueryTests
         };
 
         var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
-        localizer["UserIdRequired"].Returns("User ID is required");
+        localizer["UserIdRequired"].Returns(new LocalizedString("UserIdRequired", "User ID is required"));
         
         var validator = new GetUserByIdQueryValidator(localizer);
         var result = validator.Validate(query);

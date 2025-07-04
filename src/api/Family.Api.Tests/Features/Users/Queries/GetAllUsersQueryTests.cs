@@ -49,8 +49,8 @@ public class GetAllUsersQueryTests
         };
 
         var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
-        localizer["PageNumberInvalid"].Returns("Page number must be greater than 0");
-        localizer["PageSizeInvalid"].Returns("Page size must be between 1 and 100");
+        localizer["PageNumberInvalid"].Returns(new LocalizedString("PageNumberInvalid", "Page number must be greater than 0"));
+        localizer["PageSizeInvalid"].Returns(new LocalizedString("PageSizeInvalid", "Page size must be between 1 and 100"));
         
         var validator = new GetAllUsersQueryValidator(localizer);
         var result = validator.Validate(query);
@@ -72,8 +72,8 @@ public class GetAllUsersQueryTests
         };
 
         var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
-        localizer["PageNumberInvalid"].Returns("Page number must be greater than 0");
-        localizer["PageSizeInvalid"].Returns("Page size must be between 1 and 100");
+        localizer["PageNumberInvalid"].Returns(new LocalizedString("PageNumberInvalid", "Page number must be greater than 0"));
+        localizer["PageSizeInvalid"].Returns(new LocalizedString("PageSizeInvalid", "Page size must be between 1 and 100"));
         
         var validator = new GetAllUsersQueryValidator(localizer);
         var result = validator.Validate(query);
@@ -93,8 +93,8 @@ public class GetAllUsersQueryTests
         };
 
         var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
-        localizer["PageNumberInvalid"].Returns("Page number must be greater than 0");
-        localizer["PageSizeInvalid"].Returns("Page size must be between 1 and 100");
+        localizer["PageNumberInvalid"].Returns(new LocalizedString("PageNumberInvalid", "Page number must be greater than 0"));
+        localizer["PageSizeInvalid"].Returns(new LocalizedString("PageSizeInvalid", "Page size must be between 1 and 100"));
         
         var validator = new GetAllUsersQueryValidator(localizer);
         var result = validator.Validate(query);
