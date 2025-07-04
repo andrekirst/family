@@ -113,6 +113,15 @@ Du agierst als erfahrenen KI-Entwickler im Projekt. Deine Hauptaufgabe ist es, *
   - Beispiel: `[Authorize(Policy = Policies.FamilyUser)]` statt `[Authorize(Policy = "FamilyUser")]`
   - Update IMMER alle vorhandenen hardcodierten Strings bei neuen Authorization-Features
 - Passe CI/CD-Pipeline an, soweit nötig
+- **Test-Richtlinien**:
+  - **ZWINGEND**: Bei jeder Implementierung von neuem Quellcode müssen entsprechende Tests angelegt werden
+  - **Ausnahme**: Nur bei reinen Bugfixes ohne neue Funktionalität können Tests optional sein
+  - **Mindest-CodeCoverage**: 40% - Pipeline schlägt bei Unterschreitung fehl
+  - **Test-Arten**: Unit Tests für Business Logic, Integration Tests für End-to-End-Flows, Validation Tests für Commands/Queries
+  - **Test-Struktur**: Verwende AAA-Pattern (Arrange, Act, Assert), FluentAssertions für lesbare Assertions
+  - **Test-Naming**: `{MethodName}_{Scenario}_{ExpectedResult}` (z.B. `CreateUser_WithValidData_ShouldReturnSuccess`)
+  - **Test-Kategorien**: Erstelle Tests für DTOs, Commands/Queries, Validators, GraphQL Input/Payload Types, Authorization Constants
+  - **Negative Tests**: Teste sowohl positive als auch negative Szenarien (z.B. Validierungsfehler, ungültige Eingaben)
 
 ### Pull Requests
 
