@@ -1,3 +1,4 @@
+using Family.Api.Authorization;
 using Family.Api.Features.Users.DTOs;
 using Family.Api.Features.Users.Queries;
 using HotChocolate.Authorization;
@@ -14,7 +15,6 @@ public class UserCQRSQueries
     /// <summary>
     /// Gets a user by ID
     /// </summary>
-    [Authorize(Policy = "FamilyUser")]
     public async Task<UserDto?> GetUserByIdAsync(
         Guid userId,
         [Service] IMediator mediator,
@@ -27,7 +27,6 @@ public class UserCQRSQueries
     /// <summary>
     /// Gets a user by email address
     /// </summary>
-    [Authorize(Policy = "FamilyUser")]
     public async Task<UserDto?> GetUserByEmailAsync(
         string email,
         [Service] IMediator mediator,
@@ -40,7 +39,6 @@ public class UserCQRSQueries
     /// <summary>
     /// Gets all users with optional pagination
     /// </summary>
-    [Authorize(Policy = "FamilyUser")]
     public async Task<List<UserDto>> GetAllUsersAsync(
         [Service] IMediator mediator,
         int pageNumber = 1,

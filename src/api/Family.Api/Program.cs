@@ -1,3 +1,4 @@
+using Family.Api.Authorization;
 using Family.Api.Data;
 using Family.Api.Data.Interceptors;
 using Family.Api.GraphQL.Mutations;
@@ -66,13 +67,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("FamilyUser", policy =>
+    options.AddPolicy(Policies.FamilyUser, policy =>
         policy.RequireAuthenticatedUser()
-              .RequireClaim("family_roles", "family-user"));
+              .RequireClaim(Claims.FamilyRoles, Roles.FamilyUser));
     
-    options.AddPolicy("FamilyAdmin", policy =>
+    options.AddPolicy(Policies.FamilyAdmin, policy =>
         policy.RequireAuthenticatedUser()
-              .RequireClaim("family_roles", "family-admin"));
+              .RequireClaim(Claims.FamilyRoles, Roles.FamilyAdmin));
 });
 
 // Configure GraphQL

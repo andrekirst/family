@@ -1,3 +1,4 @@
+using Family.Api.Authorization;
 using Family.Api.Features.Users.Commands;
 using Family.Api.Features.Users.DTOs;
 using Family.Infrastructure.CQRS.Abstractions;
@@ -15,7 +16,6 @@ public class UserMutations
     /// <summary>
     /// Creates a new user
     /// </summary>
-    [Authorize(Policy = "FamilyAdmin")]
     public async Task<CreateUserPayload> CreateUserAsync(
         CreateUserInput input,
         [Service] IMediator mediator,
@@ -38,7 +38,6 @@ public class UserMutations
     /// <summary>
     /// Updates an existing user
     /// </summary>
-    [Authorize(Policy = "FamilyUser")]
     public async Task<UpdateUserPayload> UpdateUserAsync(
         UpdateUserInput input,
         [Service] IMediator mediator,
@@ -61,7 +60,6 @@ public class UserMutations
     /// <summary>
     /// Deactivates a user (soft delete)
     /// </summary>
-    [Authorize(Policy = "FamilyAdmin")]
     public async Task<DeleteUserPayload> DeleteUserAsync(
         DeleteUserInput input,
         [Service] IMediator mediator,
