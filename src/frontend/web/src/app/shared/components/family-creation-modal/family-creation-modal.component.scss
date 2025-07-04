@@ -1,0 +1,146 @@
+// Family Creation Modal Styles
+// Using Tailwind CSS utility classes with custom component styles
+
+.modal-overlay {
+  @apply fixed inset-0 z-50 overflow-y-auto;
+  @apply bg-gray-500 bg-opacity-75 transition-opacity;
+  @apply flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0;
+}
+
+.modal-container {
+  @apply inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all;
+  @apply sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6;
+  @apply max-w-md w-full;
+  
+  // Focus ring for accessibility
+  @apply focus-within:ring-2 focus-within:ring-primary-500 focus-within:ring-offset-2;
+}
+
+.modal-header {
+  @apply relative mb-6;
+}
+
+.modal-title {
+  @apply text-lg font-medium text-gray-900 mb-2;
+  @apply sm:text-xl;
+}
+
+.modal-description {
+  @apply text-sm text-gray-500 pr-8;
+  @apply sm:text-base;
+}
+
+.modal-close-btn {
+  @apply absolute top-0 right-0 p-2 text-gray-400 hover:text-gray-600;
+  @apply rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500;
+  @apply transition-colors duration-200;
+  @apply disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.modal-content {
+  @apply space-y-6;
+}
+
+.form-group {
+  @apply space-y-2;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700;
+  @apply sm:text-base;
+}
+
+.form-input {
+  @apply block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm;
+  @apply placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500;
+  @apply text-sm sm:text-base;
+  @apply transition-colors duration-200;
+  
+  &--error {
+    @apply border-red-300 text-red-900 placeholder-red-300;
+    @apply focus:outline-none focus:ring-red-500 focus:border-red-500;
+  }
+}
+
+.form-error {
+  @apply text-sm text-red-600;
+  @apply flex items-center space-x-1;
+  
+  &::before {
+    content: '⚠';
+    @apply text-red-500;
+  }
+}
+
+.modal-actions {
+  @apply flex flex-col-reverse space-y-3 space-y-reverse;
+  @apply sm:flex-row sm:space-y-0 sm:space-x-3 sm:justify-end;
+}
+
+// Screen reader only utility
+.sr-only {
+  @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .modal-container {
+    @apply border-2 border-gray-900;
+  }
+  
+  .form-input {
+    @apply border-2 border-gray-900;
+  }
+  
+  .btn {
+    @apply border-2;
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .modal-overlay,
+  .modal-container,
+  .modal-close-btn,
+  .form-input {
+    transition: none;
+  }
+  
+  .animate-spin {
+    animation: none;
+  }
+}
+
+// Dark mode support (if needed in the future)
+@media (prefers-color-scheme: dark) {
+  .modal-overlay {
+    @apply bg-gray-900 bg-opacity-75;
+  }
+  
+  .modal-container {
+    @apply bg-gray-800 text-white;
+  }
+  
+  .modal-title {
+    @apply text-gray-100;
+  }
+  
+  .modal-description {
+    @apply text-gray-300;
+  }
+  
+  .form-label {
+    @apply text-gray-200;
+  }
+  
+  .form-input {
+    @apply bg-gray-700 border-gray-600 text-white placeholder-gray-400;
+    @apply focus:border-primary-400 focus:ring-primary-400;
+  }
+  
+  .modal-close-btn {
+    @apply text-gray-400 hover:text-gray-200 hover:bg-gray-700;
+  }
+}

@@ -1,0 +1,113 @@
+<!-- Modal Overlay -->
+<div 
+  *ngIf="isOpen"
+  class="modal-overlay"
+  (click)="onClose()"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="modal-title"
+  aria-describedby="modal-description">
+  
+  <!-- Modal Container -->
+  <div 
+    class="modal-container"
+    (click)="$event.stopPropagation()"
+    role="document">
+    
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <h2 id="modal-title" class="modal-title">
+        Familie erstellen
+      </h2>
+      <p id="modal-description" class="modal-description">
+        Erstellen Sie Ihre Familie und beginnen Sie mit der gemeinsamen Organisation.
+      </p>
+      
+      <!-- Close Button -->
+      <button
+        type="button"
+        class="modal-close-btn"
+        (click)="onClose()"
+        [disabled]="isLoading"
+        aria-label="Modal schließen">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Modal Content -->
+    <div class="modal-content">
+      <form [formGroup]="familyForm" (ngSubmit)="onSubmit()" novalidate>
+        
+        <!-- Family Name Input -->
+        <div class="form-group">
+          <label for="familyName" class="form-label">
+            Familienname *
+          </label>
+          <input
+            id="familyName"
+            type="text"
+            formControlName="familyName"
+            class="form-input"
+            [class.form-input--error]="hasError"
+            placeholder="z.B. Familie Müller"
+            autocomplete="family-name"
+            [attr.aria-describedby]="hasError ? 'familyName-error' : null"
+            [attr.aria-invalid]="hasError">
+          
+          <!-- Error Message -->
+          <div 
+            *ngIf="hasError"
+            id="familyName-error"
+            class="form-error"
+            role="alert"
+            aria-live="polite">
+            {{ errorMessage }}
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="modal-actions">
+          <button
+            type="button"
+            class="btn btn--secondary"
+            (click)="onClose()"
+            [disabled]="isLoading">
+            Abbrechen
+          </button>
+          
+          <button
+            type="submit"
+            class="btn btn--primary"
+            [disabled]="isLoading || familyForm.invalid"
+            [attr.aria-describedby]="isLoading ? 'loading-text' : null">
+            
+            <!-- Loading Spinner -->
+            <svg 
+              *ngIf="isLoading" 
+              class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" 
+              xmlns="http://www.w3.org/2000/svg" 
+              fill="none" 
+              viewBox="0 0 24 24"
+              aria-hidden="true">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            
+            {{ isLoading ? 'Familie wird erstellt...' : 'Familie erstellen' }}
+          </button>
+        </div>
+
+        <!-- Loading Text for Screen Readers -->
+        <div 
+          *ngIf="isLoading"
+          id="loading-text"
+          class="sr-only"
+          aria-live="polite">
+          Familie wird erstellt, bitte warten...
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

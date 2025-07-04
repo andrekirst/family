@@ -1,0 +1,137 @@
+<!-- Loading State -->
+<div *ngIf="isLoading" class="onboarding-container">
+  <div class="loading-content">
+    <div class="loading-spinner" aria-label="Lade Benutzerinformationen">
+      <svg class="animate-spin h-12 w-12 text-primary-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+    </div>
+    <p class="loading-text">Benutzerinformationen werden geladen...</p>
+  </div>
+</div>
+
+<!-- Error State -->
+<div *ngIf="!isLoading && errorMessage" class="onboarding-container">
+  <div class="error-content">
+    <div class="error-icon">
+      <svg class="h-16 w-16 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+      </svg>
+    </div>
+    <h2 class="error-title">Fehler beim Laden</h2>
+    <p class="error-message">{{ errorMessage }}</p>
+    <button 
+      type="button" 
+      class="btn btn--primary"
+      (click)="onRetry()">
+      Erneut versuchen
+    </button>
+  </div>
+</div>
+
+<!-- First Time User Welcome -->
+<div *ngIf="!isLoading && !errorMessage && userInfo?.isFirstTime" class="onboarding-container">
+  <div class="welcome-content">
+    
+    <!-- Welcome Header -->
+    <div class="welcome-header">
+      <div class="welcome-icon">
+        <svg class="h-20 w-20 text-family-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+        </svg>
+      </div>
+      
+      <h1 class="welcome-title">
+        Willkommen bei Family!
+      </h1>
+      
+      <p class="welcome-subtitle">
+        Ihre zentrale Plattform für Familienverwaltung und -organisation
+      </p>
+    </div>
+
+    <!-- Benefits Section -->
+    <div class="benefits-section">
+      <h2 class="benefits-title">Was Sie mit Family machen können:</h2>
+      
+      <div class="benefits-grid">
+        <div class="benefit-item">
+          <div class="benefit-icon">
+            <svg class="h-8 w-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <h3 class="benefit-title">Termine verwalten</h3>
+          <p class="benefit-description">Koordinieren Sie Familienkalender und vergessen Sie nie wieder wichtige Termine.</p>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon">
+            <svg class="h-8 w-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+            </svg>
+          </div>
+          <h3 class="benefit-title">Schulorganisation</h3>
+          <p class="benefit-description">Behalten Sie Stundenpläne, Noten und Hausaufgaben im Blick.</p>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon">
+            <svg class="h-8 w-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </div>
+          <h3 class="benefit-title">Gesundheit</h3>
+          <p class="benefit-description">Verwalten Sie Arzttermine, Medikamente und Impfungen zentral.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="cta-section">
+      <h2 class="cta-title">Bereit loszulegen?</h2>
+      <p class="cta-description">
+        Erstellen Sie Ihre Familie und beginnen Sie mit der gemeinsamen Organisation.
+      </p>
+      
+      <div class="cta-actions">
+        <button 
+          type="button" 
+          class="btn btn--primary btn--large"
+          (click)="onCreateFamily()">
+          Familie erstellen
+        </button>
+        
+        <button 
+          type="button" 
+          class="btn btn--secondary btn--large"
+          (click)="onSkipForNow()">
+          Später erstellen
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Family Creation Modal -->
+<app-family-creation-modal
+  [isOpen]="showFamilyModal"
+  [isLoading]="isCreatingFamily"
+  (close)="onModalClose()"
+  (submit)="onFamilySubmit($event)">
+</app-family-creation-modal>
+
+<!-- Error Alert for Family Creation -->
+<div 
+  *ngIf="errorMessage && showFamilyModal" 
+  class="error-alert"
+  role="alert"
+  aria-live="polite">
+  <div class="error-alert-content">
+    <svg class="h-5 w-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+    </svg>
+    <span>{{ errorMessage }}</span>
+  </div>
+</div>
