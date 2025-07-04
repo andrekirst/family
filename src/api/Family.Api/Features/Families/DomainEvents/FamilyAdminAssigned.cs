@@ -1,8 +1,9 @@
 using Family.Infrastructure.EventSourcing.Models;
+using MediatR;
 
 namespace Family.Api.Features.Families.DomainEvents;
 
-public record FamilyAdminAssigned : DomainEvent
+public record FamilyAdminAssigned : DomainEvent, INotification
 {
     public Guid AdminUserId { get; init; }
     public DateTime AssignedAt { get; init; }

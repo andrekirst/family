@@ -43,6 +43,7 @@ builder.Services.AddEventSourcing(builder.Configuration);
 
 // Register Family services
 builder.Services.AddScoped<Family.Api.Features.Families.IFamilyRepository, Family.Api.Features.Families.FamilyRepository>();
+builder.Services.AddScoped<Family.Api.Services.IDomainEventPublisher, Family.Api.Services.DomainEventPublisher>();
 
 // Register health checks
 builder.Services.AddApiHealthChecks(builder.Configuration);

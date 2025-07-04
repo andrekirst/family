@@ -1,8 +1,9 @@
 using Family.Infrastructure.EventSourcing.Models;
+using MediatR;
 
 namespace Family.Api.Features.Families.DomainEvents;
 
-public record FamilyMemberAdded : DomainEvent
+public record FamilyMemberAdded : DomainEvent, INotification
 {
     public Guid MemberUserId { get; init; }
     public string Role { get; init; } = string.Empty;
