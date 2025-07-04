@@ -41,6 +41,9 @@ builder.Services.AddResilience(builder.Configuration);
 // Register Event Store services
 builder.Services.AddEventSourcing(builder.Configuration);
 
+// Register Family services
+builder.Services.AddScoped<Family.Api.Features.Families.IFamilyRepository, Family.Api.Features.Families.FamilyRepository>();
+
 // Register health checks
 builder.Services.AddApiHealthChecks(builder.Configuration);
 builder.Services.AddFamilyHealthChecks(builder.Configuration);
