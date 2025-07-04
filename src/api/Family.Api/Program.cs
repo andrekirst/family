@@ -2,6 +2,7 @@ using System.Globalization;
 using Family.Api.Authorization;
 using Family.Api.Data;
 using Family.Api.Data.Interceptors;
+using Family.Api.Extensions;
 using Family.Api.GraphQL.Mutations;
 using Family.Api.GraphQL.Queries;
 using Family.Api.GraphQL.Types;
@@ -35,6 +36,9 @@ builder.Services.AddCQRS(typeof(Program).Assembly);
 
 // Register resilience services
 builder.Services.AddResilience(builder.Configuration);
+
+// Register Event Store services
+builder.Services.AddEventStore();
 
 // Register health checks
 builder.Services.AddFamilyHealthChecks(builder.Configuration);
