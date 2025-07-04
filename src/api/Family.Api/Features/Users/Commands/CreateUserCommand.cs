@@ -54,13 +54,16 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Comma
 {
     private readonly FamilyDbContext _context;
     private readonly ILogger<CreateUserCommandHandler> _logger;
+    private readonly IStringLocalizer<UserValidationMessages> _localizer;
 
     public CreateUserCommandHandler(
         FamilyDbContext context,
-        ILogger<CreateUserCommandHandler> logger)
+        ILogger<CreateUserCommandHandler> logger,
+        IStringLocalizer<UserValidationMessages> localizer)
     {
         _context = context;
         _logger = logger;
+        _localizer = localizer;
     }
 
     public async Task<CommandResult<UserDto>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -73,7 +76,7 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Comma
 
             if (existingUser != null)
             {
-                return CommandResult<UserDto>.Failure($"User with email '{request.Email}' already exists");
+                return CommandResult<UserDto>.Failure(_localizer["EmailAlreadyExists"]);
             }
 
             // Check if user with Keycloak Subject ID already exists
@@ -128,7 +131,7 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Comma
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error creating user with email {Email}", request.Email);
-            return CommandResult<UserDto>.Failure("An error occurred while creating the user");
+            return CommandResult<UserDto>.Failure(_localizer["UserCreationFailed"]);
         }
     }
 }

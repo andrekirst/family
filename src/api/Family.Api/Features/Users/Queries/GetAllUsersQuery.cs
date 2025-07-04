@@ -3,6 +3,7 @@ using Family.Api.Features.Users.DTOs;
 using Family.Infrastructure.CQRS.Abstractions;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 namespace Family.Api.Features.Users.Queries;
 
@@ -21,14 +22,14 @@ public class GetAllUsersQuery : IQuery<List<UserDto>>
 /// </summary>
 public class GetAllUsersQueryValidator : AbstractValidator<GetAllUsersQuery>
 {
-    public GetAllUsersQueryValidator()
+    public GetAllUsersQueryValidator(IStringLocalizer<UserValidationMessages> localizer)
     {
         RuleFor(x => x.PageNumber)
-            .GreaterThan(0).WithMessage("Page number must be greater than 0");
+            .GreaterThan(0).WithMessage(localizer["PageNumberInvalid"]);
 
         RuleFor(x => x.PageSize)
-            .GreaterThan(0).WithMessage("Page size must be greater than 0")
-            .LessThanOrEqualTo(100).WithMessage("Page size must not exceed 100");
+            .GreaterThan(0).WithMessage(localizer["PageSizeInvalid"])
+            .LessThanOrEqualTo(100).WithMessage(localizer["PageSizeInvalid"]);
     }
 }
 

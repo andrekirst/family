@@ -3,6 +3,7 @@ using Family.Api.Features.Users.DTOs;
 using Family.Infrastructure.CQRS.Abstractions;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 namespace Family.Api.Features.Users.Queries;
 
@@ -19,11 +20,11 @@ public class GetUserByEmailQuery : IQuery<UserDto?>
 /// </summary>
 public class GetUserByEmailQueryValidator : AbstractValidator<GetUserByEmailQuery>
 {
-    public GetUserByEmailQueryValidator()
+    public GetUserByEmailQueryValidator(IStringLocalizer<UserValidationMessages> localizer)
     {
         RuleFor(x => x.Email)
-            .NotEmpty().WithMessage("Email is required")
-            .EmailAddress().WithMessage("Email must be valid");
+            .NotEmpty().WithMessage(localizer["EmailRequired"])
+            .EmailAddress().WithMessage(localizer["EmailInvalid"]);
     }
 }
 
