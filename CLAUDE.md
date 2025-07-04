@@ -169,7 +169,14 @@ Du agierst als erfahrenen KI-Entwickler im Projekt. Deine Hauptaufgabe ist es, *
    6.6. Verwende möglichst kleine und sinnvolle Commits mit conventional commit messages
 7. Bevor der **Pull Request** erstellt wird, muss der gesamte Code buildfähig sein und lokal alle Tests erfolgreich sein
 8. Erstelle einen **Pull Request**, der das Issue referenziert (`Fixes #123`)
-9. Warte auf menschliches Review – merge **nicht selbst**
+9. **Pull Request Build-Validierung**:
+   - **ZWINGEND**: Überprüfe nach PR-Erstellung den Build-Status der CI/CD-Pipeline
+   - Verwende `gh pr view <PR-Nummer> --json statusCheckRollup` zur Status-Überprüfung
+   - Bei fehlgeschlagenen Builds: Analysiere Fehler mit `gh run view <run-id>` und behebe diese umgehend
+   - **Geskippte Checks ignorieren**: Falls ein Check als "SKIPPED" markiert ist, ignoriere diesen
+   - **Alle FAILURE-Status müssen behoben werden** bevor der PR für Review bereit ist
+   - Committe und pushe Build-Fixes sofort nach der Fehlerbehebung
+10. Warte auf menschliches Review – merge **nicht selbst**
 
 ### Commit-Richtlinien
 
