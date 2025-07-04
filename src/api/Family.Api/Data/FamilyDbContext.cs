@@ -1,4 +1,5 @@
 using Family.Api.Models;
+using Family.Api.Models.EventStore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Family.Api.Data;
@@ -11,6 +12,10 @@ public class FamilyDbContext : DbContext
 
     public DbSet<User> Users { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
+    
+    // Event Store
+    public DbSet<Event> Events { get; set; }
+    public DbSet<Snapshot> Snapshots { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
