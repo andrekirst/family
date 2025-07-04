@@ -1,3 +1,4 @@
+using Family.Api.Authorization;
 using Family.Api.Data;
 using Family.Api.Models;
 using Family.Infrastructure.Caching.Abstractions;
@@ -416,7 +417,7 @@ public class CachedKeycloakService : IKeycloakService
     private async Task SyncUserRolesAsync(User user, JwtSecurityToken jsonToken)
     {
         var familyRoles = jsonToken.Claims
-            .Where(c => c.Type == "family_roles")
+            .Where(c => c.Type == Claims.FamilyRoles)
             .Select(c => c.Value)
             .ToList();
 
