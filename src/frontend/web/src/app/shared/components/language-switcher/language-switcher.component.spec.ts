@@ -7,7 +7,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LOCALE_ID } from '@angular/core';
-import { of } from 'rxjs';
 
 describe('LanguageSwitcherComponent', () => {
   let component: LanguageSwitcherComponent;
@@ -79,10 +78,6 @@ describe('LanguageSwitcherComponent', () => {
   });
 
   it('should render supported locales in menu', () => {
-    // Trigger menu to be rendered
-    const compiled = fixture.nativeElement;
-    const menuItems = compiled.querySelectorAll('button[mat-menu-item]');
-    
     // The menu items might not be rendered until the menu is opened
     // So we check that the component has the data ready
     expect(component.supportedLocales.length).toBeGreaterThanOrEqual(2);

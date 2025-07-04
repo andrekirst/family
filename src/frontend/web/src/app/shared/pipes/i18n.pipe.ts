@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform, OnDestroy } from '@angular/core';
+import { Pipe, PipeTransform, OnDestroy, inject } from '@angular/core';
 import { I18nService } from '../../core/services/i18n.service';
 import { Subscription } from 'rxjs';
 
@@ -9,16 +9,18 @@ import { Subscription } from 'rxjs';
 })
 export class I18nPipe implements PipeTransform, OnDestroy {
   private subscription?: Subscription;
-  private lastTranslations: any = {};
+  private lastTranslations: Record<string, string> = {};
+  
+  private i18nService = inject(I18nService);
 
-  constructor(private i18nService: I18nService) {
+  constructor() {
     // Subscribe to translation changes
     this.subscription = this.i18nService.translations$.subscribe(translations => {
       this.lastTranslations = translations;
     });
   }
 
-  transform(key: string, params?: { [key: string]: string | number }): string {
+  transform(key: string, params?: Record<string, string | number>): string {
     return this.i18nService.translate(key, params);
   }
 

@@ -58,9 +58,6 @@ describe('LocalizationService', () => {
   });
 
   it('should set locale if supported', () => {
-    const consoleSpy = spyOn(console, 'log');
-    const initialLocale = service.currentLocale;
-    
     // Mock window.location.reload to prevent actual page reload in tests
     spyOn(window.location, 'reload');
     

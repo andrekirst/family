@@ -1,4 +1,4 @@
-import { Injectable, LOCALE_ID, Inject } from '@angular/core';
+import { Injectable, LOCALE_ID, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface SupportedLocale {
@@ -19,7 +19,9 @@ export class LocalizationService {
     { code: 'en', name: 'English', flag: '🇺🇸' }
   ];
 
-  constructor(@Inject(LOCALE_ID) private defaultLocale: string) {
+  private defaultLocale = inject(LOCALE_ID);
+  
+  constructor() {
     const savedLocale = this.getSavedLocale();
     const browserLocale = this.getBrowserLocale();
     const initialLocale = savedLocale || browserLocale || this.defaultLocale || 'de';
@@ -78,9 +80,11 @@ export class LocalizationService {
 
   private getBrowserLocale(): string {
     if (typeof navigator !== 'undefined') {
-      const browserLang = navigator.language || (navigator as any).userLanguage;
-      const langCode = browserLang.split('-')[0];
-      return this.isSupportedLocale(langCode) ? langCode : 'de';
+      const browserLang = navigator.language || (navigator as { userLanguage?: string }).userLanguage;
+      if (browserLang) {
+        const langCode = browserLang.split('-')[0];
+        return this.isSupportedLocale(langCode) ? langCode : 'de';
+      }
     }
     return 'de';
   }

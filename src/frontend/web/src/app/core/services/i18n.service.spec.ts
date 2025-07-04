@@ -4,14 +4,12 @@ import { LocalizationService } from './localization.service';
 
 describe('I18nService', () => {
   let service: I18nService;
-  let localizationService: LocalizationService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [I18nService, LocalizationService]
     });
     service = TestBed.inject(I18nService);
-    localizationService = TestBed.inject(LocalizationService);
   });
 
   it('should be created', () => {

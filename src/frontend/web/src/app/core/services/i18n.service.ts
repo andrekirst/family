@@ -1,10 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LocalizationService } from './localization.service';
 
-export interface TranslationMap {
-  [key: string]: string;
-}
+export type TranslationMap = Record<string, string>;
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +11,9 @@ export class I18nService {
   private translationsSubject = new BehaviorSubject<TranslationMap>({});
   private currentTranslations: TranslationMap = {};
 
-  constructor(private localizationService: LocalizationService) {
+  private localizationService = inject(LocalizationService);
+
+  constructor() {
     this.loadTranslations();
     
     // Subscribe to locale changes
@@ -26,7 +26,7 @@ export class I18nService {
     return this.translationsSubject.asObservable();
   }
 
-  translate(key: string, params?: { [key: string]: string | number }): string {
+  translate(key: string, params?: Record<string, string | number>): string {
     let translation = this.currentTranslations[key] || key;
     
     // Replace parameters in translation
@@ -40,7 +40,7 @@ export class I18nService {
     return translation;
   }
 
-  instant(key: string, params?: { [key: string]: string | number }): string {
+  instant(key: string, params?: Record<string, string | number>): string {
     return this.translate(key, params);
   }
 
@@ -69,7 +69,7 @@ export class I18nService {
     }
   }
 
-  private async importTranslations(locale: string): Promise<any> {
+  private async importTranslations(locale: string): Promise<{ translations: TranslationMap }> {
     switch (locale) {
       case 'de':
         return import('../../../locale/messages.de.json');

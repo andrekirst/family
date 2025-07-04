@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
@@ -105,8 +105,10 @@ export class LanguageSwitcherComponent implements OnInit {
   supportedLocales: SupportedLocale[] = [];
   currentLocaleInfo: SupportedLocale = { code: 'de', name: 'Deutsch', flag: '🇩🇪' };
   currentLocale$: Observable<string>;
+  
+  public localizationService = inject(LocalizationService);
 
-  constructor(public localizationService: LocalizationService) {
+  constructor() {
     this.currentLocale$ = this.localizationService.currentLocale$;
   }
 
