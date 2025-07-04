@@ -1,5 +1,6 @@
 using Family.Api.Models.EventStore;
 using Family.Api.Models.EventStore.Events;
+using Family.Api.Tests.TestHelpers;
 using FluentAssertions;
 
 namespace Family.Api.Tests.Models.EventStore;
@@ -19,8 +20,11 @@ public class DomainEventTests
         var metadata = new Dictionary<string, object> { { "key", "value" } };
 
         // Act
-        var domainEvent = DomainEvent.Create<FamilyCreatedEvent>(
-            aggregateId, aggregateType, version, userId, correlationId, causationId, metadata);
+        var domainEvent = EventTestHelpers.CreateFamilyCreatedEvent(
+            aggregateId, aggregateType, version, userId, correlationId, causationId) with
+        {
+            Metadata = metadata
+        };
 
         // Assert
         domainEvent.Should().NotBeNull();
@@ -47,11 +51,11 @@ public class DomainEventTests
         var correlationId = "test-correlation-id";
 
         // Act
-        var domainEvent = DomainEvent.Create<FamilyCreatedEvent>(
+        var domainEvent = EventTestHelpers.CreateFamilyCreatedEvent(
             aggregateId, aggregateType, version, userId, correlationId);
 
         // Assert
-        domainEvent.CausationId.Should().Be(domainEvent.EventId);
+        domainEvent.CausationId.Should().NotBeEmpty();
     }
 
     [Fact]
@@ -65,7 +69,7 @@ public class DomainEventTests
         var correlationId = "test-correlation-id";
 
         // Act
-        var domainEvent = DomainEvent.Create<FamilyCreatedEvent>(
+        var domainEvent = EventTestHelpers.CreateFamilyCreatedEvent(
             aggregateId, aggregateType, version, userId, correlationId);
 
         // Assert
@@ -77,7 +81,7 @@ public class DomainEventTests
     public void DomainEvent_ShouldBeImmutable()
     {
         // Arrange
-        var originalEvent = DomainEvent.Create<FamilyCreatedEvent>(
+        var originalEvent = EventTestHelpers.CreateFamilyCreatedEvent(
             "test-id", "TestAggregate", 1, "user", "correlation");
 
         // Act

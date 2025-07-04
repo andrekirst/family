@@ -2,7 +2,6 @@ namespace Family.Api.Models.EventStore.Events;
 
 public record UserLoginEvent : DomainEvent
 {
-    public required string UserId { get; init; }
     public required string UserName { get; init; }
     public required string UserEmail { get; init; }
     public required string IpAddress { get; init; }
@@ -15,7 +14,6 @@ public record UserLoginEvent : DomainEvent
 
 public record UserLogoutEvent : DomainEvent
 {
-    public required string UserId { get; init; }
     public required string UserName { get; init; }
     public required string UserEmail { get; init; }
     public required DateTime LogoutTime { get; init; }
@@ -42,7 +40,6 @@ public record SystemErrorEvent : DomainEvent
     public required string StackTrace { get; init; }
     public required string Source { get; init; }
     public required DateTime ErrorTime { get; init; }
-    public string? UserId { get; init; }
     public string? RequestId { get; init; }
     public Dictionary<string, object> AdditionalProperties { get; init; } = new();
 }

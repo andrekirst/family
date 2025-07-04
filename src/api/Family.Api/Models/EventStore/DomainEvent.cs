@@ -33,14 +33,15 @@ public abstract record DomainEvent
     
     public Dictionary<string, object> Metadata { get; init; } = new();
     
-    public static T Create<T>(string aggregateId, string aggregateType, int version, 
+    public static T CreateBase<T>(string aggregateId, string aggregateType, int version, 
         string userId, string correlationId, string? causationId = null, 
-        Dictionary<string, object>? metadata = null) where T : DomainEvent, new()
+        Dictionary<string, object>? metadata = null) where T : DomainEvent
     {
         var eventType = typeof(T).Name;
         var eventId = Guid.NewGuid().ToString();
         
-        return new T
+        // Create using activator to handle required properties
+        return (T)Activator.CreateInstance(typeof(T), true)! with
         {
             EventId = eventId,
             AggregateId = aggregateId,

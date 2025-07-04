@@ -65,9 +65,9 @@ public abstract class AggregateRoot
     }
     
     protected T CreateEvent<T>(string userId, string correlationId, string? causationId = null, 
-        Dictionary<string, object>? metadata = null) where T : DomainEvent, new()
+        Dictionary<string, object>? metadata = null) where T : DomainEvent
     {
-        return DomainEvent.Create<T>(
+        return DomainEvent.CreateBase<T>(
             aggregateId: Id,
             aggregateType: GetType().Name,
             version: Version + 1,

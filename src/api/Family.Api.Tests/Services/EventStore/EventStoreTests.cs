@@ -12,8 +12,8 @@ namespace Family.Api.Tests.Services.EventStore;
 public class EventStoreTests : IDisposable
 {
     private readonly FamilyDbContext _context;
-    private readonly ILogger<EventStore> _logger;
-    private readonly EventStore _eventStore;
+    private readonly ILogger<Family.Api.Services.EventStore.EventStore> _logger;
+    private readonly Family.Api.Services.EventStore.EventStore _eventStore;
 
     public EventStoreTests()
     {
@@ -22,8 +22,8 @@ public class EventStoreTests : IDisposable
             .Options;
 
         _context = new FamilyDbContext(options);
-        _logger = Substitute.For<ILogger<EventStore>>();
-        _eventStore = new EventStore(_context, _logger);
+        _logger = Substitute.For<ILogger<Family.Api.Services.EventStore.EventStore>>();
+        _eventStore = new Family.Api.Services.EventStore.EventStore(_context, _logger);
     }
 
     [Fact]
