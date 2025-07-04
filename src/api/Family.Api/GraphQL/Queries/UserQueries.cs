@@ -1,3 +1,4 @@
+using Family.Api.Authorization;
 using Family.Api.Data;
 using Family.Api.Models;
 using HotChocolate.Authorization;
@@ -34,7 +35,7 @@ public class UserQueries
         CancellationToken cancellationToken)
     {
         var currentUserSubId = claimsPrincipal.FindFirst("sub")?.Value;
-        var isAdmin = claimsPrincipal.HasClaim("family_roles", "family-admin");
+        var isAdmin = claimsPrincipal.HasClaim(Claims.FamilyRoles, Roles.FamilyAdmin);
 
         // Users can only see their own profile unless they are admin
         if (!isAdmin)
