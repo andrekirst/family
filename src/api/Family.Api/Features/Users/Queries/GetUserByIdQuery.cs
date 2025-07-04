@@ -3,6 +3,7 @@ using Family.Api.Features.Users.DTOs;
 using Family.Infrastructure.CQRS.Abstractions;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 namespace Family.Api.Features.Users.Queries;
 
@@ -19,10 +20,10 @@ public class GetUserByIdQuery : IQuery<UserDto?>
 /// </summary>
 public class GetUserByIdQueryValidator : AbstractValidator<GetUserByIdQuery>
 {
-    public GetUserByIdQueryValidator()
+    public GetUserByIdQueryValidator(IStringLocalizer<UserValidationMessages> localizer)
     {
         RuleFor(x => x.UserId)
-            .NotEmpty().WithMessage("User ID is required");
+            .NotEmpty().WithMessage(localizer["UserIdRequired"]);
     }
 }
 

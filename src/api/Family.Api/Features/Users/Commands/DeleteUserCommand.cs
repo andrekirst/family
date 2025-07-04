@@ -2,6 +2,7 @@ using Family.Api.Data;
 using Family.Infrastructure.CQRS.Abstractions;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 namespace Family.Api.Features.Users.Commands;
 
@@ -18,10 +19,10 @@ public class DeleteUserCommand : ICommand<CommandResult>
 /// </summary>
 public class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
 {
-    public DeleteUserCommandValidator()
+    public DeleteUserCommandValidator(IStringLocalizer<UserValidationMessages> localizer)
     {
         RuleFor(x => x.UserId)
-            .NotEmpty().WithMessage("User ID is required");
+            .NotEmpty().WithMessage(localizer["UserIdRequired"]);
     }
 }
 

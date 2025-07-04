@@ -1,3 +1,4 @@
+using System.Globalization;
 using Family.Api.Authorization;
 using Family.Api.Data;
 using Family.Api.Data.Interceptors;
@@ -10,6 +11,7 @@ using Family.Infrastructure.CQRS.Extensions;
 using HotChocolate.Authorization;
 using HotChocolate.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -28,6 +30,22 @@ builder.Services.AddFamilyCaching(builder.Configuration);
 
 // Register CQRS services
 builder.Services.AddCQRS(typeof(Program).Assembly);
+
+// Configure Localization
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new[]
+    {
+        new CultureInfo("de"),
+        new CultureInfo("en")
+    };
+    
+    options.DefaultRequestCulture = new RequestCulture("de");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+    options.RequestCultureProviders.Insert(0, new AcceptLanguageHeaderRequestCultureProvider());
+});
 
 // Register services
 builder.Services.AddHttpClient<IKeycloakService, CachedKeycloakService>();
@@ -110,6 +128,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Request Localization
+app.UseRequestLocalization();
 
 // Authentication & Authorization
 app.UseAuthentication();
