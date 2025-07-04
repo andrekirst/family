@@ -64,11 +64,29 @@
     <PackageVersion Include="Testcontainers.PostgreSql" Version="4.0.0" />
     <PackageVersion Include="Testcontainers.Redis" Version="4.0.0" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
   </ItemGroup>
 
   <!-- Code Coverage Tools -->
   <ItemGroup>
     <PackageVersion Include="ReportGenerator" Version="5.4.1" />
+  </ItemGroup>
+
+  <!-- Resilience Dependencies -->
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="9.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="9.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.2" />
+    <PackageVersion Include="Polly" Version="8.5.1" />
+    <PackageVersion Include="Polly.Extensions" Version="8.5.1" />
+    <PackageVersion Include="StackExchange.Redis" Version="2.8.16" />
+    <PackageVersion Include="Npgsql" Version="9.0.2" />
+    <PackageVersion Include="AspNetCore.HealthChecks.Kafka" Version="8.0.1" />
+    <PackageVersion Include="AspNetCore.HealthChecks.Redis" Version="8.0.1" />
+    <PackageVersion Include="AspNetCore.HealthChecks.Npgsql" Version="8.0.2" />
+    <PackageVersion Include="AspNetCore.HealthChecks.UI" Version="8.0.2" />
+    <PackageVersion Include="AspNetCore.HealthChecks.UI.Client" Version="8.0.1" />
+    <PackageVersion Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="8.0.1" />
   </ItemGroup>
 
 </Project>
