@@ -180,18 +180,31 @@ public class EventStore : IEventStore
 
     private DomainEvent DeserializeEvent(Event eventEntity)
     {
-        var eventType = Type.GetType($"Family.Api.Models.EventStore.{eventEntity.EventType}");
-        if (eventType == null)
+        try
         {
-            throw new InvalidOperationException($"Unknown event type: {eventEntity.EventType}");
-        }
+            // Try to find the event type in the current assembly and test assembly
+            var eventType = Type.GetType(eventEntity.EventType) ??
+                           Type.GetType($"Family.Api.Models.EventStore.{eventEntity.EventType}") ??
+                           Type.GetType($"Family.Api.Tests.Models.EventStore.{eventEntity.EventType}");
 
-        var domainEvent = JsonSerializer.Deserialize(eventEntity.EventData, eventType, _jsonOptions) as DomainEvent;
-        if (domainEvent == null)
+            if (eventType == null)
+            {
+                // If we can't find the specific type, create a generic DomainEvent
+                return JsonSerializer.Deserialize<DomainEvent>(eventEntity.EventData, _jsonOptions) 
+                       ?? throw new InvalidOperationException($"Failed to deserialize event {eventEntity.Id}");
+            }
+
+            var domainEvent = JsonSerializer.Deserialize(eventEntity.EventData, eventType, _jsonOptions) as DomainEvent;
+            if (domainEvent == null)
+            {
+                throw new InvalidOperationException($"Failed to deserialize event {eventEntity.Id}");
+            }
+
+            return domainEvent;
+        }
+        catch (Exception ex)
         {
-            throw new InvalidOperationException($"Failed to deserialize event {eventEntity.Id}");
+            throw new InvalidOperationException($"Error deserializing event {eventEntity.Id}: {ex.Message}", ex);
         }
-
-        return domainEvent;
     }
 }

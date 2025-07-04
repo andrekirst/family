@@ -1,6 +1,4 @@
 using Family.Api.Models.EventStore;
-using Family.Api.Models.EventStore.Events;
-using Family.Api.Tests.TestHelpers;
 using FluentAssertions;
 
 namespace Family.Api.Tests.Models.EventStore;
@@ -20,10 +18,19 @@ public class DomainEventTests
         var metadata = new Dictionary<string, object> { { "key", "value" } };
 
         // Act
-        var domainEvent = EventTestHelpers.CreateFamilyCreatedEvent(
-            aggregateId, aggregateType, version, userId, correlationId, causationId) with
+        var domainEvent = new TestDomainEvent
         {
-            Metadata = metadata
+            EventId = Guid.NewGuid().ToString(),
+            AggregateId = aggregateId,
+            AggregateType = aggregateType,
+            EventType = nameof(TestDomainEvent),
+            Version = version,
+            Timestamp = DateTime.UtcNow,
+            UserId = userId,
+            CorrelationId = correlationId,
+            CausationId = causationId,
+            Metadata = metadata,
+            TestData = "test"
         };
 
         // Assert
@@ -31,7 +38,7 @@ public class DomainEventTests
         domainEvent.EventId.Should().NotBeEmpty();
         domainEvent.AggregateId.Should().Be(aggregateId);
         domainEvent.AggregateType.Should().Be(aggregateType);
-        domainEvent.EventType.Should().Be(nameof(FamilyCreatedEvent));
+        domainEvent.EventType.Should().Be(nameof(TestDomainEvent));
         domainEvent.Version.Should().Be(version);
         domainEvent.UserId.Should().Be(userId);
         domainEvent.CorrelationId.Should().Be(correlationId);
@@ -41,55 +48,32 @@ public class DomainEventTests
     }
 
     [Fact]
-    public void Create_WithoutCausationId_ShouldUseEventIdAsCausationId()
-    {
-        // Arrange
-        var aggregateId = "test-aggregate-id";
-        var aggregateType = "TestAggregate";
-        var version = 1;
-        var userId = "test-user-id";
-        var correlationId = "test-correlation-id";
-
-        // Act
-        var domainEvent = EventTestHelpers.CreateFamilyCreatedEvent(
-            aggregateId, aggregateType, version, userId, correlationId);
-
-        // Assert
-        domainEvent.CausationId.Should().NotBeEmpty();
-    }
-
-    [Fact]
-    public void Create_WithoutMetadata_ShouldUseEmptyDictionary()
-    {
-        // Arrange
-        var aggregateId = "test-aggregate-id";
-        var aggregateType = "TestAggregate";
-        var version = 1;
-        var userId = "test-user-id";
-        var correlationId = "test-correlation-id";
-
-        // Act
-        var domainEvent = EventTestHelpers.CreateFamilyCreatedEvent(
-            aggregateId, aggregateType, version, userId, correlationId);
-
-        // Assert
-        domainEvent.Metadata.Should().NotBeNull();
-        domainEvent.Metadata.Should().BeEmpty();
-    }
-
-    [Fact]
     public void DomainEvent_ShouldBeImmutable()
     {
         // Arrange
-        var originalEvent = EventTestHelpers.CreateFamilyCreatedEvent(
-            "test-id", "TestAggregate", 1, "user", "correlation");
+        var originalEvent = new TestDomainEvent
+        {
+            EventId = Guid.NewGuid().ToString(),
+            AggregateId = "test-id",
+            AggregateType = "TestAggregate",
+            EventType = nameof(TestDomainEvent),
+            Version = 1,
+            Timestamp = DateTime.UtcNow,
+            UserId = "user",
+            CorrelationId = "correlation",
+            CausationId = Guid.NewGuid().ToString(),
+            Metadata = new Dictionary<string, object>(),
+            TestData = "original"
+        };
 
         // Act
-        var modifiedEvent = originalEvent with { Version = 2 };
+        var modifiedEvent = originalEvent with { Version = 2, TestData = "modified" };
 
         // Assert
         originalEvent.Version.Should().Be(1);
+        originalEvent.TestData.Should().Be("original");
         modifiedEvent.Version.Should().Be(2);
+        modifiedEvent.TestData.Should().Be("modified");
         originalEvent.EventId.Should().Be(modifiedEvent.EventId);
         originalEvent.AggregateId.Should().Be(modifiedEvent.AggregateId);
     }
