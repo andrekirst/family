@@ -1,5 +1,8 @@
 using Family.Api.Features.Users.Queries;
+using Family.Api.Features.Users;
 using FluentAssertions;
+using Microsoft.Extensions.Localization;
+using NSubstitute;
 
 namespace Family.Api.Tests.Features.Users.Queries;
 
@@ -45,7 +48,11 @@ public class GetAllUsersQueryTests
             PageSize = 10
         };
 
-        var validator = new GetAllUsersQueryValidator();
+        var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
+        localizer["PageNumberInvalid"].Returns(new LocalizedString("PageNumberInvalid", "Page number must be greater than 0"));
+        localizer["PageSizeInvalid"].Returns(new LocalizedString("PageSizeInvalid", "Page size must be between 1 and 100"));
+        
+        var validator = new GetAllUsersQueryValidator(localizer);
         var result = validator.Validate(query);
 
         result.IsValid.Should().BeFalse();
@@ -64,7 +71,11 @@ public class GetAllUsersQueryTests
             PageSize = invalidPageSize
         };
 
-        var validator = new GetAllUsersQueryValidator();
+        var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
+        localizer["PageNumberInvalid"].Returns(new LocalizedString("PageNumberInvalid", "Page number must be greater than 0"));
+        localizer["PageSizeInvalid"].Returns(new LocalizedString("PageSizeInvalid", "Page size must be between 1 and 100"));
+        
+        var validator = new GetAllUsersQueryValidator(localizer);
         var result = validator.Validate(query);
 
         result.IsValid.Should().BeFalse();
@@ -81,7 +92,11 @@ public class GetAllUsersQueryTests
             IncludeInactive = true
         };
 
-        var validator = new GetAllUsersQueryValidator();
+        var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
+        localizer["PageNumberInvalid"].Returns(new LocalizedString("PageNumberInvalid", "Page number must be greater than 0"));
+        localizer["PageSizeInvalid"].Returns(new LocalizedString("PageSizeInvalid", "Page size must be between 1 and 100"));
+        
+        var validator = new GetAllUsersQueryValidator(localizer);
         var result = validator.Validate(query);
 
         result.IsValid.Should().BeTrue();

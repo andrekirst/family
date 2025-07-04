@@ -4,6 +4,7 @@ using Family.Api.Models;
 using Family.Infrastructure.CQRS.Abstractions;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 namespace Family.Api.Features.Users.Commands;
 
@@ -24,28 +25,25 @@ public class CreateUserCommand : ICommand<CommandResult<UserDto>>
 /// </summary>
 public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
 {
-    public CreateUserCommandValidator()
+    public CreateUserCommandValidator(IStringLocalizer<UserValidationMessages> localizer)
     {
         RuleFor(x => x.Email)
-            .NotEmpty().WithMessage("Email is required")
-            .EmailAddress().WithMessage("Email must be valid")
-            .MaximumLength(255).WithMessage("Email must not exceed 255 characters");
+            .NotEmpty().WithMessage(localizer["EmailRequired"])
+            .EmailAddress().WithMessage(localizer["EmailInvalid"])
+            .MaximumLength(255).WithMessage(x => localizer["EmailMaxLength", 255]);
 
         RuleFor(x => x.FirstName)
-            .NotEmpty().WithMessage("First name is required")
-            .MaximumLength(100).WithMessage("First name must not exceed 100 characters");
+            .NotEmpty().WithMessage(localizer["FirstNameRequired"])
+            .MaximumLength(100).WithMessage(x => localizer["FirstNameMaxLength", 100]);
 
         RuleFor(x => x.LastName)
-            .NotEmpty().WithMessage("Last name is required")
-            .MaximumLength(100).WithMessage("Last name must not exceed 100 characters");
+            .NotEmpty().WithMessage(localizer["LastNameRequired"])
+            .MaximumLength(100).WithMessage(x => localizer["LastNameMaxLength", 100]);
 
         RuleFor(x => x.PreferredLanguage)
-            .NotEmpty().WithMessage("Preferred language is required")
+            .NotEmpty().WithMessage(localizer["PreferredLanguageRequired"])
             .Must(lang => lang == "de" || lang == "en")
-            .WithMessage("Preferred language must be 'de' or 'en'");
-
-        RuleFor(x => x.KeycloakSubjectId)
-            .MaximumLength(255).WithMessage("Keycloak Subject ID must not exceed 255 characters");
+            .WithMessage(localizer["PreferredLanguageInvalid"]);
     }
 }
 
@@ -56,13 +54,16 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Comma
 {
     private readonly FamilyDbContext _context;
     private readonly ILogger<CreateUserCommandHandler> _logger;
+    private readonly IStringLocalizer<UserValidationMessages> _localizer;
 
     public CreateUserCommandHandler(
         FamilyDbContext context,
-        ILogger<CreateUserCommandHandler> logger)
+        ILogger<CreateUserCommandHandler> logger,
+        IStringLocalizer<UserValidationMessages> localizer)
     {
         _context = context;
         _logger = logger;
+        _localizer = localizer;
     }
 
     public async Task<CommandResult<UserDto>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -75,7 +76,7 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Comma
 
             if (existingUser != null)
             {
-                return CommandResult<UserDto>.Failure($"User with email '{request.Email}' already exists");
+                return CommandResult<UserDto>.Failure(_localizer["EmailAlreadyExists"]);
             }
 
             // Check if user with Keycloak Subject ID already exists
@@ -130,7 +131,7 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Comma
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error creating user with email {Email}", request.Email);
-            return CommandResult<UserDto>.Failure("An error occurred while creating the user");
+            return CommandResult<UserDto>.Failure(_localizer["UserCreationFailed"]);
         }
     }
 }

@@ -3,6 +3,7 @@ using Family.Api.Features.Users.DTOs;
 using Family.Infrastructure.CQRS.Abstractions;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 namespace Family.Api.Features.Users.Commands;
 
@@ -23,23 +24,23 @@ public class UpdateUserCommand : ICommand<CommandResult<UserDto>>
 /// </summary>
 public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
 {
-    public UpdateUserCommandValidator()
+    public UpdateUserCommandValidator(IStringLocalizer<UserValidationMessages> localizer)
     {
         RuleFor(x => x.UserId)
-            .NotEmpty().WithMessage("User ID is required");
+            .NotEmpty().WithMessage(localizer["UserIdRequired"]);
 
         RuleFor(x => x.FirstName)
-            .NotEmpty().WithMessage("First name is required")
-            .MaximumLength(100).WithMessage("First name must not exceed 100 characters");
+            .NotEmpty().WithMessage(localizer["FirstNameRequired"])
+            .MaximumLength(100).WithMessage(x => localizer["FirstNameMaxLength", 100]);
 
         RuleFor(x => x.LastName)
-            .NotEmpty().WithMessage("Last name is required")
-            .MaximumLength(100).WithMessage("Last name must not exceed 100 characters");
+            .NotEmpty().WithMessage(localizer["LastNameRequired"])
+            .MaximumLength(100).WithMessage(x => localizer["LastNameMaxLength", 100]);
 
         RuleFor(x => x.PreferredLanguage)
-            .NotEmpty().WithMessage("Preferred language is required")
+            .NotEmpty().WithMessage(localizer["PreferredLanguageRequired"])
             .Must(lang => lang == "de" || lang == "en")
-            .WithMessage("Preferred language must be 'de' or 'en'");
+            .WithMessage(localizer["PreferredLanguageInvalid"]);
     }
 }
 

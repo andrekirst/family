@@ -1,5 +1,8 @@
 using Family.Api.Features.Users.Commands;
+using Family.Api.Features.Users;
 using FluentAssertions;
+using Microsoft.Extensions.Localization;
+using NSubstitute;
 
 namespace Family.Api.Tests.Features.Users.Commands;
 
@@ -42,7 +45,14 @@ public class UpdateUserCommandTests
             IsActive = true
         };
 
-        var validator = new UpdateUserCommandValidator();
+        var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
+        localizer["UserIdRequired"].Returns(new LocalizedString("UserIdRequired", "User ID is required"));
+        localizer["FirstNameRequired"].Returns(new LocalizedString("FirstNameRequired", "First name is required"));
+        localizer["LastNameRequired"].Returns(new LocalizedString("LastNameRequired", "Last name is required"));
+        localizer["PreferredLanguageRequired"].Returns(new LocalizedString("PreferredLanguageRequired", "Preferred language is required"));
+        localizer["PreferredLanguageInvalid"].Returns(new LocalizedString("PreferredLanguageInvalid", "Preferred language must be 'de' or 'en'"));
+        
+        var validator = new UpdateUserCommandValidator(localizer);
         var result = validator.Validate(command);
 
         result.IsValid.Should().BeFalse();
@@ -64,7 +74,14 @@ public class UpdateUserCommandTests
             IsActive = true
         };
 
-        var validator = new UpdateUserCommandValidator();
+        var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
+        localizer["UserIdRequired"].Returns(new LocalizedString("UserIdRequired", "User ID is required"));
+        localizer["FirstNameRequired"].Returns(new LocalizedString("FirstNameRequired", "First name is required"));
+        localizer["LastNameRequired"].Returns(new LocalizedString("LastNameRequired", "Last name is required"));
+        localizer["PreferredLanguageRequired"].Returns(new LocalizedString("PreferredLanguageRequired", "Preferred language is required"));
+        localizer["PreferredLanguageInvalid"].Returns(new LocalizedString("PreferredLanguageInvalid", "Preferred language must be 'de' or 'en'"));
+        
+        var validator = new UpdateUserCommandValidator(localizer);
         var result = validator.Validate(command);
 
         result.IsValid.Should().BeFalse();
@@ -86,7 +103,14 @@ public class UpdateUserCommandTests
             IsActive = true
         };
 
-        var validator = new UpdateUserCommandValidator();
+        var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
+        localizer["UserIdRequired"].Returns(new LocalizedString("UserIdRequired", "User ID is required"));
+        localizer["FirstNameRequired"].Returns(new LocalizedString("FirstNameRequired", "First name is required"));
+        localizer["LastNameRequired"].Returns(new LocalizedString("LastNameRequired", "Last name is required"));
+        localizer["PreferredLanguageRequired"].Returns(new LocalizedString("PreferredLanguageRequired", "Preferred language is required"));
+        localizer["PreferredLanguageInvalid"].Returns(new LocalizedString("PreferredLanguageInvalid", "Preferred language must be 'de' or 'en'"));
+        
+        var validator = new UpdateUserCommandValidator(localizer);
         var result = validator.Validate(command);
 
         result.IsValid.Should().BeFalse();
@@ -105,7 +129,14 @@ public class UpdateUserCommandTests
             IsActive = true
         };
 
-        var validator = new UpdateUserCommandValidator();
+        var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
+        localizer["UserIdRequired"].Returns(new LocalizedString("UserIdRequired", "User ID is required"));
+        localizer["FirstNameRequired"].Returns(new LocalizedString("FirstNameRequired", "First name is required"));
+        localizer["LastNameRequired"].Returns(new LocalizedString("LastNameRequired", "Last name is required"));
+        localizer["PreferredLanguageRequired"].Returns(new LocalizedString("PreferredLanguageRequired", "Preferred language is required"));
+        localizer["PreferredLanguageInvalid"].Returns(new LocalizedString("PreferredLanguageInvalid", "Preferred language must be 'de' or 'en'"));
+        
+        var validator = new UpdateUserCommandValidator(localizer);
         var result = validator.Validate(command);
 
         result.IsValid.Should().BeTrue();

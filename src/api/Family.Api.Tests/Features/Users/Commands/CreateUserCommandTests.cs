@@ -1,5 +1,8 @@
 using Family.Api.Features.Users.Commands;
+using Family.Api.Features.Users;
 using FluentAssertions;
+using Microsoft.Extensions.Localization;
+using NSubstitute;
 
 namespace Family.Api.Tests.Features.Users.Commands;
 
@@ -59,7 +62,18 @@ public class CreateUserCommandTests
             PreferredLanguage = "de"
         };
 
-        var validator = new CreateUserCommandValidator();
+        var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
+        localizer["EmailRequired"].Returns(new LocalizedString("EmailRequired", "Email is required"));
+        localizer["EmailInvalid"].Returns(new LocalizedString("EmailInvalid", "Invalid email format"));
+        localizer["EmailMaxLength"].Returns(new LocalizedString("EmailMaxLength", "Email max length exceeded"));
+        localizer["FirstNameRequired"].Returns(new LocalizedString("FirstNameRequired", "First name is required"));
+        localizer["FirstNameMaxLength"].Returns(new LocalizedString("FirstNameMaxLength", "First name max length exceeded"));
+        localizer["LastNameRequired"].Returns(new LocalizedString("LastNameRequired", "Last name is required"));
+        localizer["LastNameMaxLength"].Returns(new LocalizedString("LastNameMaxLength", "Last name max length exceeded"));
+        localizer["PreferredLanguageRequired"].Returns(new LocalizedString("PreferredLanguageRequired", "Preferred language is required"));
+        localizer["PreferredLanguageInvalid"].Returns(new LocalizedString("PreferredLanguageInvalid", "Preferred language is invalid"));
+        
+        var validator = new CreateUserCommandValidator(localizer);
         var result = validator.Validate(command);
 
         result.IsValid.Should().BeFalse();
@@ -80,7 +94,18 @@ public class CreateUserCommandTests
             PreferredLanguage = "de"
         };
 
-        var validator = new CreateUserCommandValidator();
+        var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
+        localizer["EmailRequired"].Returns(new LocalizedString("EmailRequired", "Email is required"));
+        localizer["EmailInvalid"].Returns(new LocalizedString("EmailInvalid", "Invalid email format"));
+        localizer["EmailMaxLength"].Returns(new LocalizedString("EmailMaxLength", "Email max length exceeded"));
+        localizer["FirstNameRequired"].Returns(new LocalizedString("FirstNameRequired", "First name is required"));
+        localizer["FirstNameMaxLength"].Returns(new LocalizedString("FirstNameMaxLength", "First name max length exceeded"));
+        localizer["LastNameRequired"].Returns(new LocalizedString("LastNameRequired", "Last name is required"));
+        localizer["LastNameMaxLength"].Returns(new LocalizedString("LastNameMaxLength", "Last name max length exceeded"));
+        localizer["PreferredLanguageRequired"].Returns(new LocalizedString("PreferredLanguageRequired", "Preferred language is required"));
+        localizer["PreferredLanguageInvalid"].Returns(new LocalizedString("PreferredLanguageInvalid", "Preferred language is invalid"));
+        
+        var validator = new CreateUserCommandValidator(localizer);
         var result = validator.Validate(command);
 
         result.IsValid.Should().BeFalse();
@@ -101,7 +126,18 @@ public class CreateUserCommandTests
             PreferredLanguage = "de"
         };
 
-        var validator = new CreateUserCommandValidator();
+        var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
+        localizer["EmailRequired"].Returns(new LocalizedString("EmailRequired", "Email is required"));
+        localizer["EmailInvalid"].Returns(new LocalizedString("EmailInvalid", "Invalid email format"));
+        localizer["EmailMaxLength"].Returns(new LocalizedString("EmailMaxLength", "Email max length exceeded"));
+        localizer["FirstNameRequired"].Returns(new LocalizedString("FirstNameRequired", "First name is required"));
+        localizer["FirstNameMaxLength"].Returns(new LocalizedString("FirstNameMaxLength", "First name max length exceeded"));
+        localizer["LastNameRequired"].Returns(new LocalizedString("LastNameRequired", "Last name is required"));
+        localizer["LastNameMaxLength"].Returns(new LocalizedString("LastNameMaxLength", "Last name max length exceeded"));
+        localizer["PreferredLanguageRequired"].Returns(new LocalizedString("PreferredLanguageRequired", "Preferred language is required"));
+        localizer["PreferredLanguageInvalid"].Returns(new LocalizedString("PreferredLanguageInvalid", "Preferred language is invalid"));
+        
+        var validator = new CreateUserCommandValidator(localizer);
         var result = validator.Validate(command);
 
         result.IsValid.Should().BeFalse();
@@ -122,7 +158,18 @@ public class CreateUserCommandTests
             PreferredLanguage = "de"
         };
 
-        var validator = new CreateUserCommandValidator();
+        var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
+        localizer["EmailRequired"].Returns(new LocalizedString("EmailRequired", "Email is required"));
+        localizer["EmailInvalid"].Returns(new LocalizedString("EmailInvalid", "Invalid email format"));
+        localizer["EmailMaxLength"].Returns(new LocalizedString("EmailMaxLength", "Email max length exceeded"));
+        localizer["FirstNameRequired"].Returns(new LocalizedString("FirstNameRequired", "First name is required"));
+        localizer["FirstNameMaxLength"].Returns(new LocalizedString("FirstNameMaxLength", "First name max length exceeded"));
+        localizer["LastNameRequired"].Returns(new LocalizedString("LastNameRequired", "Last name is required"));
+        localizer["LastNameMaxLength"].Returns(new LocalizedString("LastNameMaxLength", "Last name max length exceeded"));
+        localizer["PreferredLanguageRequired"].Returns(new LocalizedString("PreferredLanguageRequired", "Preferred language is required"));
+        localizer["PreferredLanguageInvalid"].Returns(new LocalizedString("PreferredLanguageInvalid", "Preferred language is invalid"));
+        
+        var validator = new CreateUserCommandValidator(localizer);
         var result = validator.Validate(command);
 
         result.IsValid.Should().BeFalse();
@@ -140,7 +187,18 @@ public class CreateUserCommandTests
             PreferredLanguage = "de"
         };
 
-        var validator = new CreateUserCommandValidator();
+        var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
+        localizer["EmailRequired"].Returns(new LocalizedString("EmailRequired", "Email is required"));
+        localizer["EmailInvalid"].Returns(new LocalizedString("EmailInvalid", "Invalid email format"));
+        localizer["EmailMaxLength"].Returns(new LocalizedString("EmailMaxLength", "Email max length exceeded"));
+        localizer["FirstNameRequired"].Returns(new LocalizedString("FirstNameRequired", "First name is required"));
+        localizer["FirstNameMaxLength"].Returns(new LocalizedString("FirstNameMaxLength", "First name max length exceeded"));
+        localizer["LastNameRequired"].Returns(new LocalizedString("LastNameRequired", "Last name is required"));
+        localizer["LastNameMaxLength"].Returns(new LocalizedString("LastNameMaxLength", "Last name max length exceeded"));
+        localizer["PreferredLanguageRequired"].Returns(new LocalizedString("PreferredLanguageRequired", "Preferred language is required"));
+        localizer["PreferredLanguageInvalid"].Returns(new LocalizedString("PreferredLanguageInvalid", "Preferred language is invalid"));
+        
+        var validator = new CreateUserCommandValidator(localizer);
         var result = validator.Validate(command);
 
         result.IsValid.Should().BeTrue();

@@ -13,6 +13,9 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from '../../core/auth/auth.service';
 import { User } from '../../core/graphql/types';
+import { LanguageSwitcherComponent } from '../../shared/components/language-switcher/language-switcher.component';
+import { I18nPipe } from '../../shared/pipes/i18n.pipe';
+import { I18nService } from '../../core/services/i18n.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -25,7 +28,9 @@ import { User } from '../../core/graphql/types';
     MatListModule,
     MatIconModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    LanguageSwitcherComponent,
+    I18nPipe
   ],
   template: `
     <mat-sidenav-container class="sidenav-container">
@@ -38,50 +43,50 @@ import { User } from '../../core/graphql/types';
         [opened]="(isHandset$ | async) === false">
         
         <mat-toolbar class="sidenav-header">
-          <span class="app-title">Family</span>
+          <span class="app-title">{{ 'app.title' | i18n }}</span>
         </mat-toolbar>
         
         <mat-nav-list>
           <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
             <mat-icon matListItemIcon>dashboard</mat-icon>
-            <span matListItemTitle>Dashboard</span>
+            <span matListItemTitle>{{ 'nav.dashboard' | i18n }}</span>
           </a>
           
           <a mat-list-item routerLink="/calendar" routerLinkActive="active-link">
             <mat-icon matListItemIcon>event</mat-icon>
-            <span matListItemTitle>Kalender</span>
+            <span matListItemTitle>{{ 'nav.calendar' | i18n }}</span>
           </a>
           
           <a mat-list-item routerLink="/school" routerLinkActive="active-link">
             <mat-icon matListItemIcon>school</mat-icon>
-            <span matListItemTitle>Schule</span>
+            <span matListItemTitle>{{ 'nav.school' | i18n }}</span>
           </a>
           
           <a mat-list-item routerLink="/kindergarten" routerLinkActive="active-link">
             <mat-icon matListItemIcon>child_care</mat-icon>
-            <span matListItemTitle>Kindergarten</span>
+            <span matListItemTitle>{{ 'nav.kindergarten' | i18n }}</span>
           </a>
           
           <a mat-list-item routerLink="/health" routerLinkActive="active-link">
             <mat-icon matListItemIcon>local_hospital</mat-icon>
-            <span matListItemTitle>Gesundheit</span>
+            <span matListItemTitle>{{ 'nav.health' | i18n }}</span>
           </a>
           
           <a mat-list-item routerLink="/family" routerLinkActive="active-link">
             <mat-icon matListItemIcon>people</mat-icon>
-            <span matListItemTitle>Familie</span>
+            <span matListItemTitle>{{ 'nav.family' | i18n }}</span>
           </a>
           
           <mat-divider></mat-divider>
           
           <a mat-list-item routerLink="/profile" routerLinkActive="active-link">
             <mat-icon matListItemIcon>person</mat-icon>
-            <span matListItemTitle>Profil</span>
+            <span matListItemTitle>{{ 'nav.profile' | i18n }}</span>
           </a>
           
           <a mat-list-item routerLink="/settings" routerLinkActive="active-link">
             <mat-icon matListItemIcon>settings</mat-icon>
-            <span matListItemTitle>Einstellungen</span>
+            <span matListItemTitle>{{ 'nav.settings' | i18n }}</span>
           </a>
         </mat-nav-list>
       </mat-sidenav>
@@ -99,6 +104,9 @@ import { User } from '../../core/graphql/types';
           
           <span class="toolbar-spacer"></span>
           
+          <!-- Language Switcher -->
+          <app-language-switcher></app-language-switcher>
+          
           <!-- User Menu -->
           <button mat-icon-button [matMenuTriggerFor]="userMenu">
             <mat-icon>account_circle</mat-icon>
@@ -112,16 +120,16 @@ import { User } from '../../core/graphql/types';
             <mat-divider></mat-divider>
             <button mat-menu-item routerLink="/profile">
               <mat-icon>person</mat-icon>
-              <span>Profil</span>
+              <span>{{ 'nav.profile' | i18n }}</span>
             </button>
             <button mat-menu-item routerLink="/settings">
               <mat-icon>settings</mat-icon>
-              <span>Einstellungen</span>
+              <span>{{ 'nav.settings' | i18n }}</span>
             </button>
             <mat-divider></mat-divider>
             <button mat-menu-item (click)="logout()">
               <mat-icon>logout</mat-icon>
-              <span>Abmelden</span>
+              <span>{{ 'nav.logout' | i18n }}</span>
             </button>
           </mat-menu>
         </mat-toolbar>
@@ -223,6 +231,7 @@ export class MainLayoutComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
+  private i18nService = inject(I18nService);
 
   constructor() {
     this.currentUser$ = this.authService.currentUser$;
@@ -244,17 +253,21 @@ export class MainLayoutComponent implements OnInit {
     this.authService.logout().subscribe({
       next: (result) => {
         if (result.success) {
-          this.snackBar.open('Erfolgreich abgemeldet', 'Schließen', {
-            duration: 3000
-          });
+          this.snackBar.open(
+            this.i18nService.translate('auth.logoutSuccess'), 
+            this.i18nService.translate('common.close'), 
+            { duration: 3000 }
+          );
         }
         // Navigation happens automatically in AuthService.handleLogout()
       },
       error: (error) => {
         console.error('Logout error:', error);
-        this.snackBar.open('Fehler beim Abmelden', 'Schließen', {
-          duration: 3000
-        });
+        this.snackBar.open(
+          this.i18nService.translate('auth.loginFailed'), 
+          this.i18nService.translate('common.close'), 
+          { duration: 3000 }
+        );
       }
     });
   }

@@ -1,5 +1,8 @@
 using Family.Api.Features.Users.Commands;
+using Family.Api.Features.Users;
 using FluentAssertions;
+using Microsoft.Extensions.Localization;
+using NSubstitute;
 
 namespace Family.Api.Tests.Features.Users.Commands;
 
@@ -26,7 +29,10 @@ public class DeleteUserCommandTests
             UserId = Guid.Empty
         };
 
-        var validator = new DeleteUserCommandValidator();
+        var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
+        localizer["UserIdRequired"].Returns(new LocalizedString("UserIdRequired", "User ID is required"));
+        
+        var validator = new DeleteUserCommandValidator(localizer);
         var result = validator.Validate(command);
 
         result.IsValid.Should().BeFalse();
@@ -41,7 +47,10 @@ public class DeleteUserCommandTests
             UserId = Guid.NewGuid()
         };
 
-        var validator = new DeleteUserCommandValidator();
+        var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
+        localizer["UserIdRequired"].Returns(new LocalizedString("UserIdRequired", "User ID is required"));
+        
+        var validator = new DeleteUserCommandValidator(localizer);
         var result = validator.Validate(command);
 
         result.IsValid.Should().BeTrue();

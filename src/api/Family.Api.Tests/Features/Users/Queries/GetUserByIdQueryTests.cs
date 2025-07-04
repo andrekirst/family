@@ -1,5 +1,8 @@
 using Family.Api.Features.Users.Queries;
+using Family.Api.Features.Users;
 using FluentAssertions;
+using Microsoft.Extensions.Localization;
+using NSubstitute;
 
 namespace Family.Api.Tests.Features.Users.Queries;
 
@@ -26,7 +29,10 @@ public class GetUserByIdQueryTests
             UserId = Guid.Empty
         };
 
-        var validator = new GetUserByIdQueryValidator();
+        var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
+        localizer["UserIdRequired"].Returns(new LocalizedString("UserIdRequired", "User ID is required"));
+        
+        var validator = new GetUserByIdQueryValidator(localizer);
         var result = validator.Validate(query);
 
         result.IsValid.Should().BeFalse();
@@ -41,7 +47,10 @@ public class GetUserByIdQueryTests
             UserId = Guid.NewGuid()
         };
 
-        var validator = new GetUserByIdQueryValidator();
+        var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
+        localizer["UserIdRequired"].Returns(new LocalizedString("UserIdRequired", "User ID is required"));
+        
+        var validator = new GetUserByIdQueryValidator(localizer);
         var result = validator.Validate(query);
 
         result.IsValid.Should().BeTrue();
