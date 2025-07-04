@@ -1,5 +1,8 @@
 using Family.Api.Features.Users.Queries;
+using Family.Api.Features.Users;
 using FluentAssertions;
+using Microsoft.Extensions.Localization;
+using NSubstitute;
 
 namespace Family.Api.Tests.Features.Users.Queries;
 
@@ -29,7 +32,11 @@ public class GetUserByEmailQueryTests
             Email = invalidEmail
         };
 
-        var validator = new GetUserByEmailQueryValidator();
+        var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
+        localizer["EmailRequired"].Returns("Email is required");
+        localizer["EmailInvalid"].Returns("Invalid email format");
+        
+        var validator = new GetUserByEmailQueryValidator(localizer);
         var result = validator.Validate(query);
 
         result.IsValid.Should().BeFalse();
@@ -47,7 +54,11 @@ public class GetUserByEmailQueryTests
             Email = malformedEmail
         };
 
-        var validator = new GetUserByEmailQueryValidator();
+        var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
+        localizer["EmailRequired"].Returns("Email is required");
+        localizer["EmailInvalid"].Returns("Invalid email format");
+        
+        var validator = new GetUserByEmailQueryValidator(localizer);
         var result = validator.Validate(query);
 
         result.IsValid.Should().BeFalse();
@@ -62,7 +73,11 @@ public class GetUserByEmailQueryTests
             Email = "test@example.com"
         };
 
-        var validator = new GetUserByEmailQueryValidator();
+        var localizer = Substitute.For<IStringLocalizer<UserValidationMessages>>();
+        localizer["EmailRequired"].Returns("Email is required");
+        localizer["EmailInvalid"].Returns("Invalid email format");
+        
+        var validator = new GetUserByEmailQueryValidator(localizer);
         var result = validator.Validate(query);
 
         result.IsValid.Should().BeTrue();
