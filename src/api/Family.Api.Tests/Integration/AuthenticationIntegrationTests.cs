@@ -49,7 +49,7 @@ public class AuthenticationIntegrationTests : IClassFixture<WebApplicationFactor
                         true,
                         "mock-access-token",
                         "mock-refresh-token",
-                        new Models.User
+                        new Family.Api.Models.User
                         {
                             Id = Guid.NewGuid(),
                             Email = "test@family.local",

@@ -22,6 +22,7 @@ namespace Family.Api.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+
             modelBuilder.Entity("Family.Api.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -85,11 +86,11 @@ namespace Family.Api.Data.Migrations
 
                     b.HasIndex("Email")
                         .IsUnique()
-                        .HasDatabaseName("i_x__users__email");
+                        .HasDatabaseName("ix_users_email");
 
                     b.HasIndex("KeycloakSubjectId")
                         .IsUnique()
-                        .HasDatabaseName("i_x__users__keycloak_subject_id");
+                        .HasDatabaseName("ix_users_keycloak_subject_id");
 
                     b.ToTable("users");
                 });
@@ -121,6 +122,12 @@ namespace Family.Api.Data.Migrations
                         .HasDefaultValue("keycloak")
                         .HasColumnName("source");
 
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
                         .HasColumnName("user_id");
@@ -129,7 +136,7 @@ namespace Family.Api.Data.Migrations
 
                     b.HasIndex("UserId", "RoleName")
                         .IsUnique()
-                        .HasDatabaseName("i_x__user_roles__user_id__role_name");
+                        .HasDatabaseName("ix_user_roles_user_id_role_name");
 
                     b.ToTable("user_roles");
                 });
