@@ -1,3 +1,4 @@
+using Family.Api.Authorization;
 using Family.Api.Data;
 using Family.Api.Data.Interceptors;
 using Family.Api.GraphQL.Mutations;
@@ -5,6 +6,7 @@ using Family.Api.GraphQL.Queries;
 using Family.Api.GraphQL.Types;
 using Family.Api.Services;
 using Family.Infrastructure.Caching.Extensions;
+using Family.Infrastructure.CQRS.Extensions;
 using HotChocolate.Authorization;
 using HotChocolate.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -24,12 +26,12 @@ builder.Services.AddDbContext<FamilyDbContext>(options =>
 // Register caching services
 builder.Services.AddFamilyCaching(builder.Configuration);
 
+// Register CQRS services
+builder.Services.AddCQRS(typeof(Program).Assembly);
+
 // Register services
 builder.Services.AddHttpClient<IKeycloakService, CachedKeycloakService>();
 builder.Services.AddScoped<IKeycloakService, CachedKeycloakService>();
-
-// Register MediatR
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 // Configure Keycloak Authentication
 var keycloakAuthority = builder.Configuration["Keycloak:Authority"] 
@@ -65,13 +67,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("FamilyUser", policy =>
+    options.AddPolicy(Policies.FamilyUser, policy =>
         policy.RequireAuthenticatedUser()
-              .RequireClaim("family_roles", "family-user"));
+              .RequireClaim(Claims.FamilyRoles, Roles.FamilyUser));
     
-    options.AddPolicy("FamilyAdmin", policy =>
+    options.AddPolicy(Policies.FamilyAdmin, policy =>
         policy.RequireAuthenticatedUser()
-              .RequireClaim("family_roles", "family-admin"));
+              .RequireClaim(Claims.FamilyRoles, Roles.FamilyAdmin));
 });
 
 // Configure GraphQL
@@ -80,7 +82,9 @@ builder.Services
     .AddQueryType<Query>()
     .AddMutationType<Mutation>()
     .AddTypeExtension<UserQueries>()
+    .AddTypeExtension<UserCQRSQueries>()
     .AddTypeExtension<AuthenticationMutations>()
+    .AddTypeExtension<UserMutations>()
     .AddType<UserType>()
     .AddType<LoginInputType>()
     .AddType<LoginCallbackInputType>()
