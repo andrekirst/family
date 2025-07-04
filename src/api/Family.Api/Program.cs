@@ -44,6 +44,7 @@ builder.Services.AddEventSourcing(builder.Configuration);
 // Register Family services
 builder.Services.AddScoped<Family.Api.Features.Families.IFamilyRepository, Family.Api.Features.Families.FamilyRepository>();
 builder.Services.AddScoped<Family.Api.Services.IDomainEventPublisher, Family.Api.Services.DomainEventPublisher>();
+builder.Services.AddScoped<Family.Api.Services.IFamilyRoleAssignmentService, Family.Api.Services.FamilyRoleAssignmentService>();
 
 // Register User services
 builder.Services.AddScoped<Family.Api.Features.Users.Services.IFirstTimeUserService, Family.Api.Features.Users.Services.FirstTimeUserService>();
@@ -126,6 +127,8 @@ builder.Services
     .AddTypeExtension<UserMutations>()
     .AddTypeExtension<Family.Api.GraphQL.Queries.FamilyQueries>()
     .AddTypeExtension<Family.Api.GraphQL.Mutations.FamilyMutations>()
+    .AddTypeExtension<Family.Api.GraphQL.Queries.FamilyRoleQueries>()
+    .AddTypeExtension<Family.Api.GraphQL.Mutations.FamilyRoleMutations>()
     .AddType<UserType>()
     .AddType<LoginInputType>()
     .AddType<LoginCallbackInputType>()
@@ -139,6 +142,9 @@ builder.Services
     .AddType<Family.Api.GraphQL.Types.CreateFamilyInputType>()
     .AddType<Family.Api.GraphQL.Types.CreateFamilyPayloadType>()
     .AddType<Family.Api.GraphQL.Types.FirstTimeUserInfoType>()
+    .AddType<Family.Api.GraphQL.Types.FamilyMemberRoleType>()
+    .AddType<Family.Api.GraphQL.Types.AssignRoleInputType>()
+    .AddType<Family.Api.GraphQL.Types.AssignRoleResultType>()
     .AddProjections()
     .AddFiltering()
     .AddSorting();
