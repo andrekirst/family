@@ -2,6 +2,7 @@ using Family.Api.Features.Families.DTOs;
 using Family.Infrastructure.CQRS.Abstractions;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Localization;
 
 namespace Family.Api.Features.Families.Commands;
 
@@ -14,21 +15,21 @@ public class CreateFamilyResult : CommandResult
 
 public class CreateFamilyCommandValidator : AbstractValidator<CreateFamilyCommand>
 {
-    public CreateFamilyCommandValidator()
+    public CreateFamilyCommandValidator(IStringLocalizer<CreateFamilyCommandValidator> localizer)
     {
         RuleFor(x => x.Name)
             .NotEmpty()
-            .WithMessage("Family name is required")
+            .WithMessage(localizer["FamilyNameRequired"])
             .MaximumLength(100)
-            .WithMessage("Family name cannot exceed 100 characters");
+            .WithMessage(localizer["FamilyNameMaxLength", 100]);
 
         RuleFor(x => x.UserId)
             .NotEmpty()
-            .WithMessage("User ID is required");
+            .WithMessage(localizer["CreatedByRequired"]);
 
         RuleFor(x => x.CorrelationId)
             .NotEmpty()
-            .WithMessage("Correlation ID is required");
+            .WithMessage("Correlation ID is required"); // Keep internal, not user-facing
     }
 }
 
@@ -36,11 +37,16 @@ public class CreateFamilyCommandHandler : IRequestHandler<CreateFamilyCommand, C
 {
     private readonly IFamilyRepository _familyRepository;
     private readonly IValidator<CreateFamilyCommand> _validator;
+    private readonly IStringLocalizer<CreateFamilyCommandHandler> _localizer;
 
-    public CreateFamilyCommandHandler(IFamilyRepository familyRepository, IValidator<CreateFamilyCommand> validator)
+    public CreateFamilyCommandHandler(
+        IFamilyRepository familyRepository, 
+        IValidator<CreateFamilyCommand> validator,
+        IStringLocalizer<CreateFamilyCommandHandler> localizer)
     {
         _familyRepository = familyRepository;
         _validator = validator;
+        _localizer = localizer;
     }
 
     public async Task<CreateFamilyResult> Handle(CreateFamilyCommand request, CancellationToken cancellationToken)
@@ -66,7 +72,7 @@ public class CreateFamilyCommandHandler : IRequestHandler<CreateFamilyCommand, C
             return new CreateFamilyResult
             {
                 IsSuccess = false,
-                ErrorMessage = "User is already a member of a family"
+                ErrorMessage = _localizer["UserAlreadyHasFamily"]
             };
         }
 
@@ -91,7 +97,7 @@ public class CreateFamilyCommandHandler : IRequestHandler<CreateFamilyCommand, C
             return new CreateFamilyResult
             {
                 IsSuccess = false,
-                ErrorMessage = ex.Message
+                ErrorMessage = _localizer["FamilyCreationFailed"]
             };
         }
     }

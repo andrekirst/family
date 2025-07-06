@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  
+  <!-- Family Validation Messages in German -->
+  <data name="FamilyNameRequired" xml:space="preserve">
+    <value>Familienname ist erforderlich.</value>
+  </data>
+  <data name="FamilyNameMaxLength" xml:space="preserve">
+    <value>Familienname darf maximal {0} Zeichen lang sein.</value>
+  </data>
+  <data name="FamilyNameMinLength" xml:space="preserve">
+    <value>Familienname muss mindestens {0} Zeichen lang sein.</value>
+  </data>
+  <data name="DescriptionMaxLength" xml:space="preserve">
+    <value>Beschreibung darf maximal {0} Zeichen lang sein.</value>
+  </data>
+  <data name="CreatedByRequired" xml:space="preserve">
+    <value>Ersteller ist erforderlich.</value>
+  </data>
+  <data name="CreatedByInvalid" xml:space="preserve">
+    <value>Ersteller-ID ist ungültig.</value>
+  </data>
+  
+  <!-- Family Member Validation Messages -->
+  <data name="MemberUserIdRequired" xml:space="preserve">
+    <value>Benutzer-ID des Familienmitglieds ist erforderlich.</value>
+  </data>
+  <data name="MemberUserIdInvalid" xml:space="preserve">
+    <value>Benutzer-ID des Familienmitglieds ist ungültig.</value>
+  </data>
+  <data name="MemberRoleRequired" xml:space="preserve">
+    <value>Rolle des Familienmitglieds ist erforderlich.</value>
+  </data>
+  <data name="MemberRoleInvalid" xml:space="preserve">
+    <value>Rolle des Familienmitglieds ist ungültig. Erlaubt sind: Admin, Member.</value>
+  </data>
+  <data name="FamilyIdRequired" xml:space="preserve">
+    <value>Familien-ID ist erforderlich.</value>
+  </data>
+  <data name="FamilyIdInvalid" xml:space="preserve">
+    <value>Familien-ID ist ungültig.</value>
+  </data>
+  
+  <!-- Business Logic Error Messages -->
+  <data name="FamilyNotFound" xml:space="preserve">
+    <value>Familie wurde nicht gefunden.</value>
+  </data>
+  <data name="FamilyNameAlreadyExists" xml:space="preserve">
+    <value>Eine Familie mit diesem Namen existiert bereits.</value>
+  </data>
+  <data name="FamilyCreationFailed" xml:space="preserve">
+    <value>Familie konnte nicht erstellt werden.</value>
+  </data>
+  <data name="FamilyUpdateFailed" xml:space="preserve">
+    <value>Familie konnte nicht aktualisiert werden.</value>
+  </data>
+  <data name="FamilyDeletionFailed" xml:space="preserve">
+    <value>Familie konnte nicht gelöscht werden.</value>
+  </data>
+  <data name="MemberNotFound" xml:space="preserve">
+    <value>Familienmitglied wurde nicht gefunden.</value>
+  </data>
+  <data name="MemberAlreadyExists" xml:space="preserve">
+    <value>Benutzer ist bereits Mitglied dieser Familie.</value>
+  </data>
+  <data name="MemberAdditionFailed" xml:space="preserve">
+    <value>Familienmitglied konnte nicht hinzugefügt werden.</value>
+  </data>
+  <data name="MemberRemovalFailed" xml:space="preserve">
+    <value>Familienmitglied konnte nicht entfernt werden.</value>
+  </data>
+  <data name="CannotRemoveLastAdmin" xml:space="preserve">
+    <value>Der letzte Administrator kann nicht entfernt werden.</value>
+  </data>
+  <data name="InsufficientPermissions" xml:space="preserve">
+    <value>Unzureichende Berechtigung für diese Aktion.</value>
+  </data>
+  <data name="UserAlreadyHasFamily" xml:space="preserve">
+    <value>Benutzer ist bereits Mitglied einer Familie.</value>
+  </data>
+  <data name="UserNotMemberOfFamily" xml:space="preserve">
+    <value>Benutzer ist nicht Mitglied dieser Familie.</value>
+  </data>
+  
+  <!-- Role Assignment Messages -->
+  <data name="RoleAssignmentSuccessful" xml:space="preserve">
+    <value>Rolle wurde erfolgreich zugewiesen.</value>
+  </data>
+  <data name="RoleRevocationSuccessful" xml:space="preserve">
+    <value>Rolle wurde erfolgreich entzogen.</value>
+  </data>
+  <data name="RoleAssignmentFailed" xml:space="preserve">
+    <value>Rollenzuweisung fehlgeschlagen.</value>
+  </data>
+  <data name="RoleRevocationFailed" xml:space="preserve">
+    <value>Rollenentzug fehlgeschlagen.</value>
+  </data>
+  <data name="CannotRevokeOwnAdminRole" xml:space="preserve">
+    <value>Sie können Ihre eigene Administrator-Rolle nicht entziehen.</value>
+  </data>
+  
+  <!-- First Time User Messages -->
+  <data name="FirstTimeUserDetected" xml:space="preserve">
+    <value>Neuer Benutzer erkannt. Familie muss erstellt werden.</value>
+  </data>
+  <data name="WelcomeMessage" xml:space="preserve">
+    <value>Willkommen bei Family! Erstellen Sie zunächst Ihre Familie.</value>
+  </data>
+  
+  <!-- GraphQL Authentication Messages -->
+  <data name="UserNotAuthenticated" xml:space="preserve">
+    <value>Benutzer nicht authentifiziert.</value>
+  </data>
+  <data name="CurrentUserNotFound" xml:space="preserve">
+    <value>Aktueller Benutzer nicht gefunden.</value>
+  </data>
+  <data name="TargetUserNotFound" xml:space="preserve">
+    <value>Zielbenutzer nicht gefunden.</value>
+  </data>
+  <data name="NotAuthorizedToAssignRoles" xml:space="preserve">
+    <value>Nicht berechtigt, Rollen in dieser Familie zuzuweisen.</value>
+  </data>
+  <data name="NotAuthorizedToRevokeRoles" xml:space="preserve">
+    <value>Nicht berechtigt, Rollen in dieser Familie zu widerrufen.</value>
+  </data>
+  <data name="CannotRevokeFamilyOwnerRole" xml:space="preserve">
+    <value>Die Administratorrolle des Familienbesitzers kann nicht widerrufen werden.</value>
+  </data>
+  <data name="CannotRevokeLastAdminRole" xml:space="preserve">
+    <value>Sie können Ihre Administratorrolle nicht widerrufen, da Sie der einzige Administrator sind.</value>
+  </data>
+  <data name="AdminRoleAssignedSuccessfully" xml:space="preserve">
+    <value>Administratorrolle erfolgreich an {0} {1} zugewiesen.</value>
+  </data>
+  <data name="AdminRoleRevokedSuccessfully" xml:space="preserve">
+    <value>Administratorrolle von {0} {1} erfolgreich widerrufen.</value>
+  </data>
+  <data name="ErrorAssigningAdminRole" xml:space="preserve">
+    <value>Fehler beim Zuweisen der Administratorrolle.</value>
+  </data>
+  <data name="ErrorRevokingAdminRole" xml:space="preserve">
+    <value>Fehler beim Widerrufen der Administratorrolle.</value>
+  </data>
+</root>

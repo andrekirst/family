@@ -4,6 +4,7 @@ using Family.Api.Services;
 using HotChocolate.Authorization;
 using HotChocolate.Types;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using System.Security.Claims;
 
 namespace Family.Api.GraphQL.Mutations;
@@ -17,6 +18,7 @@ public class FamilyRoleMutations
         ClaimsPrincipal claimsPrincipal,
         [Service] IFamilyRoleAssignmentService roleAssignmentService,
         [Service] FamilyDbContext context,
+        [Service] IStringLocalizer<FamilyRoleMutations> localizer,
         CancellationToken cancellationToken)
     {
         try
@@ -56,7 +58,7 @@ public class FamilyRoleMutations
                 return new AssignRoleResult
                 {
                     Success = false,
-                    ErrorMessage = "Nicht berechtigt, Rollen in dieser Familie zuzuweisen"
+                    ErrorMessage = localizer["NotAuthorizedToAssignRoles"]
                 };
             }
 
@@ -69,7 +71,7 @@ public class FamilyRoleMutations
                 return new AssignRoleResult
                 {
                     Success = false,
-                    ErrorMessage = "Zielbenutzer nicht gefunden"
+                    ErrorMessage = localizer["TargetUserNotFound"]
                 };
             }
 
@@ -81,7 +83,7 @@ public class FamilyRoleMutations
                 return new AssignRoleResult
                 {
                     Success = false,
-                    ErrorMessage = "Benutzer ist kein Mitglied dieser Familie"
+                    ErrorMessage = localizer["UserNotMemberOfFamily"]
                 };
             }
 
@@ -91,7 +93,7 @@ public class FamilyRoleMutations
             return new AssignRoleResult
             {
                 Success = true,
-                Message = $"Administratorrolle erfolgreich an {targetUser.FirstName} {targetUser.LastName} zugewiesen"
+                Message = localizer["AdminRoleAssignedSuccessfully", targetUser.FirstName, targetUser.LastName]
             };
         }
         catch (Exception ex)
@@ -99,7 +101,7 @@ public class FamilyRoleMutations
             return new AssignRoleResult
             {
                 Success = false,
-                ErrorMessage = "Fehler beim Zuweisen der Administratorrolle"
+                ErrorMessage = localizer["ErrorAssigningAdminRole"]
             };
         }
     }
@@ -110,6 +112,7 @@ public class FamilyRoleMutations
         ClaimsPrincipal claimsPrincipal,
         [Service] IFamilyRoleAssignmentService roleAssignmentService,
         [Service] FamilyDbContext context,
+        [Service] IStringLocalizer<FamilyRoleMutations> localizer,
         CancellationToken cancellationToken)
     {
         try
