@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Subject, takeUntil, finalize } from 'rxjs';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { FamilyService, FirstTimeUserInfo, CreateFamilyResult } from '../../../core/services/family.service';
 import { FamilyCreationModalComponent } from '../../../shared/components/family-creation-modal/family-creation-modal.component';
@@ -9,7 +10,7 @@ import { FamilyCreationModalComponent } from '../../../shared/components/family-
 @Component({
   selector: 'app-first-time-user',
   standalone: true,
-  imports: [CommonModule, FamilyCreationModalComponent],
+  imports: [CommonModule, FamilyCreationModalComponent, TranslateModule],
   templateUrl: './first-time-user.component.html',
   styleUrls: ['./first-time-user.component.scss']
 })
@@ -22,6 +23,7 @@ export class FirstTimeUserComponent implements OnInit, OnDestroy {
   errorMessage: string | null = null;
   
   private destroy$ = new Subject<void>();
+  private translate = inject(TranslateService);
 
   constructor(
     private familyService: FamilyService,
@@ -57,7 +59,7 @@ export class FirstTimeUserComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           console.error('Error checking user status:', error);
-          this.errorMessage = 'Fehler beim Laden der Benutzerinformationen. Bitte versuchen Sie es erneut.';
+          this.errorMessage = this.translate.instant('family.firstTime.errorDefault');
         }
       });
   }
@@ -94,7 +96,7 @@ export class FirstTimeUserComponent implements OnInit, OnDestroy {
             });
           } else {
             // Handle creation error
-            this.errorMessage = result.errorMessage || 'Fehler beim Erstellen der Familie';
+            this.errorMessage = result.errorMessage || this.translate.instant('family.firstTime.errorCreateFamily');
             if (result.validationErrors && result.validationErrors.length > 0) {
               this.errorMessage = result.validationErrors.join(', ');
             }
@@ -102,7 +104,7 @@ export class FirstTimeUserComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           console.error('Error creating family:', error);
-          this.errorMessage = 'Unerwarteter Fehler beim Erstellen der Familie. Bitte versuchen Sie es erneut.';
+          this.errorMessage = this.translate.instant('family.firstTime.errorCreateFamilyUnexpected');
         }
       });
   }

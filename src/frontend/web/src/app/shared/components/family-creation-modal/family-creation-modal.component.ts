@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, OnDestroy, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 export interface FamilyCreationResult {
   success: boolean;
@@ -12,7 +13,7 @@ export interface FamilyCreationResult {
 @Component({
   selector: 'app-family-creation-modal',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './family-creation-modal.component.html',
   styleUrls: ['./family-creation-modal.component.scss']
 })
@@ -24,6 +25,7 @@ export class FamilyCreationModalComponent implements OnInit, OnDestroy {
 
   familyForm: FormGroup;
   private destroy$ = new Subject<void>();
+  private translate = inject(TranslateService);
 
   constructor(private fb: FormBuilder) {
     this.familyForm = this.fb.group({
@@ -102,16 +104,16 @@ export class FamilyCreationModalComponent implements OnInit, OnDestroy {
   get errorMessage(): string {
     if (this.familyNameControl?.errors) {
       if (this.familyNameControl.errors['required']) {
-        return 'Familienname ist erforderlich';
+        return this.translate.instant('family.createModal.nameRequired');
       }
       if (this.familyNameControl.errors['minlength']) {
-        return 'Familienname muss mindestens 2 Zeichen lang sein';
+        return this.translate.instant('family.createModal.nameMinLength');
       }
       if (this.familyNameControl.errors['maxlength']) {
-        return 'Familienname darf maximal 100 Zeichen lang sein';
+        return this.translate.instant('family.createModal.nameMaxLength');
       }
       if (this.familyNameControl.errors['pattern']) {
-        return 'Familienname darf nur Buchstaben, Leerzeichen und Bindestriche enthalten';
+        return this.translate.instant('family.createModal.namePattern');
       }
     }
     return '';
