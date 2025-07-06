@@ -89,4 +89,10 @@
     <PackageVersion Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="8.0.1" />
   </ItemGroup>
 
+  <!-- Messaging Dependencies -->
+  <ItemGroup>
+    <PackageVersion Include="Confluent.Kafka" Version="2.6.1" />
+    <PackageVersion Include="System.Text.Json" Version="9.0.2" />
+  </ItemGroup>
+
 </Project>

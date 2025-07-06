@@ -10,6 +10,7 @@ using Family.Api.Services;
 using Family.Infrastructure.Caching.Extensions;
 using Family.Infrastructure.CQRS.Extensions;
 using Family.Infrastructure.EventSourcing.Extensions;
+using Family.Infrastructure.Messaging.Extensions;
 using Family.Infrastructure.Resilience.Extensions;
 using HotChocolate.Authorization;
 using HotChocolate.Data;
@@ -41,6 +42,9 @@ builder.Services.AddResilience(builder.Configuration);
 // Register Event Store services
 builder.Services.AddEventSourcing(builder.Configuration);
 
+// Register Kafka messaging services
+builder.Services.AddKafkaMessaging(builder.Configuration);
+
 // Register Family services
 builder.Services.AddScoped<Family.Api.Features.Families.IFamilyRepository, Family.Api.Features.Families.FamilyRepository>();
 builder.Services.AddScoped<Family.Api.Services.IDomainEventPublisher, Family.Api.Services.DomainEventPublisher>();
@@ -48,6 +52,9 @@ builder.Services.AddScoped<Family.Api.Services.IFamilyRoleAssignmentService, Fam
 
 // Register User services
 builder.Services.AddScoped<Family.Api.Features.Users.Services.IFirstTimeUserService, Family.Api.Features.Users.Services.FirstTimeUserService>();
+
+// Register Kafka Event Handlers
+builder.Services.AddHostedService<Family.Api.Features.Families.EventHandlers.KafkaEventHandlerService>();
 
 // Register health checks
 builder.Services.AddApiHealthChecks(builder.Configuration);
