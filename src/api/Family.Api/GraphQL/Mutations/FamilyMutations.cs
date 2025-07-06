@@ -6,6 +6,7 @@ using HotChocolate.Authorization;
 using HotChocolate.Types;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using System.Security.Claims;
 
 namespace Family.Api.GraphQL.Mutations;
@@ -19,6 +20,7 @@ public class FamilyMutations
         ClaimsPrincipal claimsPrincipal,
         [Service] IMediator mediator,
         [Service] FamilyDbContext context,
+        [Service] IStringLocalizer<FamilyMutations> localizer,
         CancellationToken cancellationToken)
     {
         try
@@ -29,7 +31,7 @@ public class FamilyMutations
                 return new CreateFamilyPayload
                 {
                     Success = false,
-                    ErrorMessage = "User not found"
+                    ErrorMessage = localizer["UserNotFound"]
                 };
             }
 
@@ -40,7 +42,7 @@ public class FamilyMutations
                 return new CreateFamilyPayload
                 {
                     Success = false,
-                    ErrorMessage = "User not found"
+                    ErrorMessage = localizer["UserNotFound"]
                 };
             }
 

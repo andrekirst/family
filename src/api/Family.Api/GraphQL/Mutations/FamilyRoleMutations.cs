@@ -30,7 +30,7 @@ public class FamilyRoleMutations
                 return new AssignRoleResult
                 {
                     Success = false,
-                    ErrorMessage = "Benutzer nicht authentifiziert"
+                    ErrorMessage = localizer["UserNotAuthenticated"]
                 };
             }
 
@@ -42,7 +42,7 @@ public class FamilyRoleMutations
                 return new AssignRoleResult
                 {
                     Success = false,
-                    ErrorMessage = "Aktueller Benutzer nicht gefunden"
+                    ErrorMessage = localizer["CurrentUserNotFound"]
                 };
             }
 
@@ -124,7 +124,7 @@ public class FamilyRoleMutations
                 return new AssignRoleResult
                 {
                     Success = false,
-                    ErrorMessage = "Benutzer nicht authentifiziert"
+                    ErrorMessage = localizer["UserNotAuthenticated"]
                 };
             }
 
@@ -136,7 +136,7 @@ public class FamilyRoleMutations
                 return new AssignRoleResult
                 {
                     Success = false,
-                    ErrorMessage = "Aktueller Benutzer nicht gefunden"
+                    ErrorMessage = localizer["CurrentUserNotFound"]
                 };
             }
 
@@ -152,7 +152,7 @@ public class FamilyRoleMutations
                 return new AssignRoleResult
                 {
                     Success = false,
-                    ErrorMessage = "Nicht berechtigt, Rollen in dieser Familie zu widerrufen"
+                    ErrorMessage = localizer["NotAuthorizedToRevokeRoles"]
                 };
             }
 
@@ -165,7 +165,7 @@ public class FamilyRoleMutations
                 return new AssignRoleResult
                 {
                     Success = false,
-                    ErrorMessage = "Die Administratorrolle des Familienbesitzers kann nicht widerrufen werden"
+                    ErrorMessage = localizer["CannotRevokeFamilyOwnerRole"]
                 };
             }
 
@@ -180,7 +180,7 @@ public class FamilyRoleMutations
                 return new AssignRoleResult
                 {
                     Success = false,
-                    ErrorMessage = "Sie können Ihre Administratorrolle nicht widerrufen, da Sie der einzige Administrator sind"
+                    ErrorMessage = localizer["CannotRevokeLastAdminRole"]
                 };
             }
 
@@ -193,7 +193,7 @@ public class FamilyRoleMutations
             return new AssignRoleResult
             {
                 Success = true,
-                Message = $"Administratorrolle von {targetUser?.FirstName} {targetUser?.LastName} erfolgreich widerrufen"
+                Message = localizer["AdminRoleRevokedSuccessfully", targetUser?.FirstName, targetUser?.LastName]
             };
         }
         catch (Exception ex)
@@ -201,7 +201,7 @@ public class FamilyRoleMutations
             return new AssignRoleResult
             {
                 Success = false,
-                ErrorMessage = "Fehler beim Widerrufen der Administratorrolle"
+                ErrorMessage = localizer["ErrorRevokingAdminRole"]
             };
         }
     }
