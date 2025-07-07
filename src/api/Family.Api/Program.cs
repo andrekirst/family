@@ -182,7 +182,8 @@ builder.Services
     .AddType<Family.Api.GraphQL.Types.AssignRoleResultType>()
     .AddProjections()
     .AddFiltering()
-    .AddSorting();
+    .AddSorting()
+    .AddAuthorization();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

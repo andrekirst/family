@@ -29,6 +29,7 @@
     <PackageVersion Include="HotChocolate.AspNetCore" Version="14.2.0" />
     <PackageVersion Include="HotChocolate.Data.EntityFramework" Version="14.2.0" />
     <PackageVersion Include="HotChocolate.Authorization" Version="14.2.0" />
+    <PackageVersion Include="HotChocolate.AspNetCore.Authorization" Version="14.2.0" />
   </ItemGroup>
 
   <!-- CQRS Dependencies -->
