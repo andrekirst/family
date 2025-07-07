@@ -79,6 +79,10 @@ export const routes: Routes = [
             loadComponent: () => import('./features/developer-tools/graphql-playground/graphql-playground.component').then(m => m.GraphqlPlaygroundComponent)
           },
           {
+            path: 'health-dashboard',
+            loadComponent: () => import('./features/developer-tools/health-dashboard/health-dashboard.component').then(m => m.HealthDashboardComponent)
+          },
+          {
             path: '',
             redirectTo: 'graphql-playground',
             pathMatch: 'full'
