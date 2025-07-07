@@ -8,6 +8,33 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <!-- URL.parse() polyfill for Edge browser compatibility -->
+  <script>
+    (function() {
+      'use strict';
+      
+      // Check if URL.parse is available
+      if (typeof URL !== 'undefined' && !URL.parse) {
+        console.log('Adding URL.parse polyfill for browser compatibility');
+        
+        URL.parse = function(url, base) {
+          try {
+            return new URL(url, base);
+          } catch (error) {
+            // Return null if URL construction fails (matching URL.parse behavior)
+            return null;
+          }
+        };
+        
+        console.log('URL.parse polyfill added successfully');
+      } else if (typeof URL !== 'undefined' && URL.parse) {
+        console.log('URL.parse is natively supported by this browser');
+      } else {
+        console.warn('URL constructor is not available in this browser');
+      }
+    })();
+  </script>
 </head>
 <body class="mat-typography">
   <app-root></app-root>

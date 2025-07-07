@@ -22,16 +22,34 @@
  * URL.parse() polyfill for browsers that don't support it (like older Edge versions)
  * This method was added in more recent browser versions and is used by some dependencies
  */
-if (!(URL as any).parse) {
-  (URL as any).parse = function(url: string, base?: string | URL): URL {
-    try {
-      return new URL(url, base);
-    } catch (error) {
-      // If URL constructor fails, throw the same error that URL.parse would
-      throw error;
-    }
-  };
-}
+(function() {
+  'use strict';
+  
+  // Comprehensive URL.parse polyfill
+  if (typeof URL !== 'undefined' && !(URL as any).parse) {
+    console.log('[Polyfill] Adding URL.parse() support for browser compatibility');
+    
+    // Define URL.parse as a static method
+    Object.defineProperty(URL, 'parse', {
+      value: function(url: string, base?: string | URL): URL | null {
+        try {
+          return new URL(url, base);
+        } catch (error) {
+          // URL.parse should return null for invalid URLs, not throw
+          return null;
+        }
+      },
+      writable: true,
+      configurable: true
+    });
+    
+    console.log('[Polyfill] URL.parse() polyfill installed successfully');
+  } else if (typeof URL !== 'undefined' && (URL as any).parse) {
+    console.log('[Polyfill] URL.parse() is natively supported');
+  } else {
+    console.warn('[Polyfill] URL constructor not available');
+  }
+})();
 
 /**
  * By default, zone.js will patch all possible macroTask and DomEvents
@@ -55,6 +73,7 @@ if (!(URL as any).parse) {
 
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
+ * NOTE: URL.parse polyfill must be loaded BEFORE zone.js to ensure it's available early
  */
 import 'zone.js';  // Included with Angular CLI.
 
