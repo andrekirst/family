@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Creation UI Mockup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            max-width: 480px;
+            width: 100%;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        
+        .family-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: white;
+            font-size: 28px;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .modal-subtitle {
+            color: #718096;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.2s ease;
+            background: #f7fafc;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .form-help {
+            font-size: 12px;
+            color: #718096;
+            margin-top: 4px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+        
+        .info-section {
+            background: #f0f8ff;
+            border: 1px solid #bee3f8;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .info-title {
+            font-weight: 600;
+            color: #2b6cb0;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .info-text {
+            color: #2c5282;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin-top: 8px;
+        }
+        
+        .feature-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+        
+        .feature-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #38a169;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="family-icon">👨‍👩‍👧‍👦</div>
+                <h2 class="modal-title">Welcome to Family!</h2>
+                <p class="modal-subtitle">To get started, create your family and begin organizing your family life.</p>
+            </div>
+            
+            <div class="info-section">
+                <div class="info-title">As Family Admin, you will have:</div>
+                <ul class="feature-list">
+                    <li>Full access to all family features</li>
+                    <li>Ability to invite family members</li>
+                    <li>Manage family settings and permissions</li>
+                    <li>Organize schedules, health records, and school activities</li>
+                </ul>
+            </div>
+            
+            <form>
+                <div class="form-group">
+                    <label for="familyName" class="form-label">Family Name *</label>
+                    <input 
+                        type="text" 
+                        id="familyName" 
+                        class="form-input" 
+                        placeholder="Enter your family name (e.g., Smith Family)"
+                        required
+                    >
+                    <div class="form-help">This name will be visible to all family members</div>
+                </div>
+                
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary">Join Family Instead</button>
+                    <button type="submit" class="btn btn-primary">Create Family</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

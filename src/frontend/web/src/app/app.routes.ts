@@ -70,6 +70,44 @@ export const routes: Routes = [
       {
         path: 'settings',
         loadComponent: () => import('./features/settings/settings.component').then(m => m.SettingsComponent)
+      },
+      {
+        path: 'developer',
+        children: [
+          {
+            path: 'graphql-playground',
+            loadComponent: () => import('./features/developer-tools/graphql-playground/graphql-playground.component').then(m => m.GraphqlPlaygroundComponent)
+          },
+          {
+            path: 'health-dashboard',
+            loadComponent: () => import('./features/developer-tools/health-dashboard/health-dashboard.component').then(m => m.HealthDashboardComponent)
+          },
+          {
+            path: '',
+            redirectTo: 'graphql-playground',
+            pathMatch: 'full'
+          }
+        ]
+      }
+    ]
+  },
+  
+  // Error pages
+  {
+    path: 'error',
+    children: [
+      {
+        path: '404',
+        loadComponent: () => import('./features/error-pages/not-found.component').then(m => m.NotFoundComponent)
+      },
+      {
+        path: '500',
+        loadComponent: () => import('./features/error-pages/server-error.component').then(m => m.ServerErrorComponent)
+      },
+      {
+        path: '',
+        redirectTo: '404',
+        pathMatch: 'full'
       }
     ]
   },
@@ -77,6 +115,6 @@ export const routes: Routes = [
   // Wildcard route - must be last
   { 
     path: '**', 
-    redirectTo: '/dashboard' 
+    loadComponent: () => import('./features/error-pages/not-found.component').then(m => m.NotFoundComponent)
   }
 ];

@@ -22,6 +22,83 @@ namespace Family.Api.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Family.Api.Data.Entities.FamilyEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
+
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("owner_id");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("ix_families_created_at");
+
+                    b.HasIndex("Name")
+                        .HasDatabaseName("ix_families_name");
+
+                    b.HasIndex("OwnerId")
+                        .HasDatabaseName("ix_families_owner_id");
+
+                    b.ToTable("families", (string)null);
+                });
+
+            modelBuilder.Entity("Family.Api.Data.Entities.FamilyMemberEntity", b =>
+                {
+                    b.Property<string>("FamilyId")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("family_id");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.Property<DateTime>("JoinedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("joined_at");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("role");
+
+                    b.HasKey("FamilyId", "UserId");
+
+                    b.HasIndex("FamilyId")
+                        .HasDatabaseName("ix_family_members_family_id");
+
+                    b.HasIndex("JoinedAt")
+                        .HasDatabaseName("ix_family_members_joined_at");
+
+                    b.HasIndex("Role")
+                        .HasDatabaseName("ix_family_members_role");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasDatabaseName("uq_family_members_user_id");
+
+                    b.ToTable("family_members", (string)null);
+                });
 
             modelBuilder.Entity("Family.Api.Models.User", b =>
                 {
@@ -141,6 +218,17 @@ namespace Family.Api.Data.Migrations
                     b.ToTable("user_roles");
                 });
 
+            modelBuilder.Entity("Family.Api.Data.Entities.FamilyMemberEntity", b =>
+                {
+                    b.HasOne("Family.Api.Data.Entities.FamilyEntity", "Family")
+                        .WithMany("Members")
+                        .HasForeignKey("FamilyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Family");
+                });
+
             modelBuilder.Entity("Family.Api.Models.UserRole", b =>
                 {
                     b.HasOne("Family.Api.Models.User", "User")
@@ -150,6 +238,11 @@ namespace Family.Api.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Family.Api.Data.Entities.FamilyEntity", b =>
+                {
+                    b.Navigation("Members");
                 });
 
             modelBuilder.Entity("Family.Api.Models.User", b =>

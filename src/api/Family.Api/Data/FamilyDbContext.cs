@@ -1,4 +1,5 @@
 using Family.Api.Models;
+using Family.Api.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Family.Api.Data;
@@ -11,6 +12,8 @@ public class FamilyDbContext : DbContext
 
     public DbSet<User> Users { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
+    public DbSet<FamilyEntity> Families { get; set; }
+    public DbSet<FamilyMemberEntity> FamilyMembers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

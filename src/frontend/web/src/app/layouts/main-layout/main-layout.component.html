@@ -1,0 +1,319 @@
+<!-- Skip Navigation Links -->
+<nav class="sr-only" aria-label="Navigation überspringen">
+  <a href="#" class="absolute left-0 -top-40 z-[100] px-4 py-2 bg-primary-600 text-white rounded transition-all focus:top-0" (click)="skipToMainContent(); $event.preventDefault()">
+    Zum Hauptinhalt springen
+  </a>
+  <a href="#" class="absolute left-0 -top-40 z-[100] px-4 py-2 bg-primary-600 text-white rounded transition-all focus:top-0" (click)="skipToNavigation(); $event.preventDefault()">
+    Zur Navigation springen
+  </a>
+</nav>
+
+<!-- Main Layout Container -->
+<div class="h-screen bg-gray-50 flex overflow-hidden" role="application" aria-label="Family App">
+  <!-- Sidebar -->
+  <aside 
+    id="main-navigation"
+    class="fixed lg:static inset-y-0 left-0 z-50 w-64 sm:w-72 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out lg:translate-x-0" 
+    [class.-translate-x-full]="(isHandset$ | async) && !sidebarOpen"
+    [class.translate-x-0]="!(isHandset$ | async) || sidebarOpen"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    aria-label="Hauptnavigation"
+    [attr.aria-hidden]="(isHandset$ | async) && !sidebarOpen"
+    [attr.aria-modal]="(isHandset$ | async) && sidebarOpen ? 'true' : null">
+    
+    <!-- Sidebar Header -->
+    <div class="px-6 py-4 bg-primary-600 text-white flex items-center justify-between">
+      <h1 class="text-xl font-semibold text-white truncate">Family</h1>
+    </div>
+    
+    <!-- Navigation Menu -->
+    <nav class="flex-1 px-4 py-6 bg-white overflow-y-auto" role="navigation" aria-label="Hauptnavigation">
+      <ul class="space-y-1" 
+          role="menubar" 
+          appKeyboardNavigation="menu"
+          [attr.aria-orientation]="'vertical'">
+        <li role="none">
+          <a routerLink="/dashboard" 
+             routerLinkActive="bg-primary-50 text-primary-600 border-r-2 border-primary-600" 
+             class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+             role="menuitem"
+             aria-label="Dashboard"
+             data-keyboard-nav>
+            <svg class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true">
+              <use href="#icon-dashboard"></use>
+            </svg>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        
+        <li role="none">
+          <a routerLink="/calendar" 
+             routerLinkActive="bg-primary-50 text-primary-600 border-r-2 border-primary-600" 
+             class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+             role="menuitem"
+             aria-label="Kalender"
+             data-keyboard-nav>
+            <svg class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true">
+              <use href="#icon-calendar"></use>
+            </svg>
+            <span>Kalender</span>
+          </a>
+        </li>
+        
+        <li role="none">
+          <a routerLink="/school" 
+             routerLinkActive="bg-primary-50 text-primary-600 border-r-2 border-primary-600" 
+             class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+             role="menuitem"
+             aria-label="Schule"
+             data-keyboard-nav>
+            <svg class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true">
+              <use href="#icon-school"></use>
+            </svg>
+            <span>Schule</span>
+          </a>
+        </li>
+        
+        <li role="none">
+          <a routerLink="/kindergarten" 
+             routerLinkActive="bg-primary-50 text-primary-600 border-r-2 border-primary-600" 
+             class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+             role="menuitem"
+             aria-label="Kindergarten"
+             data-keyboard-nav>
+            <svg class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true">
+              <use href="#icon-child-care"></use>
+            </svg>
+            <span>Kindergarten</span>
+          </a>
+        </li>
+        
+        <li role="none">
+          <a routerLink="/health" 
+             routerLinkActive="bg-primary-50 text-primary-600 border-r-2 border-primary-600" 
+             class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+             role="menuitem"
+             aria-label="Gesundheit"
+             data-keyboard-nav>
+            <svg class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true">
+              <use href="#icon-health"></use>
+            </svg>
+            <span>Gesundheit</span>
+          </a>
+        </li>
+        
+        <li role="none">
+          <a routerLink="/family" 
+             routerLinkActive="bg-primary-50 text-primary-600 border-r-2 border-primary-600" 
+             class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+             role="menuitem"
+             aria-label="Familie"
+             data-keyboard-nav>
+            <svg class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true">
+              <use href="#icon-family"></use>
+            </svg>
+            <span>Familie</span>
+          </a>
+        </li>
+        
+        <li class="my-4 border-t border-gray-200" role="separator"></li>
+        
+        <li role="none">
+          <a routerLink="/profile" 
+             routerLinkActive="bg-primary-50 text-primary-600 border-r-2 border-primary-600" 
+             class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+             role="menuitem"
+             aria-label="Profil"
+             data-keyboard-nav>
+            <svg class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true">
+              <use href="#icon-person"></use>
+            </svg>
+            <span>Profil</span>
+          </a>
+        </li>
+        
+        <li role="none">
+          <a routerLink="/settings" 
+             routerLinkActive="bg-primary-50 text-primary-600 border-r-2 border-primary-600" 
+             class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+             role="menuitem"
+             aria-label="Einstellungen"
+             data-keyboard-nav>
+            <svg class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true">
+              <use href="#icon-settings"></use>
+            </svg>
+            <span>Einstellungen</span>
+          </a>
+        </li>
+        
+        <li role="none">
+          <a routerLink="/developer/graphql-playground" 
+             routerLinkActive="bg-primary-50 text-primary-600 border-r-2 border-primary-600" 
+             class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+             role="menuitem"
+             aria-label="Entwicklertools"
+             data-keyboard-nav>
+            <svg class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true">
+              <use href="#icon-code"></use>
+            </svg>
+            <span>Entwicklertools</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+  
+  <!-- Mobile Sidebar Overlay -->
+  <div 
+    class="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 opacity-0 pointer-events-none" 
+    [class.opacity-100]="(isHandset$ | async) && sidebarOpen"
+    [class.pointer-events-auto]="(isHandset$ | async) && sidebarOpen"
+    (click)="closeSidebar()"
+    [attr.aria-hidden]="!((isHandset$ | async) && sidebarOpen)">
+  </div>
+  
+  <!-- Main Content Area -->
+  <div class="flex-1 flex flex-col overflow-hidden lg:ml-64">
+    <!-- Top Navigation Bar -->
+    <header class="bg-white border-b border-gray-200 px-3 sm:px-4 lg:px-6 py-3 sm:py-4 flex items-center justify-between sticky top-0 z-30 shadow-sm" role="banner">
+      <!-- Mobile Menu Toggle -->
+      <button
+        *ngIf="isHandset$ | async"
+        type="button"
+        class="p-2 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 lg:hidden"
+        (click)="toggleSidebar()"
+        [attr.aria-label]="sidebarOpen ? 'Navigation schließen' : 'Navigation öffnen'"
+        [attr.aria-expanded]="sidebarOpen"
+        [attr.aria-controls]="'main-navigation'">
+        <svg class="w-6 h-6" aria-hidden="true">
+          <use href="#icon-menu"></use>
+        </svg>
+      </button>
+      
+      <!-- Spacer -->
+      <div class="flex-1"></div>
+      
+      <!-- Language Switcher -->
+      <app-language-switcher></app-language-switcher>
+      
+      <!-- User Menu -->
+      <div class="relative" aria-label="Benutzermenü">
+        <button
+          type="button"
+          class="p-2 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200"
+          (click)="toggleUserMenu()"
+          [attr.aria-expanded]="userMenuOpen"
+          [attr.aria-haspopup]="true">
+          <svg class="w-6 h-6" aria-hidden="true">
+            <use href="#icon-account"></use>
+          </svg>
+        </button>
+        
+        <!-- User Dropdown Menu -->
+        <div 
+          class="absolute right-0 mt-2 w-56 sm:w-64 bg-white rounded-md shadow-lg py-1 z-50 ring-1 ring-black ring-opacity-5 transform opacity-0 scale-95 transition-all duration-200 origin-top-right pointer-events-none"
+          [class.opacity-100]="userMenuOpen"
+          [class.scale-100]="userMenuOpen"
+          [class.pointer-events-auto]="userMenuOpen"
+          role="menu"
+          [attr.aria-hidden]="!userMenuOpen">
+          
+          <!-- User Info -->
+          <div class="px-4 py-3 border-b border-gray-200" role="menuitem">
+            <div class="font-medium text-gray-900 truncate">{{ (currentUser$ | async)?.fullName || (currentUser$ | async)?.email }}</div>
+            <div class="text-sm text-gray-500 truncate">{{ (currentUser$ | async)?.email }}</div>
+          </div>
+          
+          <div class="my-1 border-t border-gray-200" role="separator"></div>
+          
+          <!-- Menu Items -->
+          <a 
+            routerLink="/profile" 
+            class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 w-full text-left cursor-pointer"
+            role="menuitem"
+            (click)="closeUserMenu()">
+            <svg class="w-4 h-4 mr-3 text-gray-400" aria-hidden="true">
+              <use href="#icon-person"></use>
+            </svg>
+            <span>Profil</span>
+          </a>
+          
+          <a 
+            routerLink="/settings" 
+            class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 w-full text-left cursor-pointer"
+            role="menuitem"
+            (click)="closeUserMenu()">
+            <svg class="w-4 h-4 mr-3 text-gray-400" aria-hidden="true">
+              <use href="#icon-settings"></use>
+            </svg>
+            <span>Einstellungen</span>
+          </a>
+          
+          <div class="my-1 border-t border-gray-200" role="separator"></div>
+          
+          <button 
+            type="button"
+            class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 w-full text-left cursor-pointer"
+            role="menuitem"
+            (click)="logout()">
+            <svg class="w-4 h-4 mr-3 text-gray-400" aria-hidden="true">
+              <use href="#icon-logout"></use>
+            </svg>
+            <span>Abmelden</span>
+          </button>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main id="main-content" 
+          class="flex-1 overflow-y-auto bg-gray-50 focus:outline-none" 
+          role="main" 
+          tabindex="-1"
+          aria-label="Hauptinhalt">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
+
+<!-- SVG Icons -->
+<svg class="hidden" aria-hidden="true">
+  <defs>
+    <symbol id="icon-dashboard" viewBox="0 0 24 24">
+      <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+    </symbol>
+    <symbol id="icon-calendar" viewBox="0 0 24 24">
+      <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.1 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
+    </symbol>
+    <symbol id="icon-school" viewBox="0 0 24 24">
+      <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
+    </symbol>
+    <symbol id="icon-child-care" viewBox="0 0 24 24">
+      <path d="M14.5 10.5c.91 0 1.64-.73 1.64-1.64S15.41 7.22 14.5 7.22s-1.64.73-1.64 1.64.73 1.64 1.64 1.64zM9.5 10.5c.91 0 1.64-.73 1.64-1.64S10.41 7.22 9.5 7.22s-1.64.73-1.64 1.64.73 1.64 1.64 1.64zm2.5 5.5c2.33 0 4.31-1.46 5.11-3.5H6.89C7.69 14.54 9.67 16 12 16zm9.5-9C21.5 2.5 16.5 2 12 2S2.5 2.5 2.5 7.5c0 3.22 2.67 5.83 6 6.31V22h7v-8.19c3.33-.48 6-3.09 6-6.31z"/>
+    </symbol>
+    <symbol id="icon-health" viewBox="0 0 24 24">
+      <path d="M19 8h-2v3h-3v2h3v3h2v-3h3v-2h-3V8zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/>
+    </symbol>
+    <symbol id="icon-family" viewBox="0 0 24 24">
+      <path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/>
+    </symbol>
+    <symbol id="icon-person" viewBox="0 0 24 24">
+      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+    </symbol>
+    <symbol id="icon-settings" viewBox="0 0 24 24">
+      <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+    </symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24">
+      <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+    </symbol>
+    <symbol id="icon-account" viewBox="0 0 24 24">
+      <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 1H5C3.89 1 3 1.89 3 3V21A2 2 0 0 0 5 23H19A2 2 0 0 0 21 21V9M19 21H5V3H13V9H19V21Z"/>
+    </symbol>
+    <symbol id="icon-logout" viewBox="0 0 24 24">
+      <path d="M16 17v-3H9v-4h7V7l5 5-5 5M14 2a2 2 0 0 1 2 2v2h-2V4H5v16h9v-2h2v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9z"/>
+    </symbol>
+    <symbol id="icon-code" viewBox="0 0 24 24">
+      <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+    </symbol>
+  </defs>
+</svg>

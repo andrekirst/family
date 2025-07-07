@@ -1,0 +1,17 @@
+/* Reduced motion accessibility support */
+@media (prefers-reduced-motion: reduce) {
+  aside, div, button, a {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Active nav link icon color override for Tailwind utilities */
+.bg-primary-50 svg {
+  @apply text-primary-600;
+}
+
+/* User menu item hover icon color override */
+.hover\:bg-gray-100:hover svg {
+  @apply text-gray-500;
+}

@@ -1,0 +1,235 @@
+<!-- Dashboard Container -->
+<div class="p-4 md:p-6 max-w-7xl mx-auto">
+  <!-- Welcome Section -->
+  <section class="mb-8">
+    <h1 class="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+      Willkommen, {{ (currentUser$ | async)?.firstName || 'Benutzer' }}!
+    </h1>
+    <p class="text-base md:text-lg text-gray-600 dark:text-gray-300 m-0">
+      Verwalten Sie Ihre Familie effizienter mit der Family-Plattform.
+    </p>
+  </section>
+
+  <!-- Dashboard Cards Grid -->
+  <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6 mb-8" role="main" aria-label="Dashboard-Bereiche">
+    <!-- Termine Card -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md hover:-translate-y-1 motion-reduce:transition-none transition-all duration-200 flex flex-col">
+      <div class="flex items-start mb-4 sm:flex-col sm:items-start md:flex-row md:items-start">
+        <div class="flex-shrink-0 mr-4 sm:mr-0 sm:mb-2 md:mr-4 md:mb-0">
+          <svg class="w-8 h-8 text-primary-600" aria-hidden="true">
+            <use href="#icon-calendar"></use>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">Termine</h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400 m-0">Familienkalender verwalten</p>
+        </div>
+      </div>
+      <div class="flex-1 mb-4">
+        <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">Verwalten Sie alle wichtigen Termine für die Familie zentral.</p>
+      </div>
+      <div class="flex items-center justify-start">
+        <button type="button" class="btn btn-primary">
+          <svg class="w-4 h-4 mr-2" aria-hidden="true">
+            <use href="#icon-add"></use>
+          </svg>
+          Termin hinzufügen
+        </button>
+      </div>
+    </div>
+
+    <!-- Schule Card -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md hover:-translate-y-1 motion-reduce:transition-none transition-all duration-200 flex flex-col">
+      <div class="flex items-start mb-4 sm:flex-col sm:items-start md:flex-row md:items-start">
+        <div class="flex-shrink-0 mr-4 sm:mr-0 sm:mb-2 md:mr-4 md:mb-0">
+          <svg class="w-8 h-8 text-primary-600" aria-hidden="true">
+            <use href="#icon-school"></use>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">Schule</h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400 m-0">Schulorganisation</p>
+        </div>
+      </div>
+      <div class="flex-1 mb-4">
+        <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">Stundenpläne, Noten, Hausaufgaben und Elternabende verwalten.</p>
+      </div>
+      <div class="flex items-center justify-start">
+        <button type="button" class="btn btn-primary">
+          <svg class="w-4 h-4 mr-2" aria-hidden="true">
+            <use href="#icon-assignment"></use>
+          </svg>
+          Hausaufgaben
+        </button>
+      </div>
+    </div>
+
+    <!-- Kindergarten Card -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md hover:-translate-y-1 motion-reduce:transition-none transition-all duration-200 flex flex-col">
+      <div class="flex items-start mb-4 sm:flex-col sm:items-start md:flex-row md:items-start">
+        <div class="flex-shrink-0 mr-4 sm:mr-0 sm:mb-2 md:mr-4 md:mb-0">
+          <svg class="w-8 h-8 text-primary-600" aria-hidden="true">
+            <use href="#icon-child-care"></use>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">Kindergarten</h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400 m-0">Kindergartenmanagement</p>
+        </div>
+      </div>
+      <div class="flex-1 mb-4">
+        <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">Essensversorgung, Termine und Aktivitäten koordinieren.</p>
+      </div>
+      <div class="flex items-center justify-start">
+        <button type="button" class="btn btn-primary">
+          <svg class="w-4 h-4 mr-2" aria-hidden="true">
+            <use href="#icon-restaurant"></use>
+          </svg>
+          Essensplan
+        </button>
+      </div>
+    </div>
+
+    <!-- Gesundheit Card -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md hover:-translate-y-1 motion-reduce:transition-none transition-all duration-200 flex flex-col">
+      <div class="flex items-start mb-4 sm:flex-col sm:items-start md:flex-row md:items-start">
+        <div class="flex-shrink-0 mr-4 sm:mr-0 sm:mb-2 md:mr-4 md:mb-0">
+          <svg class="w-8 h-8 text-primary-600" aria-hidden="true">
+            <use href="#icon-health"></use>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">Gesundheit</h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400 m-0">Medizinische Verwaltung</p>
+        </div>
+      </div>
+      <div class="flex-1 mb-4">
+        <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">Arztbesuche, Medikamente, Impfungen und Erinnerungen.</p>
+      </div>
+      <div class="flex items-center justify-start">
+        <button type="button" class="btn btn-primary">
+          <svg class="w-4 h-4 mr-2" aria-hidden="true">
+            <use href="#icon-medication"></use>
+          </svg>
+          Medikamente
+        </button>
+      </div>
+    </div>
+
+    <!-- Familie Card -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md hover:-translate-y-1 motion-reduce:transition-none transition-all duration-200 flex flex-col">
+      <div class="flex items-start mb-4 sm:flex-col sm:items-start md:flex-row md:items-start">
+        <div class="flex-shrink-0 mr-4 sm:mr-0 sm:mb-2 md:mr-4 md:mb-0">
+          <svg class="w-8 h-8 text-primary-600" aria-hidden="true">
+            <use href="#icon-family"></use>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">Familie</h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400 m-0">Familienmitglieder</p>
+        </div>
+      </div>
+      <div class="flex-1 mb-4">
+        <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">Familienmitglieder, Rollen und Beziehungen verwalten.</p>
+      </div>
+      <div class="flex items-center justify-start">
+        <button type="button" class="btn btn-primary">
+          <svg class="w-4 h-4 mr-2" aria-hidden="true">
+            <use href="#icon-person-add"></use>
+          </svg>
+          Mitglied hinzufügen
+        </button>
+      </div>
+    </div>
+
+    <!-- Einstellungen Card -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md hover:-translate-y-1 motion-reduce:transition-none transition-all duration-200 flex flex-col">
+      <div class="flex items-start mb-4 sm:flex-col sm:items-start md:flex-row md:items-start">
+        <div class="flex-shrink-0 mr-4 sm:mr-0 sm:mb-2 md:mr-4 md:mb-0">
+          <svg class="w-8 h-8 text-primary-600" aria-hidden="true">
+            <use href="#icon-settings"></use>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">Einstellungen</h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400 m-0">Anwendungseinstellungen</p>
+        </div>
+      </div>
+      <div class="flex-1 mb-4">
+        <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">Sprache, Design und Benachrichtigungen anpassen.</p>
+      </div>
+      <div class="flex items-center justify-start">
+        <button type="button" class="btn btn-primary">
+          <svg class="w-4 h-4 mr-2" aria-hidden="true">
+            <use href="#icon-tune"></use>
+          </svg>
+          Konfigurieren
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="mt-8" aria-label="Schnellübersicht">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+      <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-6">Schnellübersicht</h2>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        <div class="flex flex-col items-center text-center p-4 rounded-lg bg-primary-50 dark:bg-primary-900">
+          <svg class="w-8 h-8 text-primary-600 mb-3" aria-hidden="true">
+            <use href="#icon-calendar"></use>
+          </svg>
+          <span class="text-2xl font-bold text-primary-600 mb-1">5</span>
+          <span class="text-sm text-gray-600 dark:text-gray-300">Termine heute</span>
+        </div>
+        <div class="flex flex-col items-center text-center p-4 rounded-lg bg-primary-50 dark:bg-primary-900">
+          <svg class="w-8 h-8 text-primary-600 mb-3" aria-hidden="true">
+            <use href="#icon-assignment"></use>
+          </svg>
+          <span class="text-2xl font-bold text-primary-600 mb-1">3</span>
+          <span class="text-sm text-gray-600 dark:text-gray-300">Offene Aufgaben</span>
+        </div>
+        <div class="flex flex-col items-center text-center p-4 rounded-lg bg-primary-50 dark:bg-primary-900">
+          <svg class="w-8 h-8 text-primary-600 mb-3" aria-hidden="true">
+            <use href="#icon-notification"></use>
+          </svg>
+          <span class="text-2xl font-bold text-primary-600 mb-1">2</span>
+          <span class="text-sm text-gray-600 dark:text-gray-300">Erinnerungen</span>
+        </div>
+        <div class="flex flex-col items-center text-center p-4 rounded-lg bg-primary-50 dark:bg-primary-900">
+          <svg class="w-8 h-8 text-primary-600 mb-3" aria-hidden="true">
+            <use href="#icon-family"></use>
+          </svg>
+          <span class="text-2xl font-bold text-primary-600 mb-1">4</span>
+          <span class="text-sm text-gray-600 dark:text-gray-300">Familienmitglieder</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- SVG Icons -->
+<svg class="hidden" aria-hidden="true">
+  <defs>
+    <symbol id="icon-add" viewBox="0 0 24 24">
+      <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+    </symbol>
+    <symbol id="icon-assignment" viewBox="0 0 24 24">
+      <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+    </symbol>
+    <symbol id="icon-restaurant" viewBox="0 0 24 24">
+      <path d="M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.20-1.10-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z"/>
+    </symbol>
+    <symbol id="icon-medication" viewBox="0 0 24 24">
+      <path d="M10.5 13.5h3v1h-3v-1zm0-2.5h3v1h-3v-1zm0-2.5h3v1h-3V8.5zM19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 6h-4V7h4v2z"/>
+    </symbol>
+    <symbol id="icon-person-add" viewBox="0 0 24 24">
+      <path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+    </symbol>
+    <symbol id="icon-tune" viewBox="0 0 24 24">
+      <path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/>
+    </symbol>
+    <symbol id="icon-notification" viewBox="0 0 24 24">
+      <path d="M7.58 4.08L6.15 2.65C3.75 4.48 2.17 7.3 2.03 10.5h2c.15-2.65 1.51-4.97 3.55-6.42zm12.39 6.42h2c-.15-3.2-1.73-6.02-4.12-7.85l-1.42 1.43c2.02 1.45 3.39 3.77 3.54 6.42zM18 11c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2v-5zm-6 11c.14 0 .27-.01.4-.04.65-.14 1.18-.58 1.44-1.18.1-.24.15-.5.15-.78h-4c.01 1.1.9 2 2.01 2z"/>
+    </symbol>
+  </defs>
+</svg>

@@ -63,8 +63,15 @@ Du agierst als erfahrenen KI-Entwickler im Projekt. Deine Hauptaufgabe ist es, *
 ### Frontend
 
 - **Angular** (für Web)
+  - **Styling**: **Tailwind CSS** (Migration von SCSS abgeschlossen)
+  - **Komponenten**: Standalone Components mit Angular 17+
+  - **Barrierefreiheit**: WCAG 2.1 AA Compliance mit axe-core
+  - **Internationalisierung**: Angular i18n mit Deutsch und Englisch
 - **Flutter** (für Mobile Apps, Android & iOS)
-- **Tests**: **Playwright** für End-to-End und Integration Tests (Angular)
+- **Tests**: 
+  - **Playwright** für End-to-End und Integration Tests (Angular)
+  - **Jasmine/Karma** für Angular Unit Tests
+  - **axe-core** für automatisierte Accessibility Tests
 - Beide greifen via GraphQL auf das Backend zu
 
 ### CI/CD
@@ -117,11 +124,18 @@ Du agierst als erfahrenen KI-Entwickler im Projekt. Deine Hauptaufgabe ist es, *
   - **ZWINGEND**: Bei jeder Implementierung von neuem Quellcode müssen entsprechende Tests angelegt werden
   - **Ausnahme**: Nur bei reinen Bugfixes ohne neue Funktionalität können Tests optional sein
   - **Mindest-CodeCoverage**: 40% - Pipeline schlägt bei Unterschreitung fehl
-  - **Test-Arten**: Unit Tests für Business Logic, Integration Tests für End-to-End-Flows, Validation Tests für Commands/Queries
+  - **Test-Arten**: 
+    - Unit Tests für Business Logic (xUnit, FluentAssertions, NSubstitute, AutoFixture)
+    - Integration Tests für End-to-End-Flows mit Testcontainers
+    - Frontend Component Tests (Jasmine/Karma)
+    - E2E Tests (Playwright)
+    - Accessibility Tests (axe-core mit WCAG 2.1 AA)
+    - Validation Tests für Commands/Queries
   - **Test-Struktur**: Verwende AAA-Pattern (Arrange, Act, Assert), FluentAssertions für lesbare Assertions
   - **Test-Naming**: `{MethodName}_{Scenario}_{ExpectedResult}` (z.B. `CreateUser_WithValidData_ShouldReturnSuccess`)
   - **Test-Kategorien**: Erstelle Tests für DTOs, Commands/Queries, Validators, GraphQL Input/Payload Types, Authorization Constants
   - **Negative Tests**: Teste sowohl positive als auch negative Szenarien (z.B. Validierungsfehler, ungültige Eingaben)
+  - **Accessibility Testing**: Verwende axe-core für automatisierte WCAG-Compliance-Tests in E2E-Tests
 
 ### Pull Requests
 
@@ -487,4 +501,87 @@ Die Family-Plattform nutzt bewährte Cloud Design Patterns für eine skalierbare
 
 ---
 
-**Letzte Aktualisierung:** 2025-07-03
+---
+
+## Implementierte Features (Aktueller Stand)
+
+### Familie-Domain (Issue #69)
+**Status**: Implementiert und getestet
+
+#### Backend-Implementierung
+- **CQRS Pattern**: Command/Query-Handler für Familienerstellung
+- **Event Sourcing**: Domain Events für Familienaktivitäten
+- **GraphQL Schema**: Vollständige Familie-API mit HotChocolate
+- **Authorization**: Policy-basierte Zugriffskontrolle mit Keycloak
+- **Validation**: Comprehensive Input-Validierung
+- **Health Checks**: Kafka, Redis, PostgreSQL Monitoring
+
+#### Frontend-Implementierung
+- **Familie-Erstellung Dialog**: Responsive Modal mit Tailwind CSS
+- **Form-Validation**: Client-seitige Validierung mit Angular Reactive Forms
+- **First-Time User Flow**: Onboarding-Prozess für neue Benutzer
+- **Developer Tools**: Debug-Seiten für Entwicklung
+- **Error Handling**: Benutzerfreundliche Fehlerseiten (404, 500)
+
+#### Accessibility (WCAG 2.1 AA)
+- **Accessibility Service**: Zentrale Verwaltung von Barrierefreiheits-Features
+  - Screen Reader Unterstützung mit ARIA Live Regions
+  - Focus Trapping für Modals und Dialoge
+  - Keyboard Navigation (Tab, Arrow Keys, Home, End)
+  - User Preferences für reduzierte Bewegungen und hohen Kontrast
+- **Keyboard Navigation Directive**: Wiederverwendbare Arrow-Key Navigation
+- **ARIA Labels**: Vollständige Beschriftung aller interaktiven Elemente
+- **Color Contrast**: WCAG AA konforme Farbkontraste
+- **Focus Management**: Sichtbare Focus-Indikatoren
+
+#### Testing-Implementation
+- **Backend Tests**:
+  - Unit Tests für Family Domain Logic (CreateFamilyCommandHandler, Validators)
+  - Integration Tests für GraphQL Familie-Endpoints
+  - Authorization Tests für Policy-Compliance
+  - DTO und Command/Query Tests
+- **Frontend Tests**:
+  - Component Tests für Familie-Creation Dialog
+  - Component Tests für Developer Tools und Error Pages
+  - Service Tests für AccessibilityService
+- **E2E Tests**:
+  - Vollständiger First-Time User Flow (Playwright)
+  - Familie-Erstellung End-to-End Workflow
+- **Accessibility Tests**:
+  - 20+ automatisierte axe-core Tests für WCAG 2.1 AA Compliance
+  - Keyboard Navigation Tests
+  - Screen Reader Compatibility Tests
+
+#### Technische Details
+- **Tailwind CSS Migration**: Vollständige Ablösung von SCSS
+- **Standalone Components**: Angular 17+ Best Practices
+- **GraphQL Integration**: HotChocolate mit Authorization
+- **Event-Driven Architecture**: Kafka-basierte Domain Events
+- **Multi-Tenant Support**: Familie-basierte Datenisolation
+- **Internationalization**: Deutsch/Englisch Support
+
+---
+
+## Nächste geplante Features
+
+### Schul-Management (Issue #TBD)
+- Stundenplan-Verwaltung
+- Noten-Tracking
+- Hausaufgaben-Management
+- Elternabend-Termine
+
+### Gesundheits-Management (Issue #TBD)
+- Arzttermin-Verwaltung
+- Medikamenten-Tracking
+- Impfungshistorie
+- Erinnerungen und Benachrichtigungen
+
+### Mobile App (Issue #TBD)
+- Flutter-basierte mobile Anwendung
+- Push-Notifications
+- Offline-Synchronisation
+- Mobile-spezifische UI/UX
+
+---
+
+**Letzte Aktualisierung:** 2025-07-07

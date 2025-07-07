@@ -2,178 +2,19 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../../core/auth/auth.service';
+import { NotificationService } from '../../../core/services/notification.service';
+import { AccessibilityService } from '../../../core/services/accessibility.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatProgressSpinnerModule,
-    MatDividerModule,
-    MatIconModule,
-    MatSnackBarModule
+    ReactiveFormsModule
   ],
-  template: `
-    <div class="login-container">
-      <mat-card class="login-card">
-        <mat-card-header>
-          <mat-card-title>Family Login</mat-card-title>
-          <mat-card-subtitle>Melden Sie sich in Ihrem Family-Konto an</mat-card-subtitle>
-        </mat-card-header>
-        
-        <mat-card-content>
-          <!-- OAuth Login Button -->
-          <button 
-            mat-raised-button 
-            color="primary" 
-            class="oauth-button"
-            (click)="loginWithOAuth()"
-            [disabled]="(isLoading$ | async) || false">
-            <mat-icon>login</mat-icon>
-            Mit Keycloak anmelden
-          </button>
-          
-          <mat-divider class="divider">
-            <span class="divider-text">oder</span>
-          </mat-divider>
-          
-          <!-- Direct Login Form -->
-          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>E-Mail</mat-label>
-              <input 
-                matInput 
-                type="email" 
-                formControlName="email"
-                placeholder="ihre@email.com"
-                autocomplete="email">
-              <mat-icon matSuffix>email</mat-icon>
-              <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
-                E-Mail ist erforderlich
-              </mat-error>
-              <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
-                Bitte geben Sie eine gültige E-Mail ein
-              </mat-error>
-            </mat-form-field>
-            
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Passwort</mat-label>
-              <input 
-                matInput 
-                [type]="hidePassword ? 'password' : 'text'" 
-                formControlName="password"
-                autocomplete="current-password">
-              <button 
-                mat-icon-button 
-                matSuffix 
-                type="button"
-                (click)="hidePassword = !hidePassword"
-                [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hidePassword">
-                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-              </button>
-              <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
-                Passwort ist erforderlich
-              </mat-error>
-            </mat-form-field>
-            
-            <button 
-              mat-raised-button 
-              color="accent" 
-              type="submit"
-              class="full-width submit-button"
-              [disabled]="loginForm.invalid || (isLoading$ | async) || false">
-              <mat-spinner diameter="20" *ngIf="isLoading$ | async"></mat-spinner>
-              <span *ngIf="(isLoading$ | async) === false">Anmelden</span>
-            </button>
-          </form>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  `,
-  styles: [`
-    .login-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      padding: 20px;
-    }
-    
-    .login-card {
-      width: 100%;
-      max-width: 400px;
-      padding: 20px;
-    }
-    
-    .oauth-button {
-      width: 100%;
-      height: 48px;
-      margin-bottom: 20px;
-      font-size: 16px;
-    }
-    
-    .divider {
-      margin: 20px 0;
-      position: relative;
-    }
-    
-    .divider-text {
-      background: white;
-      padding: 0 16px;
-      color: rgba(0, 0, 0, 0.6);
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
-    
-    .login-form {
-      margin-top: 20px;
-    }
-    
-    .full-width {
-      width: 100%;
-      margin-bottom: 16px;
-    }
-    
-    .submit-button {
-      height: 48px;
-      font-size: 16px;
-      margin-top: 8px;
-    }
-    
-    mat-card-header {
-      margin-bottom: 20px;
-    }
-    
-    mat-card-title {
-      font-size: 24px;
-      font-weight: 500;
-    }
-    
-    mat-card-subtitle {
-      font-size: 14px;
-      color: rgba(0, 0, 0, 0.6);
-      margin-top: 8px;
-    }
-  `]
+  templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -183,7 +24,8 @@ export class LoginComponent implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
-  private snackBar = inject(MatSnackBar);
+  private notificationService = inject(NotificationService);
+  private accessibilityService = inject(AccessibilityService);
 
   constructor() {
     this.loginForm = this.fb.group({
@@ -207,24 +49,28 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       
+      // Announce login attempt to screen readers
+      this.accessibilityService.announceToScreenReader('Anmeldung wird versucht...', { politeness: 'assertive' });
+      
       this.authService.directLogin({ email, password }).subscribe({
         next: (result) => {
           if (result.success) {
+            this.accessibilityService.announceToScreenReader('Anmeldung erfolgreich. Sie werden weitergeleitet.', { politeness: 'assertive' });
             this.router.navigate(['/dashboard']);
-            this.snackBar.open('Erfolgreich angemeldet!', 'Schließen', {
-              duration: 3000
-            });
+            this.notificationService.showSuccess('Erfolgreich angemeldet!');
           } else {
+            this.accessibilityService.announceToScreenReader('Anmeldung fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.', { politeness: 'assertive' });
             this.showErrors(result.errors || ['Anmeldung fehlgeschlagen']);
           }
         },
         error: (error) => {
           console.error('Login error:', error);
-          this.snackBar.open('Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.', 'Schließen', {
-            duration: 5000
-          });
+          this.accessibilityService.announceToScreenReader('Ein Fehler ist bei der Anmeldung aufgetreten.', { politeness: 'assertive' });
+          this.notificationService.showError('Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.');
         }
       });
+    } else {
+      this.accessibilityService.announceToScreenReader('Bitte füllen Sie alle erforderlichen Felder korrekt aus.', { politeness: 'assertive' });
     }
   }
 
@@ -240,18 +86,13 @@ export class LoginComponent implements OnInit {
       },
       error: (error) => {
         console.error('OAuth initiation error:', error);
-        this.snackBar.open('OAuth-Anmeldung konnte nicht gestartet werden.', 'Schließen', {
-          duration: 5000
-        });
+        this.notificationService.showError('OAuth-Anmeldung konnte nicht gestartet werden.');
       }
     });
   }
 
   private showErrors(errors: string[]): void {
     const message = errors.join(', ');
-    this.snackBar.open(message, 'Schließen', {
-      duration: 5000,
-      panelClass: ['error-snackbar']
-    });
+    this.notificationService.showError(message);
   }
 }

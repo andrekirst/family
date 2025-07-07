@@ -19,13 +19,18 @@
     <PackageReference Include="HotChocolate.AspNetCore" />
     <PackageReference Include="HotChocolate.Data.EntityFramework" />
     <PackageReference Include="HotChocolate.Authorization" />
+    <PackageReference Include="HotChocolate.AspNetCore.Authorization" />
     <PackageReference Include="MediatR" />
+    <PackageReference Include="FluentValidation" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+    <PackageReference Include="Confluent.Kafka" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\infrastructure\Family.Infrastructure.Caching\Family.Infrastructure.Caching.csproj" />
     <ProjectReference Include="..\..\infrastructure\Family.Infrastructure.CQRS\Family.Infrastructure.CQRS.csproj" />
     <ProjectReference Include="..\..\infrastructure\Family.Infrastructure.EventSourcing\Family.Infrastructure.EventSourcing.csproj" />
+    <ProjectReference Include="..\..\infrastructure\Family.Infrastructure.Messaging\Family.Infrastructure.Messaging.csproj" />
     <ProjectReference Include="..\..\infrastructure\Family.Infrastructure.Resilience\Family.Infrastructure.Resilience.csproj" />
   </ItemGroup>
 

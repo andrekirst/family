@@ -162,7 +162,7 @@ public static class ServiceCollectionExtensions
                 timeout: healthCheckConfig.Timeout,
                 args: [
                     "Keycloak",
-                    $"{keycloakAuthority}/health",
+                    $"{keycloakAuthority}",
                     TimeSpan.FromSeconds(10)
                 ]);
         }

@@ -10,6 +10,7 @@ using Family.Api.Services;
 using Family.Infrastructure.Caching.Extensions;
 using Family.Infrastructure.CQRS.Extensions;
 using Family.Infrastructure.EventSourcing.Extensions;
+using Family.Infrastructure.Messaging.Extensions;
 using Family.Infrastructure.Resilience.Extensions;
 using HotChocolate.Authorization;
 using HotChocolate.Data;
@@ -20,6 +21,23 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FamilyAppPolicy", policy =>
+    {
+        policy.WithOrigins(
+                "http://localhost:4200",
+                "https://localhost:4200",
+                "http://localhost:3000",
+                "https://localhost:3000"
+            )
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+    });
+});
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
@@ -41,9 +59,30 @@ builder.Services.AddResilience(builder.Configuration);
 // Register Event Store services
 builder.Services.AddEventSourcing(builder.Configuration);
 
+// Register Kafka messaging services
+builder.Services.AddKafkaMessaging(builder.Configuration);
+
+// Register Family services
+builder.Services.AddScoped<Family.Api.Features.Families.IFamilyRepository, Family.Api.Features.Families.FamilyRepository>();
+builder.Services.AddScoped<Family.Api.Services.IDomainEventPublisher, Family.Api.Services.DomainEventPublisher>();
+builder.Services.AddScoped<Family.Api.Services.IFamilyRoleAssignmentService, Family.Api.Services.FamilyRoleAssignmentService>();
+
+// Register User services
+builder.Services.AddScoped<Family.Api.Features.Users.Services.IFirstTimeUserService, Family.Api.Features.Users.Services.FirstTimeUserService>();
+
+// Register Kafka Event Handlers
+builder.Services.AddHostedService<Family.Api.Features.Families.EventHandlers.KafkaEventHandlerService>();
+
 // Register health checks
-builder.Services.AddApiHealthChecks(builder.Configuration);
 builder.Services.AddFamilyHealthChecks(builder.Configuration);
+
+// Add health checks UI for development
+builder.Services.AddHealthChecksUI()
+    .AddInMemoryStorage();
+
+// Configure HealthChecksUI from configuration
+builder.Services.Configure<HealthChecks.UI.Configuration.Settings>(
+    builder.Configuration.GetSection("HealthChecksUI"));
 
 // Configure Localization
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
@@ -61,9 +100,9 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.RequestCultureProviders.Insert(0, new AcceptLanguageHeaderRequestCultureProvider());
 });
 
-// Register services
-builder.Services.AddHttpClient<IKeycloakService, CachedKeycloakService>();
-builder.Services.AddScoped<IKeycloakService, CachedKeycloakService>();
+// Register services (temporarily using non-cached version for debugging)
+builder.Services.AddHttpClient<IKeycloakService, KeycloakService>();
+builder.Services.AddScoped<IKeycloakService, KeycloakService>();
 
 // Configure Keycloak Authentication
 var keycloakAuthority = builder.Configuration["Keycloak:Authority"] 
@@ -91,7 +130,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             OnAuthenticationFailed = context =>
             {
-                context.Response.Headers.Add("Token-Expired", "true");
+                context.Response.Headers["Token-Expired"] = "true";
                 return Task.CompletedTask;
             }
         };
@@ -117,6 +156,10 @@ builder.Services
     .AddTypeExtension<UserCQRSQueries>()
     .AddTypeExtension<AuthenticationMutations>()
     .AddTypeExtension<UserMutations>()
+    .AddTypeExtension<Family.Api.GraphQL.Queries.FamilyQueries>()
+    .AddTypeExtension<Family.Api.GraphQL.Mutations.FamilyMutations>()
+    .AddTypeExtension<Family.Api.GraphQL.Queries.FamilyRoleQueries>()
+    .AddTypeExtension<Family.Api.GraphQL.Mutations.FamilyRoleMutations>()
     .AddType<UserType>()
     .AddType<LoginInputType>()
     .AddType<LoginCallbackInputType>()
@@ -125,9 +168,18 @@ builder.Services
     .AddType<LoginPayloadType>()
     .AddType<LogoutPayloadType>()
     .AddType<RefreshTokenPayloadType>()
+    .AddType<Family.Api.GraphQL.Types.FamilyType>()
+    .AddType<Family.Api.GraphQL.Types.FamilyMemberType>()
+    .AddType<Family.Api.GraphQL.Types.CreateFamilyInputType>()
+    .AddType<Family.Api.GraphQL.Types.CreateFamilyPayloadType>()
+    .AddType<Family.Api.GraphQL.Types.FirstTimeUserInfoType>()
+    .AddType<Family.Api.GraphQL.Types.FamilyMemberRoleType>()
+    .AddType<Family.Api.GraphQL.Types.AssignRoleInputType>()
+    .AddType<Family.Api.GraphQL.Types.AssignRoleResultType>()
     .AddProjections()
     .AddFiltering()
-    .AddSorting();
+    .AddSorting()
+    .AddAuthorization();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -142,6 +194,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Enable CORS
+app.UseCors("FamilyAppPolicy");
 
 // Request Localization
 app.UseRequestLocalization();

@@ -29,6 +29,7 @@
     <PackageVersion Include="HotChocolate.AspNetCore" Version="14.2.0" />
     <PackageVersion Include="HotChocolate.Data.EntityFramework" Version="14.2.0" />
     <PackageVersion Include="HotChocolate.Authorization" Version="14.2.0" />
+    <PackageVersion Include="HotChocolate.AspNetCore.Authorization" Version="14.2.0" />
   </ItemGroup>
 
   <!-- CQRS Dependencies -->
@@ -87,6 +88,12 @@
     <PackageVersion Include="AspNetCore.HealthChecks.UI" Version="8.0.2" />
     <PackageVersion Include="AspNetCore.HealthChecks.UI.Client" Version="8.0.1" />
     <PackageVersion Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="8.0.1" />
+  </ItemGroup>
+
+  <!-- Messaging Dependencies -->
+  <ItemGroup>
+    <PackageVersion Include="Confluent.Kafka" Version="2.6.1" />
+    <PackageVersion Include="System.Text.Json" Version="9.0.2" />
   </ItemGroup>
 
 </Project>
