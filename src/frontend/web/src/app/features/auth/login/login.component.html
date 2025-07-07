@@ -1,48 +1,48 @@
 <!-- Login Container -->
-<div class="login-container">
-  <div class="login-card">
+<div class="min-h-screen flex items-center justify-center p-3 sm:p-4 bg-gradient-to-br from-indigo-500 to-purple-600">
+  <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-2xl p-6 sm:p-8">
     <!-- Header -->
-    <div class="login-header">
-      <h1 class="login-title">Family Login</h1>
-      <p class="login-subtitle">Melden Sie sich in Ihrem Family-Konto an</p>
+    <div class="mb-8 text-center">
+      <h1 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Family Login</h1>
+      <p class="text-sm text-gray-600 dark:text-gray-300">Melden Sie sich in Ihrem Family-Konto an</p>
     </div>
     
     <!-- OAuth Login Button -->
     <button 
       type="button"
-      class="btn btn-family oauth-button"
+      class="btn btn-family w-full h-11 sm:h-12 text-base mb-6"
       (click)="loginWithOAuth()"
       [disabled]="(isLoading$ | async) || false"
       [attr.aria-label]="'Mit Keycloak anmelden'">
-      <svg class="btn-icon" aria-hidden="true">
+      <svg class="w-5 h-5 mr-2" aria-hidden="true">
         <use href="#icon-login"></use>
       </svg>
       Mit Keycloak anmelden
     </button>
     
     <!-- Divider -->
-    <div class="divider">
-      <div class="divider-line"></div>
-      <span class="divider-text">oder</span>
-      <div class="divider-line"></div>
+    <div class="flex items-center my-6">
+      <div class="flex-1 h-px bg-gray-300 dark:bg-gray-600"></div>
+      <span class="px-4 text-sm text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800">oder</span>
+      <div class="flex-1 h-px bg-gray-300 dark:bg-gray-600"></div>
     </div>
     
     <!-- Direct Login Form -->
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form" novalidate>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4" novalidate>
       <!-- Email Field -->
-      <div class="form-group">
+      <div class="space-y-2">
         <label for="email" class="form-label">E-Mail</label>
-        <div class="form-input-container">
+        <div class="relative">
           <input 
             id="email"
             type="email" 
             formControlName="email"
-            class="form-input"
+            class="w-full pl-3 pr-10 py-3 border rounded-lg placeholder-gray-400 transition-colors focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
+            [ngClass]="{'border-gray-300': !(loginForm.get('email')?.invalid && loginForm.get('email')?.touched), 'border-error-500 focus:ring-error-500 focus:border-error-500': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
             placeholder="ihre@email.com"
             autocomplete="email"
-            [class.form-input-error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
             [attr.aria-describedby]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched ? 'email-error' : null">
-          <svg class="form-input-icon" aria-hidden="true">
+          <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" aria-hidden="true">
             <use href="#icon-email"></use>
           </svg>
         </div>
@@ -61,24 +61,24 @@
       </div>
       
       <!-- Password Field -->
-      <div class="form-group">
+      <div class="space-y-2">
         <label for="password" class="form-label">Passwort</label>
-        <div class="form-input-container">
+        <div class="relative">
           <input 
             id="password"
             [type]="hidePassword ? 'password' : 'text'" 
             formControlName="password"
-            class="form-input"
+            class="w-full pl-3 pr-10 py-3 border rounded-lg placeholder-gray-400 transition-colors focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
+            [ngClass]="{'border-gray-300': !(loginForm.get('password')?.invalid && loginForm.get('password')?.touched), 'border-error-500 focus:ring-error-500 focus:border-error-500': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
             autocomplete="current-password"
-            [class.form-input-error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
             [attr.aria-describedby]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched ? 'password-error' : null">
           <button 
             type="button"
-            class="form-input-action"
+            class="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded"
             (click)="hidePassword = !hidePassword"
             [attr.aria-label]="hidePassword ? 'Passwort anzeigen' : 'Passwort verbergen'"
             [attr.aria-pressed]="!hidePassword">
-            <svg class="form-input-action-icon" aria-hidden="true">
+            <svg class="w-5 h-5" aria-hidden="true">
               <use [href]="hidePassword ? '#icon-visibility-off' : '#icon-visibility'"></use>
             </svg>
           </button>
@@ -97,9 +97,9 @@
       <!-- Submit Button -->
       <button 
         type="submit"
-        class="btn btn-primary submit-button"
+        class="btn btn-primary w-full h-11 sm:h-12 text-base mt-6 relative flex items-center justify-center"
         [disabled]="loginForm.invalid || (isLoading$ | async) || false">
-        <div *ngIf="isLoading$ | async" class="loading-spinner" aria-hidden="true"></div>
+        <div *ngIf="isLoading$ | async" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2 motion-reduce:animate-none" aria-hidden="true"></div>
         <span [class.sr-only]="isLoading$ | async">
           {{ (isLoading$ | async) ? 'Anmeldung läuft...' : 'Anmelden' }}
         </span>
@@ -109,7 +109,7 @@
 </div>
 
 <!-- SVG Icons -->
-<svg class="hidden" aria-hidden="true">
+<svg class="sr-only" aria-hidden="true">
   <defs>
     <symbol id="icon-login" viewBox="0 0 24 24">
       <path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v12z"/>
