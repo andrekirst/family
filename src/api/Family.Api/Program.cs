@@ -100,9 +100,9 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.RequestCultureProviders.Insert(0, new AcceptLanguageHeaderRequestCultureProvider());
 });
 
-// Register services
-builder.Services.AddHttpClient<IKeycloakService, CachedKeycloakService>();
-builder.Services.AddScoped<IKeycloakService, CachedKeycloakService>();
+// Register services (temporarily using non-cached version for debugging)
+builder.Services.AddHttpClient<IKeycloakService, KeycloakService>();
+builder.Services.AddScoped<IKeycloakService, KeycloakService>();
 
 // Configure Keycloak Authentication
 var keycloakAuthority = builder.Configuration["Keycloak:Authority"] 
