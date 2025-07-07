@@ -1,45 +1,45 @@
 <!-- Skip Navigation Links -->
 <nav class="sr-only" aria-label="Navigation überspringen">
-  <a href="#" class="skip-link" (click)="skipToMainContent(); $event.preventDefault()">
+  <a href="#" class="absolute left-0 -top-40 z-[100] px-4 py-2 bg-primary-600 text-white rounded transition-all focus:top-0" (click)="skipToMainContent(); $event.preventDefault()">
     Zum Hauptinhalt springen
   </a>
-  <a href="#" class="skip-link" (click)="skipToNavigation(); $event.preventDefault()">
+  <a href="#" class="absolute left-0 -top-40 z-[100] px-4 py-2 bg-primary-600 text-white rounded transition-all focus:top-0" (click)="skipToNavigation(); $event.preventDefault()">
     Zur Navigation springen
   </a>
 </nav>
 
 <!-- Main Layout Container -->
-<div class="layout-container" role="application" aria-label="Family App">
+<div class="h-screen bg-gray-50 flex overflow-hidden" role="application" aria-label="Family App">
   <!-- Sidebar -->
   <aside 
     id="main-navigation"
-    class="sidebar" 
-    [class.sidebar-open]="!(isHandset$ | async)" 
-    [class.sidebar-closed]="isHandset$ | async"
+    class="fixed lg:static inset-y-0 left-0 z-50 w-64 sm:w-72 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out lg:translate-x-0" 
+    [class.-translate-x-full]="(isHandset$ | async) && !sidebarOpen"
+    [class.translate-x-0]="!(isHandset$ | async) || sidebarOpen"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     aria-label="Hauptnavigation"
     [attr.aria-hidden]="(isHandset$ | async) && !sidebarOpen"
     [attr.aria-modal]="(isHandset$ | async) && sidebarOpen ? 'true' : null">
     
     <!-- Sidebar Header -->
-    <div class="sidebar-header">
-      <h1 class="app-title">Family</h1>
+    <div class="px-6 py-4 bg-primary-600 text-white flex items-center justify-between">
+      <h1 class="text-xl font-semibold text-white truncate">Family</h1>
     </div>
     
     <!-- Navigation Menu -->
-    <nav class="nav-menu" role="navigation" aria-label="Hauptnavigation">
-      <ul class="nav-list" 
+    <nav class="flex-1 px-4 py-6 bg-white overflow-y-auto" role="navigation" aria-label="Hauptnavigation">
+      <ul class="space-y-1" 
           role="menubar" 
           appKeyboardNavigation="menu"
           [attr.aria-orientation]="'vertical'">
         <li role="none">
           <a routerLink="/dashboard" 
-             routerLinkActive="nav-link-active" 
-             class="nav-link"
+             routerLinkActive="bg-primary-50 text-primary-600 border-r-2 border-primary-600" 
+             class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
              role="menuitem"
              aria-label="Dashboard"
              data-keyboard-nav>
-            <svg class="nav-icon" aria-hidden="true">
+            <svg class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true">
               <use href="#icon-dashboard"></use>
             </svg>
             <span>Dashboard</span>
@@ -48,12 +48,12 @@
         
         <li role="none">
           <a routerLink="/calendar" 
-             routerLinkActive="nav-link-active" 
-             class="nav-link"
+             routerLinkActive="bg-primary-50 text-primary-600 border-r-2 border-primary-600" 
+             class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
              role="menuitem"
              aria-label="Kalender"
              data-keyboard-nav>
-            <svg class="nav-icon" aria-hidden="true">
+            <svg class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true">
               <use href="#icon-calendar"></use>
             </svg>
             <span>Kalender</span>
@@ -62,12 +62,12 @@
         
         <li role="none">
           <a routerLink="/school" 
-             routerLinkActive="nav-link-active" 
-             class="nav-link"
+             routerLinkActive="bg-primary-50 text-primary-600 border-r-2 border-primary-600" 
+             class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
              role="menuitem"
              aria-label="Schule"
              data-keyboard-nav>
-            <svg class="nav-icon" aria-hidden="true">
+            <svg class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true">
               <use href="#icon-school"></use>
             </svg>
             <span>Schule</span>
@@ -76,12 +76,12 @@
         
         <li role="none">
           <a routerLink="/kindergarten" 
-             routerLinkActive="nav-link-active" 
-             class="nav-link"
+             routerLinkActive="bg-primary-50 text-primary-600 border-r-2 border-primary-600" 
+             class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
              role="menuitem"
              aria-label="Kindergarten"
              data-keyboard-nav>
-            <svg class="nav-icon" aria-hidden="true">
+            <svg class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true">
               <use href="#icon-child-care"></use>
             </svg>
             <span>Kindergarten</span>
@@ -90,12 +90,12 @@
         
         <li role="none">
           <a routerLink="/health" 
-             routerLinkActive="nav-link-active" 
-             class="nav-link"
+             routerLinkActive="bg-primary-50 text-primary-600 border-r-2 border-primary-600" 
+             class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
              role="menuitem"
              aria-label="Gesundheit"
              data-keyboard-nav>
-            <svg class="nav-icon" aria-hidden="true">
+            <svg class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true">
               <use href="#icon-health"></use>
             </svg>
             <span>Gesundheit</span>
@@ -104,28 +104,28 @@
         
         <li role="none">
           <a routerLink="/family" 
-             routerLinkActive="nav-link-active" 
-             class="nav-link"
+             routerLinkActive="bg-primary-50 text-primary-600 border-r-2 border-primary-600" 
+             class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
              role="menuitem"
              aria-label="Familie"
              data-keyboard-nav>
-            <svg class="nav-icon" aria-hidden="true">
+            <svg class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true">
               <use href="#icon-family"></use>
             </svg>
             <span>Familie</span>
           </a>
         </li>
         
-        <li class="nav-divider" role="separator"></li>
+        <li class="my-4 border-t border-gray-200" role="separator"></li>
         
         <li role="none">
           <a routerLink="/profile" 
-             routerLinkActive="nav-link-active" 
-             class="nav-link"
+             routerLinkActive="bg-primary-50 text-primary-600 border-r-2 border-primary-600" 
+             class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
              role="menuitem"
              aria-label="Profil"
              data-keyboard-nav>
-            <svg class="nav-icon" aria-hidden="true">
+            <svg class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true">
               <use href="#icon-person"></use>
             </svg>
             <span>Profil</span>
@@ -134,12 +134,12 @@
         
         <li role="none">
           <a routerLink="/settings" 
-             routerLinkActive="nav-link-active" 
-             class="nav-link"
+             routerLinkActive="bg-primary-50 text-primary-600 border-r-2 border-primary-600" 
+             class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
              role="menuitem"
              aria-label="Einstellungen"
              data-keyboard-nav>
-            <svg class="nav-icon" aria-hidden="true">
+            <svg class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true">
               <use href="#icon-settings"></use>
             </svg>
             <span>Einstellungen</span>
@@ -148,12 +148,12 @@
         
         <li role="none">
           <a routerLink="/developer/graphql-playground" 
-             routerLinkActive="nav-link-active" 
-             class="nav-link"
+             routerLinkActive="bg-primary-50 text-primary-600 border-r-2 border-primary-600" 
+             class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
              role="menuitem"
              aria-label="Entwicklertools"
              data-keyboard-nav>
-            <svg class="nav-icon" aria-hidden="true">
+            <svg class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true">
               <use href="#icon-code"></use>
             </svg>
             <span>Entwicklertools</span>
@@ -165,71 +165,74 @@
   
   <!-- Mobile Sidebar Overlay -->
   <div 
-    class="sidebar-overlay" 
-    [class.sidebar-overlay-visible]="(isHandset$ | async) && sidebarOpen"
+    class="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 opacity-0 pointer-events-none" 
+    [class.opacity-100]="(isHandset$ | async) && sidebarOpen"
+    [class.pointer-events-auto]="(isHandset$ | async) && sidebarOpen"
     (click)="closeSidebar()"
     [attr.aria-hidden]="!((isHandset$ | async) && sidebarOpen)">
   </div>
   
   <!-- Main Content Area -->
-  <div class="main-container">
+  <div class="flex-1 flex flex-col overflow-hidden lg:ml-64">
     <!-- Top Navigation Bar -->
-    <header class="top-navbar" role="banner">
+    <header class="bg-white border-b border-gray-200 px-3 sm:px-4 lg:px-6 py-3 sm:py-4 flex items-center justify-between sticky top-0 z-30 shadow-sm" role="banner">
       <!-- Mobile Menu Toggle -->
       <button
         *ngIf="isHandset$ | async"
         type="button"
-        class="menu-toggle"
+        class="p-2 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 lg:hidden"
         (click)="toggleSidebar()"
         [attr.aria-label]="sidebarOpen ? 'Navigation schließen' : 'Navigation öffnen'"
         [attr.aria-expanded]="sidebarOpen"
         [attr.aria-controls]="'main-navigation'">
-        <svg class="menu-icon" aria-hidden="true">
+        <svg class="w-6 h-6" aria-hidden="true">
           <use href="#icon-menu"></use>
         </svg>
       </button>
       
       <!-- Spacer -->
-      <div class="navbar-spacer"></div>
+      <div class="flex-1"></div>
       
       <!-- Language Switcher -->
       <app-language-switcher></app-language-switcher>
       
       <!-- User Menu -->
-      <div class="user-menu" aria-label="Benutzermenü">
+      <div class="relative" aria-label="Benutzermenü">
         <button
           type="button"
-          class="user-menu-trigger"
+          class="p-2 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200"
           (click)="toggleUserMenu()"
           [attr.aria-expanded]="userMenuOpen"
           [attr.aria-haspopup]="true">
-          <svg class="user-icon" aria-hidden="true">
+          <svg class="w-6 h-6" aria-hidden="true">
             <use href="#icon-account"></use>
           </svg>
         </button>
         
         <!-- User Dropdown Menu -->
         <div 
-          class="user-dropdown"
-          [class.user-dropdown-open]="userMenuOpen"
+          class="absolute right-0 mt-2 w-56 sm:w-64 bg-white rounded-md shadow-lg py-1 z-50 ring-1 ring-black ring-opacity-5 transform opacity-0 scale-95 transition-all duration-200 origin-top-right pointer-events-none"
+          [class.opacity-100]="userMenuOpen"
+          [class.scale-100]="userMenuOpen"
+          [class.pointer-events-auto]="userMenuOpen"
           role="menu"
           [attr.aria-hidden]="!userMenuOpen">
           
           <!-- User Info -->
-          <div class="user-info" role="menuitem">
-            <div class="user-name">{{ (currentUser$ | async)?.fullName || (currentUser$ | async)?.email }}</div>
-            <div class="user-email">{{ (currentUser$ | async)?.email }}</div>
+          <div class="px-4 py-3 border-b border-gray-200" role="menuitem">
+            <div class="font-medium text-gray-900 truncate">{{ (currentUser$ | async)?.fullName || (currentUser$ | async)?.email }}</div>
+            <div class="text-sm text-gray-500 truncate">{{ (currentUser$ | async)?.email }}</div>
           </div>
           
-          <div class="menu-divider" role="separator"></div>
+          <div class="my-1 border-t border-gray-200" role="separator"></div>
           
           <!-- Menu Items -->
           <a 
             routerLink="/profile" 
-            class="user-menu-item"
+            class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 w-full text-left cursor-pointer"
             role="menuitem"
             (click)="closeUserMenu()">
-            <svg class="menu-item-icon" aria-hidden="true">
+            <svg class="w-4 h-4 mr-3 text-gray-400" aria-hidden="true">
               <use href="#icon-person"></use>
             </svg>
             <span>Profil</span>
@@ -237,23 +240,23 @@
           
           <a 
             routerLink="/settings" 
-            class="user-menu-item"
+            class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 w-full text-left cursor-pointer"
             role="menuitem"
             (click)="closeUserMenu()">
-            <svg class="menu-item-icon" aria-hidden="true">
+            <svg class="w-4 h-4 mr-3 text-gray-400" aria-hidden="true">
               <use href="#icon-settings"></use>
             </svg>
             <span>Einstellungen</span>
           </a>
           
-          <div class="menu-divider" role="separator"></div>
+          <div class="my-1 border-t border-gray-200" role="separator"></div>
           
           <button 
             type="button"
-            class="user-menu-item"
+            class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 w-full text-left cursor-pointer"
             role="menuitem"
             (click)="logout()">
-            <svg class="menu-item-icon" aria-hidden="true">
+            <svg class="w-4 h-4 mr-3 text-gray-400" aria-hidden="true">
               <use href="#icon-logout"></use>
             </svg>
             <span>Abmelden</span>
@@ -264,7 +267,7 @@
     
     <!-- Main Content -->
     <main id="main-content" 
-          class="main-content" 
+          class="flex-1 overflow-y-auto bg-gray-50 focus:outline-none" 
           role="main" 
           tabindex="-1"
           aria-label="Hauptinhalt">

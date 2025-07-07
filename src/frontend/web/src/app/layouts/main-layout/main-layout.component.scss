@@ -1,166 +1,17 @@
-.layout-container {
-  @apply h-screen bg-gray-50 flex overflow-hidden;
-}
-
-.sidebar {
-  @apply fixed lg:static inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out lg:translate-x-0;
-  
-  &.sidebar-closed {
-    @apply -translate-x-full;
-  }
-  
-  &.sidebar-open {
-    @apply translate-x-0;
-  }
-}
-
-.sidebar-header {
-  @apply px-6 py-4 bg-primary-600 text-white flex items-center justify-between;
-}
-
-.app-title {
-  @apply text-xl font-semibold text-white truncate;
-}
-
-.nav-menu {
-  @apply flex-1 px-4 py-6 bg-white overflow-y-auto;
-}
-
-.nav-list {
-  @apply space-y-1;
-}
-
-.nav-link {
-  @apply flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
-  
-  &.nav-link-active {
-    @apply bg-primary-50 text-primary-600 border-r-2 border-primary-600;
-  }
-}
-
-.nav-icon {
-  @apply w-5 h-5 mr-3 text-gray-400;
-  
-  .nav-link-active & {
-    @apply text-primary-600;
-  }
-}
-
-.nav-divider {
-  @apply my-4 border-t border-gray-200;
-}
-
-.sidebar-overlay {
-  @apply fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 opacity-0 pointer-events-none;
-  
-  &.sidebar-overlay-visible {
-    @apply opacity-100 pointer-events-auto;
-  }
-}
-
-.main-container {
-  @apply flex-1 flex flex-col overflow-hidden;
-}
-
-.top-navbar {
-  @apply bg-white border-b border-gray-200 px-4 lg:px-6 py-4 flex items-center justify-between sticky top-0 z-30 shadow-sm;
-}
-
-.menu-toggle {
-  @apply p-2 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 lg:hidden;
-}
-
-.menu-icon {
-  @apply w-6 h-6;
-}
-
-.navbar-spacer {
-  @apply flex-1;
-}
-
-.user-menu {
-  @apply relative;
-}
-
-.user-menu-trigger {
-  @apply p-2 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200;
-}
-
-.user-icon {
-  @apply w-6 h-6;
-}
-
-.user-dropdown {
-  @apply absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-1 z-50 ring-1 ring-black ring-opacity-5 transform opacity-0 scale-95 transition-all duration-200 origin-top-right pointer-events-none;
-  
-  &.user-dropdown-open {
-    @apply opacity-100 scale-100 pointer-events-auto;
-  }
-}
-
-.user-info {
-  @apply px-4 py-3 border-b border-gray-200;
-}
-
-.user-name {
-  @apply font-medium text-gray-900 truncate;
-}
-
-.user-email {
-  @apply text-sm text-gray-500 truncate;
-}
-
-.menu-divider {
-  @apply my-1 border-t border-gray-200;
-}
-
-.user-menu-item {
-  @apply flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 w-full text-left;
-  
-  &[role="menuitem"] {
-    @apply cursor-pointer;
-  }
-}
-
-.menu-item-icon {
-  @apply w-4 h-4 mr-3 text-gray-400;
-  
-  .user-menu-item:hover & {
-    @apply text-gray-500;
-  }
-}
-
-.main-content {
-  @apply flex-1 overflow-y-auto bg-gray-50 focus:outline-none;
-}
-
+/* Reduced motion accessibility support */
 @media (prefers-reduced-motion: reduce) {
-  .sidebar,
-  .sidebar-overlay,
-  .user-dropdown,
-  .nav-link,
-  .user-menu-trigger,
-  .user-menu-item {
-    @apply transition-none;
+  aside, div, button, a {
+    transition: none !important;
+    animation: none !important;
   }
 }
 
-@media (max-width: 640px) {
-  .sidebar {
-    @apply w-72;
-  }
-  
-  .user-dropdown {
-    @apply w-56;
-  }
-  
-  .top-navbar {
-    @apply px-3 py-3;
-  }
+/* Active nav link icon color override for Tailwind utilities */
+.bg-primary-50 svg {
+  @apply text-primary-600;
 }
 
-@media (min-width: 1024px) {
-  .main-container {
-    @apply ml-64;
-  }
+/* User menu item hover icon color override */
+.hover\:bg-gray-100:hover svg {
+  @apply text-gray-500;
 }
