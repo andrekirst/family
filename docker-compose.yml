@@ -152,6 +152,8 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8081
       ConnectionStrings__DefaultConnection: "Host=postgres-app;Database=family;Username=family;Password=family"
+      ConnectionStrings__Redis: "redis:6379"
+      ConnectionStrings__Kafka: "kafka:9092"
       Keycloak__Authority: "http://keycloak:8080/realms/family"
       Keycloak__Audience: "family-api"
       Cache__RedisConnectionString: "redis:6379"

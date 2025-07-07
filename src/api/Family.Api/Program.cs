@@ -76,10 +76,6 @@ builder.Services.AddHostedService<Family.Api.Features.Families.EventHandlers.Kaf
 // Register health checks
 builder.Services.AddFamilyHealthChecks(builder.Configuration);
 
-// Add basic self health check
-builder.Services.AddHealthChecks()
-    .AddCheck("self", () => Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Healthy());
-
 // Add health checks UI for development
 builder.Services.AddHealthChecksUI()
     .AddInMemoryStorage();
