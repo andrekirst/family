@@ -57,8 +57,15 @@ builder.Services.AddScoped<Family.Api.Features.Users.Services.IFirstTimeUserServ
 builder.Services.AddHostedService<Family.Api.Features.Families.EventHandlers.KafkaEventHandlerService>();
 
 // Register health checks
-builder.Services.AddApiHealthChecks(builder.Configuration);
 builder.Services.AddFamilyHealthChecks(builder.Configuration);
+
+// Add basic self health check
+builder.Services.AddHealthChecks()
+    .AddCheck("self", () => Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Healthy());
+
+// Add health checks UI for development
+builder.Services.AddHealthChecksUI()
+    .AddInMemoryStorage();
 
 // Configure Localization
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
