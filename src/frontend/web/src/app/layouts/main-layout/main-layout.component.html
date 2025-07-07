@@ -1,15 +1,15 @@
 <!-- Skip Navigation Links -->
-<nav class="sr-only" aria-label="{{ 'nav.skipNavigation' | i18n }}">
+<nav class="sr-only" aria-label="Navigation überspringen">
   <a href="#" class="skip-link" (click)="skipToMainContent(); $event.preventDefault()">
-    {{ 'nav.skipToMainContent' | i18n }}
+    Zum Hauptinhalt springen
   </a>
   <a href="#" class="skip-link" (click)="skipToNavigation(); $event.preventDefault()">
-    {{ 'nav.skipToNavigation' | i18n }}
+    Zur Navigation springen
   </a>
 </nav>
 
 <!-- Main Layout Container -->
-<div class="layout-container" role="application" [attr.aria-label]="'app.title' | i18n">
+<div class="layout-container" role="application" aria-label="Family App">
   <!-- Sidebar -->
   <aside 
     id="main-navigation"
@@ -17,17 +17,17 @@
     [class.sidebar-open]="!(isHandset$ | async)" 
     [class.sidebar-closed]="isHandset$ | async"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [attr.aria-label]="'nav.mainNavigation' | i18n"
+    aria-label="Hauptnavigation"
     [attr.aria-hidden]="(isHandset$ | async) && !sidebarOpen"
-    [attr.aria-modal]="(isHandset$ | async) && sidebarOpen ? 'true' : null"
+    [attr.aria-modal]="(isHandset$ | async) && sidebarOpen ? 'true' : null">
     
     <!-- Sidebar Header -->
     <div class="sidebar-header">
-      <h1 class="app-title">{{ 'app.title' | i18n }}</h1>
+      <h1 class="app-title">Family</h1>
     </div>
     
     <!-- Navigation Menu -->
-    <nav class="nav-menu" role="navigation" [attr.aria-label]="'nav.mainNavigation' | i18n">
+    <nav class="nav-menu" role="navigation" aria-label="Hauptnavigation">
       <ul class="nav-list" 
           role="menubar" 
           appKeyboardNavigation="menu"
@@ -37,12 +37,12 @@
              routerLinkActive="nav-link-active" 
              class="nav-link"
              role="menuitem"
-             [attr.aria-label]="'nav.dashboard' | i18n"
+             aria-label="Dashboard"
              data-keyboard-nav>
             <svg class="nav-icon" aria-hidden="true">
               <use href="#icon-dashboard"></use>
             </svg>
-            <span>{{ 'nav.dashboard' | i18n }}</span>
+            <span>Dashboard</span>
           </a>
         </li>
         
@@ -51,12 +51,12 @@
              routerLinkActive="nav-link-active" 
              class="nav-link"
              role="menuitem"
-             [attr.aria-label]="'nav.calendar' | i18n"
+             aria-label="Kalender"
              data-keyboard-nav>
             <svg class="nav-icon" aria-hidden="true">
               <use href="#icon-calendar"></use>
             </svg>
-            <span>{{ 'nav.calendar' | i18n }}</span>
+            <span>Kalender</span>
           </a>
         </li>
         
@@ -65,12 +65,12 @@
              routerLinkActive="nav-link-active" 
              class="nav-link"
              role="menuitem"
-             [attr.aria-label]="'nav.school' | i18n"
+             aria-label="Schule"
              data-keyboard-nav>
             <svg class="nav-icon" aria-hidden="true">
               <use href="#icon-school"></use>
             </svg>
-            <span>{{ 'nav.school' | i18n }}</span>
+            <span>Schule</span>
           </a>
         </li>
         
@@ -79,12 +79,12 @@
              routerLinkActive="nav-link-active" 
              class="nav-link"
              role="menuitem"
-             [attr.aria-label]="'nav.kindergarten' | i18n"
+             aria-label="Kindergarten"
              data-keyboard-nav>
             <svg class="nav-icon" aria-hidden="true">
               <use href="#icon-child-care"></use>
             </svg>
-            <span>{{ 'nav.kindergarten' | i18n }}</span>
+            <span>Kindergarten</span>
           </a>
         </li>
         
@@ -93,12 +93,12 @@
              routerLinkActive="nav-link-active" 
              class="nav-link"
              role="menuitem"
-             [attr.aria-label]="'nav.health' | i18n"
+             aria-label="Gesundheit"
              data-keyboard-nav>
             <svg class="nav-icon" aria-hidden="true">
               <use href="#icon-health"></use>
             </svg>
-            <span>{{ 'nav.health' | i18n }}</span>
+            <span>Gesundheit</span>
           </a>
         </li>
         
@@ -107,12 +107,12 @@
              routerLinkActive="nav-link-active" 
              class="nav-link"
              role="menuitem"
-             [attr.aria-label]="'nav.family' | i18n"
+             aria-label="Familie"
              data-keyboard-nav>
             <svg class="nav-icon" aria-hidden="true">
               <use href="#icon-family"></use>
             </svg>
-            <span>{{ 'nav.family' | i18n }}</span>
+            <span>Familie</span>
           </a>
         </li>
         
@@ -123,12 +123,12 @@
              routerLinkActive="nav-link-active" 
              class="nav-link"
              role="menuitem"
-             [attr.aria-label]="'nav.profile' | i18n"
+             aria-label="Profil"
              data-keyboard-nav>
             <svg class="nav-icon" aria-hidden="true">
               <use href="#icon-person"></use>
             </svg>
-            <span>{{ 'nav.profile' | i18n }}</span>
+            <span>Profil</span>
           </a>
         </li>
         
@@ -137,12 +137,12 @@
              routerLinkActive="nav-link-active" 
              class="nav-link"
              role="menuitem"
-             [attr.aria-label]="'nav.settings' | i18n"
+             aria-label="Einstellungen"
              data-keyboard-nav>
             <svg class="nav-icon" aria-hidden="true">
               <use href="#icon-settings"></use>
             </svg>
-            <span>{{ 'nav.settings' | i18n }}</span>
+            <span>Einstellungen</span>
           </a>
         </li>
         
@@ -151,12 +151,12 @@
              routerLinkActive="nav-link-active" 
              class="nav-link"
              role="menuitem"
-             [attr.aria-label]="'nav.developer' | i18n"
+             aria-label="Entwicklertools"
              data-keyboard-nav>
             <svg class="nav-icon" aria-hidden="true">
               <use href="#icon-code"></use>
             </svg>
-            <span>{{ 'nav.developer' | i18n }}</span>
+            <span>Entwicklertools</span>
           </a>
         </li>
       </ul>
@@ -181,7 +181,7 @@
         type="button"
         class="menu-toggle"
         (click)="toggleSidebar()"
-        [attr.aria-label]="sidebarOpen ? ('nav.closeNavigation' | i18n) : ('nav.openNavigation' | i18n)"
+        [attr.aria-label]="sidebarOpen ? 'Navigation schließen' : 'Navigation öffnen'"
         [attr.aria-expanded]="sidebarOpen"
         [attr.aria-controls]="'main-navigation'">
         <svg class="menu-icon" aria-hidden="true">
@@ -196,7 +196,7 @@
       <app-language-switcher></app-language-switcher>
       
       <!-- User Menu -->
-      <div class="user-menu" [attr.aria-label]="'nav.userMenu' | i18n">
+      <div class="user-menu" aria-label="Benutzermenü">
         <button
           type="button"
           class="user-menu-trigger"
@@ -232,7 +232,7 @@
             <svg class="menu-item-icon" aria-hidden="true">
               <use href="#icon-person"></use>
             </svg>
-            <span>{{ 'nav.profile' | i18n }}</span>
+            <span>Profil</span>
           </a>
           
           <a 
@@ -243,7 +243,7 @@
             <svg class="menu-item-icon" aria-hidden="true">
               <use href="#icon-settings"></use>
             </svg>
-            <span>{{ 'nav.settings' | i18n }}</span>
+            <span>Einstellungen</span>
           </a>
           
           <div class="menu-divider" role="separator"></div>
@@ -256,7 +256,7 @@
             <svg class="menu-item-icon" aria-hidden="true">
               <use href="#icon-logout"></use>
             </svg>
-            <span>{{ 'nav.logout' | i18n }}</span>
+            <span>Abmelden</span>
           </button>
         </div>
       </div>
@@ -267,7 +267,7 @@
           class="main-content" 
           role="main" 
           tabindex="-1"
-          [attr.aria-label]="'nav.mainContent' | i18n">
+          aria-label="Hauptinhalt">
       <router-outlet></router-outlet>
     </main>
   </div>

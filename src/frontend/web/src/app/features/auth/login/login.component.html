@@ -102,7 +102,7 @@
             [attr.aria-label]="hidePassword ? 'Passwort anzeigen' : 'Passwort verbergen'"
             [attr.aria-pressed]="!hidePassword">
             <svg class="w-5 h-5" aria-hidden="true">
-              <use [href]="hidePassword ? '#icon-visibility-off' : '#icon-visibility'"></use>
+              <use [attr.href]="hidePassword ? '#icon-visibility-off' : '#icon-visibility'"></use>
             </svg>
           </button>
         </div>
