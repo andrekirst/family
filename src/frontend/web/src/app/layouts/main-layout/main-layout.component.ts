@@ -10,6 +10,8 @@ import { LanguageSwitcherComponent } from '../../shared/components/language-swit
 import { I18nPipe } from '../../shared/pipes/i18n.pipe';
 import { I18nService } from '../../core/services/i18n.service';
 import { NotificationService } from '../../core/services/notification.service';
+import { AccessibilityService } from '../../core/services/accessibility.service';
+import { KeyboardNavigationDirective } from '../../core/directives/keyboard-navigation.directive';
 
 @Component({
   selector: 'app-main-layout',
@@ -18,7 +20,8 @@ import { NotificationService } from '../../core/services/notification.service';
     CommonModule,
     RouterOutlet,
     LanguageSwitcherComponent,
-    I18nPipe
+    I18nPipe,
+    KeyboardNavigationDirective
   ],
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.scss']
@@ -34,6 +37,7 @@ export class MainLayoutComponent implements OnInit {
   private router = inject(Router);
   private notificationService = inject(NotificationService);
   private i18nService = inject(I18nService);
+  private accessibilityService = inject(AccessibilityService);
 
   constructor() {
     this.currentUser$ = this.authService.currentUser$;
@@ -77,6 +81,12 @@ export class MainLayoutComponent implements OnInit {
 
   toggleSidebar(): void {
     this.sidebarOpen = !this.sidebarOpen;
+    
+    // Announce sidebar state to screen readers
+    const message = this.sidebarOpen 
+      ? this.i18nService.translate('nav.sidebarOpened') 
+      : this.i18nService.translate('nav.sidebarClosed');
+    this.accessibilityService.announceToScreenReader(message);
   }
 
   closeSidebar(): void {
@@ -85,10 +95,39 @@ export class MainLayoutComponent implements OnInit {
 
   toggleUserMenu(): void {
     this.userMenuOpen = !this.userMenuOpen;
+    
+    // Announce menu state to screen readers
+    const message = this.userMenuOpen
+      ? this.i18nService.translate('nav.userMenuOpened')
+      : this.i18nService.translate('nav.userMenuClosed');
+    this.accessibilityService.announceToScreenReader(message);
   }
 
   closeUserMenu(): void {
     this.userMenuOpen = false;
+  }
+
+  skipToMainContent(): void {
+    const mainContent = document.querySelector('main');
+    if (mainContent) {
+      mainContent.focus();
+      this.accessibilityService.announceToScreenReader(
+        this.i18nService.translate('nav.skippedToMainContent')
+      );
+    }
+  }
+
+  skipToNavigation(): void {
+    const navigation = document.querySelector('nav[role="navigation"]');
+    if (navigation) {
+      const firstLink = navigation.querySelector('a, button');
+      if (firstLink) {
+        (firstLink as HTMLElement).focus();
+        this.accessibilityService.announceToScreenReader(
+          this.i18nService.translate('nav.skippedToNavigation')
+        );
+      }
+    }
   }
 
   private isClickInsideUserMenu(event: Event): boolean {

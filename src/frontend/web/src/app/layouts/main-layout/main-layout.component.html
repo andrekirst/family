@@ -1,12 +1,25 @@
+<!-- Skip Navigation Links -->
+<nav class="sr-only" aria-label="{{ 'nav.skipNavigation' | i18n }}">
+  <a href="#" class="skip-link" (click)="skipToMainContent(); $event.preventDefault()">
+    {{ 'nav.skipToMainContent' | i18n }}
+  </a>
+  <a href="#" class="skip-link" (click)="skipToNavigation(); $event.preventDefault()">
+    {{ 'nav.skipToNavigation' | i18n }}
+  </a>
+</nav>
+
 <!-- Main Layout Container -->
-<div class="layout-container">
+<div class="layout-container" role="application" [attr.aria-label]="'app.title' | i18n">
   <!-- Sidebar -->
   <aside 
+    id="main-navigation"
     class="sidebar" 
     [class.sidebar-open]="!(isHandset$ | async)" 
     [class.sidebar-closed]="isHandset$ | async"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [attr.aria-label]="'nav.mainNavigation' | i18n">
+    [attr.aria-label]="'nav.mainNavigation' | i18n"
+    [attr.aria-hidden]="(isHandset$ | async) && !sidebarOpen"
+    [attr.aria-modal]="(isHandset$ | async) && sidebarOpen ? 'true' : null"
     
     <!-- Sidebar Header -->
     <div class="sidebar-header">
@@ -15,9 +28,17 @@
     
     <!-- Navigation Menu -->
     <nav class="nav-menu" role="navigation" [attr.aria-label]="'nav.mainNavigation' | i18n">
-      <ul class="nav-list">
-        <li>
-          <a routerLink="/dashboard" routerLinkActive="nav-link-active" class="nav-link">
+      <ul class="nav-list" 
+          role="menubar" 
+          appKeyboardNavigation="menu"
+          [attr.aria-orientation]="'vertical'">
+        <li role="none">
+          <a routerLink="/dashboard" 
+             routerLinkActive="nav-link-active" 
+             class="nav-link"
+             role="menuitem"
+             [attr.aria-label]="'nav.dashboard' | i18n"
+             data-keyboard-nav>
             <svg class="nav-icon" aria-hidden="true">
               <use href="#icon-dashboard"></use>
             </svg>
@@ -25,8 +46,13 @@
           </a>
         </li>
         
-        <li>
-          <a routerLink="/calendar" routerLinkActive="nav-link-active" class="nav-link">
+        <li role="none">
+          <a routerLink="/calendar" 
+             routerLinkActive="nav-link-active" 
+             class="nav-link"
+             role="menuitem"
+             [attr.aria-label]="'nav.calendar' | i18n"
+             data-keyboard-nav>
             <svg class="nav-icon" aria-hidden="true">
               <use href="#icon-calendar"></use>
             </svg>
@@ -34,8 +60,13 @@
           </a>
         </li>
         
-        <li>
-          <a routerLink="/school" routerLinkActive="nav-link-active" class="nav-link">
+        <li role="none">
+          <a routerLink="/school" 
+             routerLinkActive="nav-link-active" 
+             class="nav-link"
+             role="menuitem"
+             [attr.aria-label]="'nav.school' | i18n"
+             data-keyboard-nav>
             <svg class="nav-icon" aria-hidden="true">
               <use href="#icon-school"></use>
             </svg>
@@ -43,8 +74,13 @@
           </a>
         </li>
         
-        <li>
-          <a routerLink="/kindergarten" routerLinkActive="nav-link-active" class="nav-link">
+        <li role="none">
+          <a routerLink="/kindergarten" 
+             routerLinkActive="nav-link-active" 
+             class="nav-link"
+             role="menuitem"
+             [attr.aria-label]="'nav.kindergarten' | i18n"
+             data-keyboard-nav>
             <svg class="nav-icon" aria-hidden="true">
               <use href="#icon-child-care"></use>
             </svg>
@@ -52,8 +88,13 @@
           </a>
         </li>
         
-        <li>
-          <a routerLink="/health" routerLinkActive="nav-link-active" class="nav-link">
+        <li role="none">
+          <a routerLink="/health" 
+             routerLinkActive="nav-link-active" 
+             class="nav-link"
+             role="menuitem"
+             [attr.aria-label]="'nav.health' | i18n"
+             data-keyboard-nav>
             <svg class="nav-icon" aria-hidden="true">
               <use href="#icon-health"></use>
             </svg>
@@ -61,8 +102,13 @@
           </a>
         </li>
         
-        <li>
-          <a routerLink="/family" routerLinkActive="nav-link-active" class="nav-link">
+        <li role="none">
+          <a routerLink="/family" 
+             routerLinkActive="nav-link-active" 
+             class="nav-link"
+             role="menuitem"
+             [attr.aria-label]="'nav.family' | i18n"
+             data-keyboard-nav>
             <svg class="nav-icon" aria-hidden="true">
               <use href="#icon-family"></use>
             </svg>
@@ -72,8 +118,13 @@
         
         <li class="nav-divider" role="separator"></li>
         
-        <li>
-          <a routerLink="/profile" routerLinkActive="nav-link-active" class="nav-link">
+        <li role="none">
+          <a routerLink="/profile" 
+             routerLinkActive="nav-link-active" 
+             class="nav-link"
+             role="menuitem"
+             [attr.aria-label]="'nav.profile' | i18n"
+             data-keyboard-nav>
             <svg class="nav-icon" aria-hidden="true">
               <use href="#icon-person"></use>
             </svg>
@@ -81,8 +132,13 @@
           </a>
         </li>
         
-        <li>
-          <a routerLink="/settings" routerLinkActive="nav-link-active" class="nav-link">
+        <li role="none">
+          <a routerLink="/settings" 
+             routerLinkActive="nav-link-active" 
+             class="nav-link"
+             role="menuitem"
+             [attr.aria-label]="'nav.settings' | i18n"
+             data-keyboard-nav>
             <svg class="nav-icon" aria-hidden="true">
               <use href="#icon-settings"></use>
             </svg>
@@ -90,8 +146,13 @@
           </a>
         </li>
         
-        <li>
-          <a routerLink="/developer/graphql-playground" routerLinkActive="nav-link-active" class="nav-link">
+        <li role="none">
+          <a routerLink="/developer/graphql-playground" 
+             routerLinkActive="nav-link-active" 
+             class="nav-link"
+             role="menuitem"
+             [attr.aria-label]="'nav.developer' | i18n"
+             data-keyboard-nav>
             <svg class="nav-icon" aria-hidden="true">
               <use href="#icon-code"></use>
             </svg>
@@ -120,8 +181,9 @@
         type="button"
         class="menu-toggle"
         (click)="toggleSidebar()"
-        [attr.aria-label]="'nav.toggleMenu' | i18n"
-        [attr.aria-expanded]="sidebarOpen">
+        [attr.aria-label]="sidebarOpen ? ('nav.closeNavigation' | i18n) : ('nav.openNavigation' | i18n)"
+        [attr.aria-expanded]="sidebarOpen"
+        [attr.aria-controls]="'main-navigation'">
         <svg class="menu-icon" aria-hidden="true">
           <use href="#icon-menu"></use>
         </svg>
@@ -201,7 +263,11 @@
     </header>
     
     <!-- Main Content -->
-    <main class="main-content" role="main">
+    <main id="main-content" 
+          class="main-content" 
+          role="main" 
+          tabindex="-1"
+          [attr.aria-label]="'nav.mainContent' | i18n">
       <router-outlet></router-outlet>
     </main>
   </div>
