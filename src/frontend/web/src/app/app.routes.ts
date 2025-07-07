@@ -92,9 +92,29 @@ export const routes: Routes = [
     ]
   },
   
+  // Error pages
+  {
+    path: 'error',
+    children: [
+      {
+        path: '404',
+        loadComponent: () => import('./features/error-pages/not-found.component').then(m => m.NotFoundComponent)
+      },
+      {
+        path: '500',
+        loadComponent: () => import('./features/error-pages/server-error.component').then(m => m.ServerErrorComponent)
+      },
+      {
+        path: '',
+        redirectTo: '404',
+        pathMatch: 'full'
+      }
+    ]
+  },
+  
   // Wildcard route - must be last
   { 
     path: '**', 
-    redirectTo: '/dashboard' 
+    loadComponent: () => import('./features/error-pages/not-found.component').then(m => m.NotFoundComponent)
   }
 ];
