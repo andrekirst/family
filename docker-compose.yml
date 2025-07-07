@@ -142,6 +142,25 @@ services:
     networks:
       - family-network
 
+  # Kafka Topic Initializer
+  kafka-init:
+    image: confluentinc/cp-kafka:7.6.0
+    container_name: family-kafka-init
+    depends_on:
+      - kafka
+    command: |
+      bash -c "
+      echo 'Waiting for Kafka to be ready...'
+      while ! kafka-topics --bootstrap-server kafka:9092 --list 2>/dev/null; do
+        sleep 2
+      done
+      echo 'Creating topic family.events...'
+      kafka-topics --create --topic family.events --bootstrap-server kafka:9092 --partitions 3 --replication-factor 1 --if-not-exists
+      echo 'Topic creation completed'
+      "
+    networks:
+      - family-network
+
   # Family API
   family-api:
     build:
@@ -164,6 +183,8 @@ services:
       - postgres-app
       - redis
       - kafka
+      - kafka-init
+      - keycloak
     networks:
       - family-network
 
