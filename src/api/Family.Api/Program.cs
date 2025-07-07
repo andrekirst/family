@@ -67,6 +67,10 @@ builder.Services.AddHealthChecks()
 builder.Services.AddHealthChecksUI()
     .AddInMemoryStorage();
 
+// Configure HealthChecksUI from configuration
+builder.Services.Configure<HealthChecks.UI.Configuration.Settings>(
+    builder.Configuration.GetSection("HealthChecksUI"));
+
 // Configure Localization
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.Configure<RequestLocalizationOptions>(options =>
@@ -113,7 +117,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             OnAuthenticationFailed = context =>
             {
-                context.Response.Headers.Add("Token-Expired", "true");
+                context.Response.Headers["Token-Expired"] = "true";
                 return Task.CompletedTask;
             }
         };
