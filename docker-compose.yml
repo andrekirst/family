@@ -3,6 +3,7 @@ services:
   postgres-keycloak:
     image: postgres:16
     container_name: family-postgres-keycloak
+    hostname: postgres-keycloak
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
@@ -18,6 +19,7 @@ services:
   postgres-app:
     image: postgres:16
     container_name: family-postgres-app
+    hostname: postgres-app
     environment:
       POSTGRES_DB: family
       POSTGRES_USER: family
@@ -33,6 +35,7 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:26.0
     container_name: family-keycloak
+    hostname: keycloak
     environment:
       # Database Configuration
       KC_DB: postgres
@@ -70,6 +73,7 @@ services:
   redis:
     image: redis:7-alpine
     container_name: family-redis
+    hostname: redis
     command: redis-server --appendonly yes
     volumes:
       - redis_data:/data
@@ -87,6 +91,7 @@ services:
   zookeeper:
     image: confluentinc/cp-zookeeper:7.6.0
     container_name: family-zookeeper
+    hostname: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -102,6 +107,7 @@ services:
   kafka:
     image: confluentinc/cp-kafka:7.6.0
     container_name: family-kafka
+    hostname: kafka
     depends_on:
       - zookeeper
     environment:
@@ -131,6 +137,7 @@ services:
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     container_name: family-kafka-ui
+    hostname: kafka-ui
     depends_on:
       - kafka
     environment:
@@ -146,6 +153,7 @@ services:
   kafka-init:
     image: confluentinc/cp-kafka:7.6.0
     container_name: family-kafka-init
+    hostname: kafka-init
     depends_on:
       - kafka
     command: |
@@ -167,9 +175,10 @@ services:
       context: .
       dockerfile: src/api/Family.Api/Dockerfile
     container_name: family-api
+    hostname: family-api
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:8081
+      ASPNETCORE_URLS: http://0.0.0.0:8081
       ConnectionStrings__DefaultConnection: "Host=postgres-app;Database=family;Username=family;Password=family"
       ConnectionStrings__Redis: "redis:6379"
       ConnectionStrings__Kafka: "kafka:9092"
@@ -194,6 +203,7 @@ services:
       context: ./src/frontend/web
       dockerfile: Dockerfile
     container_name: family-web
+    hostname: family-web
     environment:
       - NODE_ENV=production
     ports:
