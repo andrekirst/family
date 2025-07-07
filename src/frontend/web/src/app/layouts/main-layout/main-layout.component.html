@@ -89,6 +89,15 @@
             <span>{{ 'nav.settings' | i18n }}</span>
           </a>
         </li>
+        
+        <li>
+          <a routerLink="/developer/graphql-playground" routerLinkActive="nav-link-active" class="nav-link">
+            <svg class="nav-icon" aria-hidden="true">
+              <use href="#icon-code"></use>
+            </svg>
+            <span>{{ 'nav.developer' | i18n }}</span>
+          </a>
+        </li>
       </ul>
     </nav>
   </aside>
@@ -233,6 +242,9 @@
     </symbol>
     <symbol id="icon-logout" viewBox="0 0 24 24">
       <path d="M16 17v-3H9v-4h7V7l5 5-5 5M14 2a2 2 0 0 1 2 2v2h-2V4H5v16h9v-2h2v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9z"/>
+    </symbol>
+    <symbol id="icon-code" viewBox="0 0 24 24">
+      <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
     </symbol>
   </defs>
 </svg>
