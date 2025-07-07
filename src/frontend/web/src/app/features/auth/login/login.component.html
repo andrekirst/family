@@ -28,10 +28,21 @@
     </div>
     
     <!-- Direct Login Form -->
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4" novalidate>
+    <form [formGroup]="loginForm" 
+          (ngSubmit)="onSubmit()" 
+          class="space-y-4" 
+          novalidate
+          role="form"
+          [attr.aria-label]="'Anmeldeformular'"
+          [attr.aria-describedby]="'form-description'">
+      <div id="form-description" class="sr-only">
+        Geben Sie Ihre E-Mail-Adresse und Ihr Passwort ein, um sich anzumelden.
+      </div>
       <!-- Email Field -->
       <div class="space-y-2">
-        <label for="email" class="form-label">E-Mail</label>
+        <label for="email" class="form-label">
+          E-Mail <span aria-hidden="true">*</span>
+        </label>
         <div class="relative">
           <input 
             id="email"
@@ -41,16 +52,23 @@
             [ngClass]="{'border-gray-300': !(loginForm.get('email')?.invalid && loginForm.get('email')?.touched), 'border-error-500 focus:ring-error-500 focus:border-error-500': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
             placeholder="ihre@email.com"
             autocomplete="email"
-            [attr.aria-describedby]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched ? 'email-error' : null">
+            required
+            [attr.aria-required]="'true'"
+            [attr.aria-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+            [attr.aria-describedby]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched ? 'email-error' : 'email-help'">
           <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" aria-hidden="true">
             <use href="#icon-email"></use>
           </svg>
+        </div>
+        <div id="email-help" class="sr-only">
+          Geben Sie eine gültige E-Mail-Adresse ein, um sich anzumelden.
         </div>
         <div 
           *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
           id="email-error"
           class="form-error"
-          role="alert">
+          role="alert"
+          aria-live="polite">
           <span *ngIf="loginForm.get('email')?.hasError('required')">
             E-Mail ist erforderlich
           </span>
@@ -62,7 +80,9 @@
       
       <!-- Password Field -->
       <div class="space-y-2">
-        <label for="password" class="form-label">Passwort</label>
+        <label for="password" class="form-label">
+          Passwort <span aria-hidden="true">*</span>
+        </label>
         <div class="relative">
           <input 
             id="password"
@@ -71,7 +91,10 @@
             class="w-full pl-3 pr-10 py-3 border rounded-lg placeholder-gray-400 transition-colors focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
             [ngClass]="{'border-gray-300': !(loginForm.get('password')?.invalid && loginForm.get('password')?.touched), 'border-error-500 focus:ring-error-500 focus:border-error-500': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
             autocomplete="current-password"
-            [attr.aria-describedby]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched ? 'password-error' : null">
+            required
+            [attr.aria-required]="'true'"
+            [attr.aria-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+            [attr.aria-describedby]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched ? 'password-error' : 'password-help'">
           <button 
             type="button"
             class="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded"
@@ -83,11 +106,15 @@
             </svg>
           </button>
         </div>
+        <div id="password-help" class="sr-only">
+          Geben Sie Ihr Passwort ein.
+        </div>
         <div 
           *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
           id="password-error"
           class="form-error"
-          role="alert">
+          role="alert"
+          aria-live="polite">
           <span *ngIf="loginForm.get('password')?.hasError('required')">
             Passwort ist erforderlich
           </span>

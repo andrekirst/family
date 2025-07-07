@@ -12,7 +12,9 @@
   <div 
     class="modal-container"
     (click)="$event.stopPropagation()"
-    role="document">
+    role="document"
+    appFocusTrap
+    [focusTrapInitialFocus]="null">
     
     <!-- Modal Header -->
     <div class="modal-header">
@@ -38,7 +40,11 @@
 
     <!-- Modal Content -->
     <div class="modal-content">
-      <form [formGroup]="familyForm" (ngSubmit)="onSubmit()" novalidate>
+      <form [formGroup]="familyForm" 
+            (ngSubmit)="onSubmit()" 
+            novalidate
+            role="form"
+            [attr.aria-label]="'family.createModal.formLabel' | translate">
         
         <!-- Family Name Input -->
         <div class="form-group">
@@ -53,6 +59,8 @@
             [class.form-input--error]="hasError"
             [placeholder]="'family.createModal.namePlaceholder' | translate"
             autocomplete="family-name"
+            required
+            [attr.aria-required]="'true'"
             [attr.aria-describedby]="hasError ? 'familyName-error' : null"
             [attr.aria-invalid]="hasError">
           

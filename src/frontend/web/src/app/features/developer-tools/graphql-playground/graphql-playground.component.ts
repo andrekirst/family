@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { environment } from '../../../../environments/environment';
+import { AccessibilityService } from '../../../core/services/accessibility.service';
 
 @Component({
   selector: 'app-graphql-playground',

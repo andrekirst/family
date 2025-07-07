@@ -1,8 +1,10 @@
-import { Component, EventEmitter, Input, Output, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, OnDestroy, inject, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { AccessibilityService } from '../../../core/services/accessibility.service';
+import { FocusTrapDirective } from '../../../core/directives/focus-trap.directive';
 
 export interface FamilyCreationResult {
   success: boolean;
@@ -13,7 +15,7 @@ export interface FamilyCreationResult {
 @Component({
   selector: 'app-family-creation-modal',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule, FocusTrapDirective],
   templateUrl: './family-creation-modal.component.html',
   styleUrls: ['./family-creation-modal.component.scss']
 })
@@ -26,6 +28,8 @@ export class FamilyCreationModalComponent implements OnInit, OnDestroy {
   familyForm: FormGroup;
   private destroy$ = new Subject<void>();
   private translate = inject(TranslateService);
+  private accessibilityService = inject(AccessibilityService);
+  private elementRef = inject(ElementRef);
 
   constructor(private fb: FormBuilder) {
     this.familyForm = this.fb.group({
